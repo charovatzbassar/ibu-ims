@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model internship_listing {
+  listingID          Int       @id
+  companyName        String    @db.VarChar(255)
+  position           String    @db.VarChar(100)
+  listingDescription String?   @db.Text
+  location           String?   @db.VarChar(100)
+  startDate          DateTime? @db.Date
+  endDate            DateTime? @db.Date
+  requirements       String?   @db.Text
+  contactEmail       String    @db.VarChar(100)
+}
