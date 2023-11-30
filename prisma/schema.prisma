@@ -8,7 +8,7 @@ datasource db {
 }
 
 model internship_listing {
-  listingID          Int       @id
+  listingID          Int       @id @default(autoincrement())
   companyName        String    @db.VarChar(255)
   position           String    @db.VarChar(100)
   listingDescription String?   @db.Text

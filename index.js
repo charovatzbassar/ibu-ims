@@ -6,6 +6,8 @@ const express = require("express");
 const internshipRoutes = require("./routers/internshipRouter");
 const app = express();
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/api/internships", internshipRoutes);
 
 app.listen(process.env.API_PORT, () => {
