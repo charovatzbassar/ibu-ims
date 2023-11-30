@@ -30,4 +30,29 @@ router.get("/:id", async (req, res) => {
   res.json(listing);
 });
 
+router.patch("/:id/edit", async (req, res) => {
+  const updatedListing = await prisma.internship_listing.update({
+    where: {
+      listingID: Number(req.params.id),
+    },
+    data: {
+      ...req.body,
+      startDate: new Date(req.body.startDate),
+      endDate: new Date(req.body.endDate),
+    },
+  });
+
+  res.json(updatedListing);
+});
+
+router.delete("/:id/delete", async (req, res) => {
+  const deletedListing = await prisma.internship_listing.delete({
+    where: {
+      listingID: Number(req.params.id),
+    },
+  });
+
+  res.json(deletedListing);
+});
+
 module.exports = router;
