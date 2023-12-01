@@ -18,8 +18,10 @@ router
       const newListing = await prisma.internship_listing.create({
         data: {
           ...req.body,
-          startDate: new Date(req.body.startDate),
-          endDate: new Date(req.body.endDate),
+          ...(req.body.startDate
+            ? { startDate: new Date(req.body.startDate) }
+            : {}),
+          ...(req.body.endDate ? { endDate: new Date(req.body.endDate) } : {}),
         },
       });
       res.json(newListing);
@@ -47,8 +49,10 @@ router
         },
         data: {
           ...req.body,
-          startDate: new Date(req.body.startDate),
-          endDate: new Date(req.body.endDate),
+          ...(req.body.startDate
+            ? { startDate: new Date(req.body.startDate) }
+            : {}),
+          ...(req.body.endDate ? { endDate: new Date(req.body.endDate) } : {}),
         },
       });
 
