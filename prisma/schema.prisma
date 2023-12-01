@@ -8,13 +8,67 @@ datasource db {
 }
 
 model internship_listing {
-  listingID          Int       @id @default(autoincrement())
-  companyName        String    @db.VarChar(255)
-  position           String    @db.VarChar(100)
-  listingDescription String?   @db.Text
-  location           String?   @db.VarChar(100)
-  startDate          DateTime? @db.Date
-  endDate            DateTime? @db.Date
-  requirements       String?   @db.Text
-  contactEmail       String    @db.VarChar(100)
+  listingID          Int          @id
+  companyID          Int?
+  position           String       @db.VarChar(100)
+  listingDescription String?      @db.Text
+  startDate          DateTime?    @db.Date
+  endDate            DateTime?    @db.Date
+  requirements       String?      @db.Text
+  noOfPlaces         Int?
+  internship         internship[]
+  company            company?     @relation(fields: [companyID], references: [companyID], onDelete: NoAction, onUpdate: NoAction, map: "fk_companyID")
+
+  @@index([companyID], map: "fk_companyID")
+}
+
+model company {
+  companyID          Int                  @id @default(autoincrement())
+  companyName        String?              @db.VarChar(25)
+  location           String?              @db.VarChar(25)
+  contactEmail       String?              @unique(map: "contactEmail") @db.VarChar(35)
+  internship_listing internship_listing[]
+}
+
+model intern {
+  internID    Int          @id @default(autoincrement())
+  firstName   String?      @db.VarChar(25)
+  lastName    String?      @db.VarChar(25)
+  dateOfBirth DateTime?    @db.Date
+  email       String?      @unique(map: "email") @db.VarChar(35)
+  internship  internship[]
+}
+
+model internship {
+  internshipID       Int                 @id @default(autoincrement())
+  internID           Int?
+  managerID          Int?
+  listingID          Int?
+  intern             intern?             @relation(fields: [internID], references: [internID], onDelete: NoAction, onUpdate: NoAction, map: "fk_internID")
+  internship_listing internship_listing? @relation(fields: [listingID], references: [listingID], onDelete: NoAction, onUpdate: NoAction, map: "fk_listingID")
+  manager            manager?            @relation(fields: [managerID], references: [managerID], onDelete: NoAction, onUpdate: NoAction, map: "fk_managerID")
+  internship_days    internship_days[]
+
+  @@index([internID], map: "fk_internID")
+  @@index([listingID], map: "fk_listingID_idx")
+  @@index([managerID], map: "fk_managerID")
+}
+
+model internship_days {
+  dayID          Int         @id @default(autoincrement())
+  internshipID   Int?
+  workdayDate    DateTime?   @db.Date
+  dayDescription String?     @db.Text
+  internship     internship? @relation(fields: [internshipID], references: [internshipID], onDelete: NoAction, onUpdate: NoAction, map: "fk_internshipID")
+
+  @@index([internshipID], map: "fk_internshipID")
+}
+
+model manager {
+  managerID   Int          @id @default(autoincrement())
+  firstName   String?      @db.VarChar(25)
+  lastName    String?      @db.VarChar(25)
+  dateOfBirth DateTime?    @db.Date
+  email       String?      @unique(map: "email") @db.VarChar(35)
+  internship  internship[]
 }
