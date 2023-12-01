@@ -9,8 +9,8 @@ router
   .route("/")
   .get(
     catchAsync(async (req, res) => {
-      const data = await prisma.internship_listing.findMany();
-      res.json(data);
+      const allListings = await prisma.internship_listing.findMany();
+      res.json(allListings);
     })
   )
   .post(
