@@ -6,7 +6,14 @@ const express = require("express");
 const internshipRoutes = require("./routers/internshipRouter");
 const companyRoutes = require("./routers/companyRouter");
 const APIError = require("./utils/APIError");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocs = require("./swagger-output.json");
+
+const port = 8080;
+
 const app = express();
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,6 +30,6 @@ app.use((err, req, res, next) => {
   res.status(status).json({ message: err.message, status });
 });
 
-app.listen(process.env.API_PORT, () => {
+app.listen(port, () => {
   console.log("Server is listening");
 });
