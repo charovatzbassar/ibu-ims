@@ -7,7 +7,7 @@ const internshipRoutes = require("./routers/internshipRouter");
 const companyRoutes = require("./routers/companyRouter");
 const APIError = require("./utils/APIError");
 const swaggerUi = require("swagger-ui-express");
-const swaggerDocs = require("./swagger-output.json");
+const swaggerDocs = require("./swagger/swagger-output.json");
 
 const port = 8080;
 
