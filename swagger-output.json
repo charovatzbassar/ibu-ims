@@ -7,13 +7,11 @@
   },
   "host": "localhost:8080",
   "basePath": "/",
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
   "paths": {
     "/api/internships/": {
       "get": {
-        "description": "",
+        "description": "Get all internship listings.",
         "responses": {
           "200": {
             "description": "OK"
@@ -21,7 +19,7 @@
         }
       },
       "post": {
-        "description": "",
+        "description": "Add an internship listing to the database.",
         "parameters": [
           {
             "name": "body",
@@ -48,7 +46,7 @@
     },
     "/api/internships/{id}": {
       "get": {
-        "description": "",
+        "description": "Get an internship listing by ID.",
         "parameters": [
           {
             "name": "id",
@@ -64,7 +62,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete an internship listing from the database.",
         "parameters": [
           {
             "name": "id",
@@ -80,7 +78,7 @@
         }
       },
       "patch": {
-        "description": "",
+        "description": "Modify an internship listing in the database.",
         "parameters": [
           {
             "name": "id",
@@ -113,7 +111,7 @@
     },
     "/api/companies/": {
       "get": {
-        "description": "",
+        "description": "Get all companies.",
         "responses": {
           "200": {
             "description": "OK"
@@ -121,7 +119,7 @@
         }
       },
       "post": {
-        "description": "",
+        "description": "Add a company to the database.",
         "responses": {
           "200": {
             "description": "OK"
@@ -131,7 +129,7 @@
     },
     "/api/companies/{id}": {
       "get": {
-        "description": "",
+        "description": "Get a company by ID.",
         "parameters": [
           {
             "name": "id",
@@ -147,7 +145,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete a company from the database.",
         "parameters": [
           {
             "name": "id",
@@ -163,7 +161,7 @@
         }
       },
       "patch": {
-        "description": "",
+        "description": "Modify a company in the database.",
         "parameters": [
           {
             "name": "id",
