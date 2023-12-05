@@ -10,45 +10,16 @@ const APIError = require("./utils/APIError");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./swagger/swagger-output.json");
 const passport = require("passport");
-const jwt = require("jsonwebtoken");
-const { Strategy: GoogleStrategy } = require("passport-google-oauth20");
+const auth = require("./utils/auth");
+const { createJwtToken } = require("./utils/jwt");
 
 const port = 8080;
 const appPort = 5173;
 
 const app = express();
 
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: process.env.AUTH_CLIENT_ID,
-      clientSecret: process.env.AUTH_CLIENT_SECRET,
-      callbackURL: `http://localhost:${port}/auth/google/callback`,
-    },
-    (accessToken, refreshToken, profile, done) => {
-      const user = { id: profile.id, email: profile.emails[0].value };
-      return done(null, user);
-    }
-  )
-);
-
+auth(passport);
 app.use(passport.initialize());
-
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
-  (req, res) => {
-    const token = jwt.sign({ user: req.user }, "your-secret-key", {
-      expiresIn: "1h",
-    });
-    res.redirect(`http://localhost:3000/login?token=${token}`);
-  }
-);
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
@@ -61,6 +32,29 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.get("/", (req, res) => {
+  res.json({
+    status: "session cookie not set",
+  });
+});
+app.get(
+  "/auth/google",
+  passport.authenticate("google", {
+    scope: ["https://www.googleapis.com/auth/userinfo.profile"],
+  })
+);
+app.get(
+  "/auth/google/callback",
+  passport.authenticate("google", {
+    failureRedirect: "/",
+  }),
+  (req, res) => {
+    const token = createJwtToken(req.user); 
+    res.redirect(`/dashboard?token=${token}`);
+  }
+);
+
 app.use("/api/internships", internshipRoutes);
 app.use("/api/companies", companyRoutes);
 

@@ -1,12 +1,14 @@
 const express = require("express");
 const prisma = require("../prisma/prisma");
 const { catchAsync } = require("../utils/catchAsync");
+const { jwtMiddleware } = require("../utils/middleware");
 
 const router = express.Router();
 
 router
   .route("/")
   .get(
+    jwtMiddleware,
     catchAsync(async (req, res) => {
       const allCompanies = await prisma.company.findMany();
       res.json(allCompanies);
