@@ -38,19 +38,22 @@ app.get("/", (req, res) => {
     status: "session cookie not set",
   });
 });
+
 app.get(
   "/auth/google",
   passport.authenticate("google", {
     scope: ["https://www.googleapis.com/auth/userinfo.profile"],
-  })
+  }),
+  (req, res) => {}
 );
+
 app.get(
   "/auth/google/callback",
   passport.authenticate("google", {
     failureRedirect: "/",
   }),
   (req, res) => {
-    const token = createJwtToken(req.user); 
+    const token = createJwtToken(req.user);
     res.redirect(`/dashboard?token=${token}`);
   }
 );
