@@ -6,6 +6,7 @@ const express = require("express");
 const cors = require("cors");
 const internshipRoutes = require("./routers/internshipRouter");
 const companyRoutes = require("./routers/companyRouter");
+const authRoutes = require("./routers/authRouter");
 const APIError = require("./utils/APIError");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./swagger/swagger-output.json");
@@ -47,30 +48,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.json({
-    status: "session cookie not set",
-  });
-});
-
-app.get(
-  "/auth/google",
-  passport.authenticate("google", {
-    scope: ["https://www.googleapis.com/auth/userinfo.profile"],
-  }),
-  (req, res) => {}
-);
-
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/",
-  }),
-  (req, res) => {
-    res.json({ user: req.user });
-  }
-);
-
+app.use("/auth/google", authRoutes);
 app.use("/api/internships", internshipRoutes);
 app.use("/api/companies", companyRoutes);
 
