@@ -1,9 +1,11 @@
 const express = require("express");
 const prisma = require("../prisma/prisma");
 const { catchAsync } = require("../utils/catchAsync");
-const { jwtMiddleware } = require("../utils/middleware");
+const { isLoggedIn } = require("../utils/isLoggedIn");
 
 const router = express.Router();
+
+router.use(isLoggedIn);
 
 router
   .route("/")

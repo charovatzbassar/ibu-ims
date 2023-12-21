@@ -10,29 +10,28 @@ const APIError = require("./utils/APIError");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./swagger/swagger-output.json");
 const passport = require("passport");
-const auth = require("./utils/auth");
-const { createJwtToken } = require("./utils/jwt");
 const session = require("express-session");
 
 const port = 8080;
 const appPort = 5173;
 
-const sessionConfig = {
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    httpOnly: true, // its true by default, for extra security, not accessed via js
-    //secure: true,
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // when the session expires
-    maxAge: 1000 * 60 * 60 * 24 * 7, // how long the session lasts
-  },
-};
-
 const app = express();
 
-app.use(session(sessionConfig));
-auth(passport);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      httpOnly: true, // its true by default, for extra security, not accessed via js
+      //secure: true,
+      expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // when the session expires
+      maxAge: 1000 * 60 * 60 * 24 * 7, // how long the session lasts
+    },
+  })
+);
+
+require("./utils/auth");
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -68,8 +67,7 @@ app.get(
     failureRedirect: "/",
   }),
   (req, res) => {
-    const token = createJwtToken(req.user);
-    res.redirect(`/dashboard?token=${token}`);
+    res.json({ user: req.user });
   }
 );
 
