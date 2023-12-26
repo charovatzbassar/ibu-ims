@@ -11,25 +11,14 @@ const APIError = require("./utils/APIError");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./swagger/swagger-output.json");
 const passport = require("passport");
-const session = require("express-session");
+const session = require("./utils/session");
 
 const port = process.env.API_PORT || 8080;
 const appPort = process.env.APP_PORT || 5173;
 
 const app = express();
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      httpOnly: true,
-      expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-      maxAge: 1000 * 60 * 60 * 24 * 7,
-    },
-  })
-);
+app.use(session);
 
 require("./utils/auth");
 app.use(passport.initialize());
