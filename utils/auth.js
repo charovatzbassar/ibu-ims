@@ -9,12 +9,20 @@ passport.use(
       callbackURL: "http://localhost:8080/auth/google/callback",
     },
     (token, refreshToken, profile, done) => {
-      console.log(profile.emails);
+      let role;
+
+      if (profile.emails[0].value.split("@")[1] === "stu.ibu.edu.ba") {
+        role = "intern";
+      } else if (profile.emails[0].value.split("@")[1] === "ibu.edu.ba") {
+        role = "mentor";
+      } else {
+        role = "company";
+      }
 
       return done(null, {
         profile: profile,
         token: token,
-        role: "user",
+        role,
       });
     }
   )
