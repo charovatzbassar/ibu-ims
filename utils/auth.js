@@ -9,9 +9,12 @@ passport.use(
       callbackURL: "http://localhost:8080/auth/google/callback",
     },
     (token, refreshToken, profile, done) => {
+      console.log(profile.emails);
+
       return done(null, {
         profile: profile,
         token: token,
+        role: "user",
       });
     }
   )

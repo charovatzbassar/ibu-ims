@@ -13,8 +13,8 @@ const swaggerDocs = require("./swagger/swagger-output.json");
 const passport = require("passport");
 const session = require("express-session");
 
-const port = 8080;
-const appPort = 5173;
+const port = process.env.API_PORT || 8080;
+const appPort = process.env.APP_PORT || 5173;
 
 const app = express();
 
@@ -24,10 +24,9 @@ app.use(
     resave: false,
     saveUninitialized: true,
     cookie: {
-      httpOnly: true, // its true by default, for extra security, not accessed via js
-      //secure: true,
-      expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // when the session expires
-      maxAge: 1000 * 60 * 60 * 24 * 7, // how long the session lasts
+      httpOnly: true,
+      expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+      maxAge: 1000 * 60 * 60 * 24 * 7,
     },
   })
 );

@@ -2,6 +2,7 @@ const express = require("express");
 const prisma = require("../prisma/prisma");
 const { catchAsync } = require("../utils/catchAsync");
 const { isLoggedIn } = require("../utils/isLoggedIn");
+const { checkRole } = require("../utils/checkRole");
 
 const router = express.Router();
 
@@ -15,6 +16,7 @@ router
   )
   .post(
     isLoggedIn,
+    checkRole("company"),
     catchAsync(async (req, res) => {
       const newListing = await prisma.internship_listing.create({
         data: {
@@ -44,6 +46,7 @@ router
   )
   .patch(
     isLoggedIn,
+    checkRole("company"),
     catchAsync(async (req, res) => {
       const updatedListing = await prisma.internship_listing.update({
         where: {
@@ -63,6 +66,7 @@ router
   )
   .delete(
     isLoggedIn,
+    checkRole("company"),
     catchAsync(async (req, res) => {
       const deletedListing = await prisma.internship_listing.delete({
         where: {
