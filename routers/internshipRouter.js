@@ -20,13 +20,13 @@ router
     catchAsync(async (req, res) => {
       const company = await prisma.company.findUnique({
         where: {
-          companyID: req.user.profile.emails[0].value,
+          contactEmail: req.user.profile.emails[0].value,
         },
       });
 
       const newListing = await prisma.internship_listing.create({
         data: {
-          companyID: company.companyID,
+          companyID: Number(company.companyID),
           ...req.body,
           ...(req.body.startDate
             ? { startDate: new Date(req.body.startDate) }
