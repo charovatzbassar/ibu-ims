@@ -13,7 +13,6 @@ passport.use(
       let role;
 
       if (profile.emails[0].value.split("@")[1] === "stu.ibu.edu.ba") {
-        role = "intern";
         const user = await prisma.intern.findUnique({
           where: { email: profile.emails[0].value },
         });
@@ -27,8 +26,8 @@ passport.use(
             },
           });
         }
+        role = "intern";
       } else if (profile.emails[0].value.split("@")[1] === "ibu.edu.ba") {
-        role = "mentor";
         const user = await prisma.mentor.findUnique({
           where: { email: profile.emails[0].value },
         });
@@ -42,14 +41,16 @@ passport.use(
             },
           });
         }
+        role = "mentor";
       } else {
-        role = "company";
         const user = await prisma.company.findUnique({
           where: { contactEmail: profile.emails[0].value },
         });
 
         if (!user) {
+          return done(new Error("Unauthorized"), false);
         }
+        role = "company";
       }
 
       return done(null, {
