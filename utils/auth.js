@@ -47,9 +47,9 @@ passport.use(
           where: { contactEmail: profile.emails[0].value },
         });
 
-        if (!user) {
-          return done(new Error("Unauthorized"), false);
-        }
+        // if (!user) {
+        //   return done(new Error("Unauthorized"), false);
+        // }
         role = "company";
       }
 
