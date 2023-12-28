@@ -14,7 +14,7 @@ passport.use(
 
       if (profile.emails[0].value.split("@")[1] === "stu.ibu.edu.ba") {
         role = "intern";
-        const user = await prisma.intern.find({
+        const user = await prisma.intern.findUnique({
           where: { email: profile.emails[0].value },
         });
 
@@ -53,8 +53,8 @@ passport.use(
       }
 
       return done(null, {
-        profile: profile,
-        token: token,
+        profile,
+        token,
         role,
       });
     }

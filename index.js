@@ -3,7 +3,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const express = require("express");
-const cors = require("cors");
+const cors = require("./utils/cors");
 const internshipRoutes = require("./routers/internshipRouter");
 const companyRoutes = require("./routers/companyRouter");
 const authRoutes = require("./routers/authRouter");
@@ -14,7 +14,6 @@ const passport = require("passport");
 const session = require("./utils/session");
 
 const port = process.env.API_PORT || 8080;
-const appPort = process.env.APP_PORT || 5173;
 
 const app = express();
 
@@ -26,12 +25,7 @@ app.use(passport.session());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use(
-  cors({
-    origin: "http://localhost:" + appPort,
-    credentials: true,
-  })
-);
+app.use(cors);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
