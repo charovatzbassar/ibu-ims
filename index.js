@@ -3,7 +3,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const express = require("express");
-const cors = require("./utils/cors");
+const cors = require("./config/cors");
 const internshipRoutes = require("./routers/internshipRouter");
 const companyRoutes = require("./routers/companyRouter");
 const authRoutes = require("./routers/authRouter");
@@ -11,7 +11,7 @@ const APIError = require("./utils/APIError");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./swagger/swagger-output.json");
 const passport = require("passport");
-const session = require("./utils/session");
+const session = require("./config/session");
 
 const port = process.env.API_PORT || 8080;
 
@@ -19,7 +19,7 @@ const app = express();
 
 app.use(session);
 
-require("./utils/auth");
+require("./auth/auth");
 app.use(passport.initialize());
 app.use(passport.session());
 

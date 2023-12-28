@@ -1,8 +1,8 @@
 const express = require("express");
 const prisma = require("../prisma/prisma");
 const { catchAsync } = require("../utils/catchAsync");
-const { isLoggedIn } = require("../utils/isLoggedIn");
-const { checkRole } = require("../utils/checkRole");
+const { isLoggedIn } = require("../middleware/isLoggedIn");
+const { checkRole } = require("../middleware/checkRole");
 
 const router = express.Router();
 
