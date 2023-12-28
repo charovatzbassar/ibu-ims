@@ -1,9 +1,12 @@
 const express = require("express");
 const prisma = require("../prisma/prisma");
 const { catchAsync } = require("../utils/catchAsync");
-const { jwtMiddleware } = require("../utils/middleware");
+const { isLoggedIn } = require("../middleware/isLoggedIn");
+const { checkRole } = require("../middleware/checkRole");
 
 const router = express.Router();
+
+router.use(isLoggedIn);
 
 router
   .route("/")
@@ -38,7 +41,18 @@ router
     })
   )
   .patch(
+    checkRole("company"),
     catchAsync(async (req, res) => {
+      const company = await prisma.company.findUnique({
+        where: {
+          contactEmail: req.user.profile.emails[0].value,
+        },
+      });
+
+      if (company.companyID !== Number(req.params.id)) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
       const updatedCompany = await prisma.company.update({
         where: {
           companyID: Number(req.params.id),

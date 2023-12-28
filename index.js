@@ -3,76 +3,34 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 const express = require("express");
-const cors = require("cors");
+const cors = require("./config/cors");
 const internshipRoutes = require("./routers/internshipRouter");
 const companyRoutes = require("./routers/companyRouter");
+const authRoutes = require("./routers/authRouter");
 const APIError = require("./utils/APIError");
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocs = require("./swagger/swagger-output.json");
 const passport = require("passport");
-const auth = require("./utils/auth");
-const { createJwtToken } = require("./utils/jwt");
-const session = require("express-session");
+const session = require("./config/session");
 
-const port = 8080;
-const appPort = 5173;
-
-const sessionConfig = {
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true,
-  cookie: {
-    httpOnly: true, // its true by default, for extra security, not accessed via js
-    //secure: true,
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // when the session expires
-    maxAge: 1000 * 60 * 60 * 24 * 7, // how long the session lasts
-  },
-};
+const port = process.env.API_PORT || 8080;
 
 const app = express();
 
-app.use(session(sessionConfig));
-auth(passport);
+app.use(session);
+
+require("./auth/auth");
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
-app.use(
-  cors({
-    origin: "http://localhost:" + appPort,
-    credentials: true,
-  })
-);
+app.use(cors);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) => {
-  res.json({
-    status: "session cookie not set",
-  });
-});
-
-app.get(
-  "/auth/google",
-  passport.authenticate("google", {
-    scope: ["https://www.googleapis.com/auth/userinfo.profile"],
-  }),
-  (req, res) => {}
-);
-
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", {
-    failureRedirect: "/",
-  }),
-  (req, res) => {
-    const token = createJwtToken(req.user);
-    res.redirect(`/dashboard?token=${token}`);
-  }
-);
-
+app.use("/auth/google", authRoutes);
 app.use("/api/internships", internshipRoutes);
 app.use("/api/companies", companyRoutes);
 
