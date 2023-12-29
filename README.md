@@ -1,1 +1,1 @@
-# internship-api
+# IBU Internship App
