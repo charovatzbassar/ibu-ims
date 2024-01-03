@@ -17,7 +17,7 @@ router.get(
     failureRedirect: "/",
   }),
   (req, res) => {
-    res.redirect("http://localhost:5173");
+    res.redirect("http://localhost:5173/redirect?token=" + req.user.token);
   }
 );
 
@@ -25,7 +25,7 @@ router.get("/logout", (req, res) => {
   res.clearCookie("connect.sid", {
     path: "/",
     domain: "localhost",
-    secure: req.secure || req.headers["x-forwarded-proto"] === "https", // Set 'secure' based on the request protocol
+    secure: req.secure || req.headers["x-forwarded-proto"] === "https",
     sameSite: "None",
     expires: new Date(0),
   });

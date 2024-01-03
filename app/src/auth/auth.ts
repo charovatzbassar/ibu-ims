@@ -8,5 +8,5 @@ export const logout = async () => {
   const res = await axios.get("http://localhost:8080/auth/google/logout", {
     withCredentials: true,
   });
-  console.log(res);
+  localStorage.removeItem("token");
 };
