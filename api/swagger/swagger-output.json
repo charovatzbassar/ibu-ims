@@ -11,17 +11,7 @@
     "http"
   ],
   "paths": {
-    "/": {
-      "get": {
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/auth/google": {
+    "/auth/google/": {
       "get": {
         "description": "",
         "responses": {
@@ -37,6 +27,33 @@
         "responses": {
           "default": {
             "description": ""
+          }
+        }
+      }
+    },
+    "/auth/google/logout": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "x-forwarded-proto",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/google/user": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -106,6 +123,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       },
@@ -137,6 +157,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -205,6 +228,9 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
