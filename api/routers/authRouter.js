@@ -17,7 +17,7 @@ router.get(
     failureRedirect: "/",
   }),
   (req, res) => {
-    res.redirect("http://localhost:5173/redirect?token=" + req.user.token);
+    res.redirect("http://localhost:5173/");
   }
 );
 
@@ -31,6 +31,11 @@ router.get("/logout", (req, res) => {
   });
 
   res.json({ msg: "Logged out" });
+});
+
+router.get("/user", (req, res) => {
+  if (!req.user) return res.json({ user: null });
+  res.json({ user: req.user });
 });
 
 module.exports = router;
