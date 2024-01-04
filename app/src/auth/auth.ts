@@ -8,13 +8,12 @@ export const logout = async () => {
   await axios.get("http://localhost:8080/auth/google/logout", {
     withCredentials: true,
   });
-  localStorage.removeItem("token");
+  window.location.href = "/auth/login";
 };
 
-export const isLoggedIn = async () => {
+export const getUser = async () => {
   const res = await axios.get("http://localhost:8080/auth/google/user", {
     withCredentials: true,
   });
-  console.log(res.data.user);
   return res.data.user;
 };
