@@ -11,16 +11,8 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import DashboardIcon from "@mui/icons-material/Dashboard";
-import PeopleIcon from "@mui/icons-material/People";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import { Logout } from "@mui/icons-material";
-import { getUser, logout } from "../auth/auth";
-import { Link, Outlet } from "react-router-dom";
+import { getUser } from "../auth/auth";
+import { Outlet } from "react-router-dom";
 import NavigationItems from "./NavigationItems";
 
 const drawerWidth: number = 240;
