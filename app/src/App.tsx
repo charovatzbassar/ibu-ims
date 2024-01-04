@@ -3,16 +3,26 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import LoginPage from "./pages/LoginPage";
 import React from "react";
+import SignInPage from "./pages/SignInPage";
+import Dashboard from "./components/Dashboard";
+import { isLoggedIn } from "./auth/auth";
 
 const router = createBrowserRouter([
+  {
+    path: "/internships",
+    element: (await isLoggedIn()) ? (
+      <Dashboard />
+    ) : (
+      <Navigate to="/auth/login" />
+    ),
+  },
   {
     path: "/auth",
     children: [
       {
         path: "login",
-        element: <LoginPage />,
+        element: <SignInPage />,
       },
     ],
   },
