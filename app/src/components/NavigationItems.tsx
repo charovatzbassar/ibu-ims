@@ -20,29 +20,6 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
   if (props.role === "intern") {
     items = (
       <>
-        {" "}
-        <Link
-          to="/home/dashboard"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
-        </Link>
-        <Link
-          to="/home/internships"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Internships" />
-          </ListItemButton>
-        </Link>
         <ListItemButton>
           <ListItemIcon>
             <BarChartIcon />
@@ -55,40 +32,11 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
           </ListItemIcon>
           <ListItemText primary="Internship Days" />
         </ListItemButton>
-        <ListItemButton onClick={logout}>
-          <ListItemIcon>
-            <Logout />
-          </ListItemIcon>
-          <ListItemText primary="Log Out" />
-        </ListItemButton>
       </>
     );
   } else if (props.role === "mentor") {
     items = (
       <>
-        {" "}
-        <Link
-          to="/home/dashboard"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
-        </Link>
-        <Link
-          to="/home/internships"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Internships" />
-          </ListItemButton>
-        </Link>
         <ListItemButton>
           <ListItemIcon>
             <BarChartIcon />
@@ -101,40 +49,11 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
           </ListItemIcon>
           <ListItemText primary="My Students" />
         </ListItemButton>
-        <ListItemButton onClick={logout}>
-          <ListItemIcon>
-            <Logout />
-          </ListItemIcon>
-          <ListItemText primary="Log Out" />
-        </ListItemButton>
       </>
     );
   } else if (props.role === "company") {
     items = (
       <>
-        {" "}
-        <Link
-          to="/home/dashboard"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <DashboardIcon />
-            </ListItemIcon>
-            <ListItemText primary="Dashboard" />
-          </ListItemButton>
-        </Link>
-        <Link
-          to="/home/internships"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <PeopleIcon />
-            </ListItemIcon>
-            <ListItemText primary="Internships" />
-          </ListItemButton>
-        </Link>
         <ListItemButton>
           <ListItemIcon>
             <BarChartIcon />
@@ -147,16 +66,42 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
           </ListItemIcon>
           <ListItemText primary="Company Info" />
         </ListItemButton>
-        <ListItemButton onClick={logout}>
-          <ListItemIcon>
-            <Logout />
-          </ListItemIcon>
-          <ListItemText primary="Log Out" />
-        </ListItemButton>
       </>
     );
   }
-  return items;
+  return (
+    <>
+      <Link
+        to="/home/dashboard"
+        style={{ textDecoration: "none", color: "black" }}
+      >
+        <ListItemButton>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItemButton>
+      </Link>
+      <Link
+        to="/home/internships"
+        style={{ textDecoration: "none", color: "black" }}
+      >
+        <ListItemButton>
+          <ListItemIcon>
+            <PeopleIcon />
+          </ListItemIcon>
+          <ListItemText primary="Internships" />
+        </ListItemButton>
+      </Link>
+      {items}{" "}
+      <ListItemButton onClick={logout}>
+        <ListItemIcon>
+          <Logout />
+        </ListItemIcon>
+        <ListItemText primary="Log Out" />
+      </ListItemButton>
+    </>
+  );
 };
 
 export default NavigationItems;

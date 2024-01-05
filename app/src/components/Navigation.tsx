@@ -82,22 +82,15 @@ export default function Dashboard() {
   };
 
   React.useEffect(() => {
-    fetchUser();
-  }, []);
-
-  const fetchUser = async () => {
-    try {
-      const user = await getUser();
+    getUser().then((user): void => {
       setUser({
         firstName: user.profile.name.givenName,
         lastName: user.profile.name.familyName,
         email: user.profile.emails[0].value,
         role: user.role,
       });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    });
+  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -148,7 +141,7 @@ export default function Dashboard() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            <NavigationItems role={user?.role} />
+            <NavigationItems role={user?.role || ""} />
           </List>
         </Drawer>
         <Box

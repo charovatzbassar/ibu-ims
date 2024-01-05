@@ -1,6 +1,12 @@
 import React from "react";
 import { getInternshipListings } from "../utils/http";
 
+interface Internship {
+  readonly listingID: number;
+  position: string;
+  listingDescription: string;
+}
+
 const InternshipsPage: React.FC = () => {
   const [internships, setInternships] = React.useState([]);
 
@@ -10,11 +16,9 @@ const InternshipsPage: React.FC = () => {
     });
   }, []);
 
-  console.log(internships);
-
   return (
     <>
-      {internships.map((internship) => (
+      {internships.map((internship: Internship) => (
         <div key={internship.listingID}>
           {internship.position} - {internship.listingDescription}
         </div>
