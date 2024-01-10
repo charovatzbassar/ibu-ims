@@ -17,7 +17,7 @@ router.get(
     failureRedirect: "/",
   }),
   (req, res) => {
-    res.redirect("http://localhost:5173/home/dashboard");
+    res.redirect("http://localhost:5173/redirect?token=" + req.user.token);
   }
 );
 

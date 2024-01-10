@@ -8,6 +8,7 @@ export const logout = async () => {
   await axios.get("http://localhost:8080/auth/google/logout", {
     withCredentials: true,
   });
+  localStorage.removeItem("token");
   window.location.href = "/auth/login";
 };
 

@@ -1,6 +1,7 @@
 const passport = require("passport");
 const { Strategy: GoogleStrategy } = require("passport-google-oauth20");
 const prisma = require("../prisma/prisma");
+const { sign } = require("jsonwebtoken");
 
 passport.use(
   new GoogleStrategy(
@@ -28,12 +29,12 @@ passport.use(
         }
         role = "intern";
       } else if (profile.emails[0].value.split("@")[1] === "ibu.edu.ba") {
-        const user = await prisma.mentor.findUnique({
+        const user = await prisma.manager.findUnique({
           where: { email: profile.emails[0].value },
         });
 
         if (!user) {
-          await prisma.mentor.create({
+          await prisma.manager.create({
             data: {
               email: profile.emails[0].value,
               firstName: profile.name.givenName,
@@ -41,11 +42,11 @@ passport.use(
             },
           });
         }
-        role = "mentor";
+        role = "manager";
       } else {
-        const user = await prisma.company.findUnique({
-          where: { contactEmail: profile.emails[0].value },
-        });
+        // const user = await prisma.company.findUnique({
+        //   where: { contactEmail: profile.emails[0].value },
+        // });
 
         // if (!user) {
         //   return done(new Error("Unauthorized"), false);
@@ -53,10 +54,21 @@ passport.use(
         role = "company";
       }
 
+      const jwtToken = sign(
+        {
+          profile,
+          token,
+          role,
+        },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+
       return done(null, {
         profile,
         token,
         role,
+        jwtToken,
       });
     }
   )
