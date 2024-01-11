@@ -44,7 +44,7 @@ app.use(cors);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/auth/google", authRoutes);
+app.use("/api/auth/google", authRoutes);
 app.use("/api/internships", internshipRoutes);
 app.use("/api/companies", companyRoutes);
 

@@ -8,7 +8,7 @@ passport.use(
     {
       clientID: process.env.AUTH_CLIENT_ID,
       clientSecret: process.env.AUTH_CLIENT_SECRET,
-      callbackURL: "http://localhost:8080/auth/google/callback",
+      callbackURL: "http://localhost:8080/api/auth/google/callback",
     },
     async (token, refreshToken, profile, done) => {
       let role;
@@ -61,7 +61,7 @@ passport.use(
           role,
         },
         process.env.JWT_SECRET,
-        { expiresIn: "1h" }
+        { expiresIn: "24h" }
       );
 
       return done(null, {

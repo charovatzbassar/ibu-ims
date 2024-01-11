@@ -6,20 +6,16 @@ import {
 import React from "react";
 import SignInPage from "./pages/SignInPage";
 import Navigation from "./components/Navigation";
-import { getUser } from "./auth/auth";
 import DashboardPage from "./pages/DashboardPage";
 import InternshipsPage from "./pages/InternshipsPage";
-import RedirectComponent from "./utils/RedirectComponent";
+import appAxios from "./services/appAxios";
+
+const getUser = async () => {
+  const res = await appAxios.get("/auth/google/user");
+  return res.data.user;
+};
 
 const router = createBrowserRouter([
-  {
-    path: "/redirect",
-    element: (await getUser()) ? (
-      <RedirectComponent />
-    ) : (
-      <Navigate to="/auth/login" />
-    ),
-  },
   {
     path: "/home",
     element: (await getUser()) ? <Navigation /> : <Navigate to="/auth/login" />,
@@ -54,6 +50,9 @@ const router = createBrowserRouter([
 ]);
 
 function App(): React.ReactElement {
+
+  
+
   return <RouterProvider router={router} />;
 }
 

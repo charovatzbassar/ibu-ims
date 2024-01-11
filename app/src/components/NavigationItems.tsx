@@ -8,13 +8,16 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 import { Logout } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import { logout } from "../auth/auth";
+import { useDispatch } from "react-redux";
+import { logout } from "../store/authSlice";
 
 interface NavigationItemsProps {
   role: string;
 }
 
 const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
+  const dispatch = useDispatch();
+
   let items;
 
   if (props.role === "intern") {
@@ -94,7 +97,7 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
         </ListItemButton>
       </Link>
       {items}{" "}
-      <ListItemButton onClick={logout}>
+      <ListItemButton onClick={() => dispatch(logout())} >
         <ListItemIcon>
           <Logout />
         </ListItemIcon>

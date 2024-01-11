@@ -1,11 +1,6 @@
 import React from "react";
-import { getInternshipListings } from "../utils/http";
-
-interface Internship {
-  readonly listingID: number;
-  position: string;
-  listingDescription: string;
-}
+import { getInternshipListings } from "../services/internshipListings";
+import { Internship } from "../utils/types";
 
 const InternshipsPage: React.FC = () => {
   const [internships, setInternships] = React.useState([]);
