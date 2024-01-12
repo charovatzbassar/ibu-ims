@@ -1,8 +1,4 @@
-import {
-  createAsyncThunk,
-  createSlice,
-  createSelector,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import appAxios from "../services/appAxios";
 
 const token = localStorage.getItem("token") || null;
@@ -49,10 +45,6 @@ const authSlice = createSlice({
     });
   },
 });
-
-const selectAuth = (state) => state.auth;
-
-export const selectUser = createSelector([selectAuth], (auth) => auth.user);
 
 export const loginUser = createAsyncThunk("auth/google/user", async () => {
   const { data } = await appAxios.get("/auth/google/user");

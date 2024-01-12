@@ -13,10 +13,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Outlet } from "react-router-dom";
 import NavigationItems from "./NavigationItems";
-import { User } from "../utils/types";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../store/authSlice";
-import { AppDispatch } from "../store";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 const drawerWidth: number = 240;
 
@@ -73,19 +71,11 @@ const defaultTheme = createTheme();
 export default function Dashboard() {
   const [open, setOpen] = React.useState(false);
 
-  const user = useSelector(
-    (state: { auth: { user: User } }) => state.auth.user
-  );
-  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector((state: RootState) => state.auth.user);
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
-  console.log(user);
-
-  React.useEffect(() => {
-    dispatch(loginUser());
-  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>
