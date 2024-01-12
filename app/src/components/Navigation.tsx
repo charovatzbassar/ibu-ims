@@ -11,9 +11,10 @@ import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { getUser } from "../auth/auth";
 import { Outlet } from "react-router-dom";
 import NavigationItems from "./NavigationItems";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 const drawerWidth: number = 240;
 
@@ -67,30 +68,14 @@ const Drawer = styled(MuiDrawer, {
 
 const defaultTheme = createTheme();
 
-interface User {
-  firstName: string;
-  lastName: string;
-  email: string;
-  role: string;
-}
-
 export default function Dashboard() {
   const [open, setOpen] = React.useState(false);
-  const [user, setUser] = React.useState<User | null>(null);
+
+  const user = useSelector((state: RootState) => state.auth.user);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
-  React.useEffect(() => {
-    getUser().then((user): void => {
-      setUser({
-        firstName: user.profile.name.givenName,
-        lastName: user.profile.name.familyName,
-        email: user.profile.emails[0].value,
-        role: user.role,
-      });
-    });
-  }, []);
 
   return (
     <ThemeProvider theme={defaultTheme}>
