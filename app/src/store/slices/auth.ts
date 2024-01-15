@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import appAxios from "../services/appAxios";
+import appAxios from "../../services/appAxios";
 
 const token = localStorage.getItem("token") || null;
 

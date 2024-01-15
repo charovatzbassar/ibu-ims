@@ -9,7 +9,7 @@ import AssignmentIcon from "@mui/icons-material/Assignment";
 import { Logout } from "@mui/icons-material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { useDispatch } from "react-redux";
-import { logout } from "../store/authSlice";
+import { logout } from "../../store/slices/auth";
 
 interface NavigationItemsProps {
   role: string;
@@ -97,7 +97,7 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
         </ListItemButton>
       </Link>
       {items}{" "}
-      <ListItemButton onClick={() => dispatch(logout())} >
+      <ListItemButton onClick={() => dispatch(logout())}>
         <ListItemIcon>
           <Logout />
         </ListItemIcon>

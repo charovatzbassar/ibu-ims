@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import React from "react";
-import SignInPage from "./pages/SignInPage";
-import Navigation from "./components/Navigation";
-import DashboardPage from "./pages/DashboardPage";
-import InternshipsPage from "./pages/InternshipsPage";
+import SignInPage from "./screens/SignInPage/SignInPage";
+import Navigation from "./components/Navigation/Navigation";
+import DashboardPage from "./screens/DashboardPage/DashboardPage";
+import InternshipsPage from "./screens/InternshipsPage/InternshipsPage";
 import ProtectedRoute from "./utils/ProtectedRoute";
 
 function App(): React.ReactElement {

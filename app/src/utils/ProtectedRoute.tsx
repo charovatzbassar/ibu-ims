@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import { RootState } from "../store";
-import { loginUser } from "../store/authSlice";
+import { loginUser } from "../store/slices/auth";
 import { AppDispatch } from "../store";
 
 const ProtectedRoute: React.FC = () => {

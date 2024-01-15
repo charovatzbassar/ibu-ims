@@ -13,6 +13,14 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "paths": {
+      "@components": ["./components"],
+      "@screens": ["./screens"],
+      "@services": ["./services"],
+      "@utils": ["./utils"],
+      "@actions": ["./store/slices"],
+      "@actions/auth": ["./store/slices/auth"],
+    },
 
     /* Linting */
     "strict": true,
