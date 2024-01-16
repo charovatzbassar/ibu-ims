@@ -1,10 +1,8 @@
-import { Route, Routes } from "react-router-dom";
 import React from "react";
-import SignInPage from "./screens/SignInPage/SignInPage";
-import Navigation from "./components/Navigation/Navigation";
-import DashboardPage from "./screens/DashboardPage/DashboardPage";
-import InternshipsPage from "./screens/InternshipsPage/InternshipsPage";
-import ProtectedRoute from "./utils/ProtectedRoute";
+import { Route, Routes } from "react-router-dom";
+import { DashboardPage, InternshipsPage, SignInPage } from "@/pages";
+import { Navigation } from "@/components";
+import ProtectedRoute from "@/utils/ProtectedRoute";
 
 function App(): React.ReactElement {
   return (
