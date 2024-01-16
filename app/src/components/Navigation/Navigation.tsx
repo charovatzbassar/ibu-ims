@@ -14,7 +14,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Outlet } from "react-router-dom";
 import { NavigationItems } from "../";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "@/store";
 
 const drawerWidth: number = 240;
 

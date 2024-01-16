@@ -1,7 +1,7 @@
 import appAxios from "./appAxios";
 
 export default class InternshipListingsService {
-  getInternshipListings = async () => {
+  public static getInternshipListings = async () => {
     try {
       const res = await appAxios.get("/internships");
       return res.data;
@@ -9,7 +9,7 @@ export default class InternshipListingsService {
       return [];
     }
   };
-  getInternshipListing = async (id: string) => {
+  public static getInternshipListing = async (id: string) => {
     try {
       const res = await appAxios.get(`/internships/${id}`);
       return res.data;
@@ -18,7 +18,7 @@ export default class InternshipListingsService {
     }
   };
 
-  createInternshipListing = async () => {
+  public static createInternshipListing = async () => {
     try {
       await appAxios.post("/internships");
     } catch (e) {
@@ -26,7 +26,7 @@ export default class InternshipListingsService {
     }
   };
 
-  editInternshipListing = async (id: string) => {
+  public static editInternshipListing = async (id: string) => {
     try {
       await appAxios.put(`/internships/${id}`);
     } catch (e) {
@@ -34,7 +34,7 @@ export default class InternshipListingsService {
     }
   };
 
-  deleteInternshipListing = async (id: string) => {
+  public static deleteInternshipListing = async (id: string) => {
     try {
       await appAxios.delete(`/internships/${id}`);
     } catch (e) {

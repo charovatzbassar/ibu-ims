@@ -1,7 +1,7 @@
 import appAxios from "./appAxios";
 
 export default class CompaniesService {
-  getCompanies = async () => {
+  public static getCompanies = async () => {
     try {
       const res = await appAxios.get("/companies");
       return res.data;
@@ -10,7 +10,7 @@ export default class CompaniesService {
     }
   };
 
-  getCompany = async (id: string) => {
+  public static getCompany = async (id: string) => {
     try {
       const res = await appAxios.get(`/companies/${id}`);
       return res.data;
@@ -19,7 +19,7 @@ export default class CompaniesService {
     }
   };
 
-  createCompany = async () => {
+  public static createCompany = async () => {
     try {
       await appAxios.post("/companies");
     } catch (e) {
@@ -27,7 +27,7 @@ export default class CompaniesService {
     }
   };
 
-  editCompany = async (id: string) => {
+  public static editCompany = async (id: string) => {
     try {
       await appAxios.put(`/companies/${id}`);
     } catch (e) {
@@ -35,7 +35,7 @@ export default class CompaniesService {
     }
   };
 
-  deleteCompany = async (id: string) => {
+  public static deleteCompany = async (id: string) => {
     try {
       await appAxios.delete(`/companies/${id}`);
     } catch (e) {
