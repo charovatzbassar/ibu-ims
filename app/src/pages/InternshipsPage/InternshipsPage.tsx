@@ -5,19 +5,22 @@ import { CircularProgress } from "@mui/material";
 const InternshipsPage: React.FC = () => {
   const { data, isPending, isError, error } = useInternshipListings();
 
-  let content;
-
-  if (isPending) {
-    content = <CircularProgress />;
-  }
-
-  if (data) {
-    content = <div>{data.map((internshipListing) => {
-      return <div key={internshipListing.listingID}>{internshipListing.position}</div>;
-    })}</div>;
-  }
-
-  return <>{content}</>;
+  return (
+    <>
+      {isPending && <CircularProgress />}
+      {data && (
+        <div>
+          {data.map((internshipListing) => {
+            return (
+              <div key={internshipListing.listingID}>
+                {internshipListing.position}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </>
+  );
 };
 
 export default InternshipsPage;
