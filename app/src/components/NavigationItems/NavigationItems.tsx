@@ -1,13 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import PeopleIcon from "@mui/icons-material/People";
-import BarChartIcon from "@mui/icons-material/BarChart";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import { Logout } from "@mui/icons-material";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import {
+  Info,
+  BarChart,
+  People,
+  Logout,
+  Assignment,
+  Dashboard,
+  Addchart,
+} from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/slices/auth";
 
@@ -25,15 +27,21 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
       <>
         <ListItemButton>
           <ListItemIcon>
-            <BarChartIcon />
+            <BarChart />
           </ListItemIcon>
           <ListItemText primary="My Internship" />
         </ListItemButton>
         <ListItemButton>
           <ListItemIcon>
-            <AssignmentIcon />
+            <Assignment />
           </ListItemIcon>
           <ListItemText primary="Internship Days" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <Info />
+          </ListItemIcon>
+          <ListItemText primary="My Profile" />
         </ListItemButton>
       </>
     );
@@ -42,13 +50,13 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
       <>
         <ListItemButton>
           <ListItemIcon>
-            <BarChartIcon />
+            <BarChart />
           </ListItemIcon>
           <ListItemText primary="My Internships" />
         </ListItemButton>
         <ListItemButton>
           <ListItemIcon>
-            <AssignmentIcon />
+            <Assignment />
           </ListItemIcon>
           <ListItemText primary="My Students" />
         </ListItemButton>
@@ -59,13 +67,19 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
       <>
         <ListItemButton>
           <ListItemIcon>
-            <BarChartIcon />
+            <BarChart />
           </ListItemIcon>
           <ListItemText primary="My Internships" />
         </ListItemButton>
         <ListItemButton>
           <ListItemIcon>
-            <AssignmentIcon />
+            <Addchart />
+          </ListItemIcon>
+          <ListItemText primary="Create Listing" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <Info />
           </ListItemIcon>
           <ListItemText primary="Company Info" />
         </ListItemButton>
@@ -80,7 +94,7 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
       >
         <ListItemButton>
           <ListItemIcon>
-            <DashboardIcon />
+            <Dashboard />
           </ListItemIcon>
           <ListItemText primary="Dashboard" />
         </ListItemButton>
@@ -91,7 +105,7 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
       >
         <ListItemButton>
           <ListItemIcon>
-            <PeopleIcon />
+            <People />
           </ListItemIcon>
           <ListItemText primary="Internships" />
         </ListItemButton>
