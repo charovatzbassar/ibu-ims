@@ -14,7 +14,7 @@ export type Company = {
   readonly companyName: string;
   readonly location: string;
   readonly contactEmail: string;
-  // readonly companyLogo: string;
+  readonly companyLogo: string;
 };
 
 export type User = {
