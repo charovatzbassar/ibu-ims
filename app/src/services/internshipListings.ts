@@ -1,44 +1,28 @@
 import appAxios from "./appAxios";
+import { InternshipListing } from "./types";
 
 export default class InternshipListingsService {
-  public static getInternshipListings = async () => {
-    try {
-      const res = await appAxios.get("/internships");
-      return res.data;
-    } catch (e) {
-      return [];
-    }
+  public static getInternshipListings = async (): Promise<
+    InternshipListing[]
+  > => {
+    return appAxios.get("/internships").then((res) => res.data);
   };
-  public static getInternshipListing = async (id: string) => {
-    try {
-      const res = await appAxios.get(`/internships/${id}`);
-      return res.data;
-    } catch (e) {
-      return {};
-    }
+
+  public static getInternshipListing = async (
+    id: string
+  ): Promise<InternshipListing> => {
+    return appAxios.get(`/internships/${id}`).then((res) => res.data);
   };
 
   public static createInternshipListing = async () => {
-    try {
-      await appAxios.post("/internships");
-    } catch (e) {
-      return { error: e, message: "Could not create internship listing" };
-    }
+    return appAxios.post("/internships").then((res) => res.data);
   };
 
   public static editInternshipListing = async (id: string) => {
-    try {
-      await appAxios.put(`/internships/${id}`);
-    } catch (e) {
-      return { error: e, message: "Could not edit internship listing" };
-    }
+    return appAxios.put(`/internships/${id}`).then((res) => res.data);
   };
 
   public static deleteInternshipListing = async (id: string) => {
-    try {
-      await appAxios.delete(`/internships/${id}`);
-    } catch (e) {
-      return { error: e, message: "Could not delete internship listing" };
-    }
+    return appAxios.delete(`/internships/${id}`).then((res) => res.data);
   };
 }

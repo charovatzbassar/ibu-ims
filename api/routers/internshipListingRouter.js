@@ -1,10 +1,11 @@
 const express = require("express");
 const prisma = require("../prisma/prisma");
-const { catchAsync } = require("../utils/catchAsync");
-const { isLoggedIn } = require("../middleware/isLoggedIn");
-const { checkRole } = require("../middleware/checkRole");
+const { catchAsync } = require("../utils");
+const { checkAuth, checkRole } = require("../middleware");
 
 const router = express.Router();
+
+router.use(checkAuth);
 
 router
   .route("/")
@@ -15,7 +16,6 @@ router
     })
   )
   .post(
-    isLoggedIn,
     checkRole("company"),
     catchAsync(async (req, res) => {
       const company = await prisma.company.findUnique({
@@ -52,7 +52,6 @@ router
     })
   )
   .patch(
-    isLoggedIn,
     checkRole("company"),
     catchAsync(async (req, res) => {
       const company = await prisma.company.findUnique({
@@ -89,7 +88,6 @@ router
     })
   )
   .delete(
-    isLoggedIn,
     checkRole("company"),
     catchAsync(async (req, res) => {
       const company = await prisma.company.findUnique({
