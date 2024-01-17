@@ -1,16 +1,16 @@
-import React from "react";
+import { useState, FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import { RootState } from "../store";
-import { loginUser } from "../store/authSlice";
+import { loginUser } from "../store/slices/auth";
 import { AppDispatch } from "../store";
 
-const ProtectedRoute: React.FC = () => {
+const ProtectedRoute: FC = () => {
   const user = useSelector((state: RootState) => state.auth.user);
   const dispatch = useDispatch<AppDispatch>();
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchUser = async () => {
       await dispatch(loginUser());
       setLoading(false);
@@ -20,7 +20,7 @@ const ProtectedRoute: React.FC = () => {
   }, [dispatch]);
 
   if (loading) {
-    return <div>You are not logged in</div>;
+    return <div>Loading...</div>;
   }
 
   if (!loading && !user.token) {

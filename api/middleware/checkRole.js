@@ -1,4 +1,4 @@
-module.exports.checkRole = (role) => {
+module.exports = (role) => {
   return (req, res, next) => {
     if (req.isAuthenticated() && req.user.role === role) {
       return next();

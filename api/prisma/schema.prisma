@@ -7,26 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model internship_listing {
-  listingID          Int          @id
-  companyID          Int?
-  position           String       @db.VarChar(100)
-  listingDescription String?      @db.Text
-  startDate          DateTime?    @db.Date
-  endDate            DateTime?    @db.Date
-  requirements       String?      @db.Text
-  noOfPlaces         Int?
-  internship         internship[]
-  company            company?     @relation(fields: [companyID], references: [companyID], onDelete: NoAction, onUpdate: NoAction, map: "fk_companyID")
-
-  @@index([companyID], map: "fk_companyID")
-}
-
 model company {
   companyID          Int                  @id @default(autoincrement())
   companyName        String?              @db.VarChar(25)
-  location           String?              @db.VarChar(25)
+  location           String?              @db.VarChar(55)
   contactEmail       String?              @unique(map: "contactEmail") @db.VarChar(35)
+  companyLogo        Bytes?               @db.Blob
+  internship         internship[]
   internship_listing internship_listing[]
 }
 
@@ -40,18 +27,19 @@ model intern {
 }
 
 model internship {
-  internshipID       Int                 @id @default(autoincrement())
-  internID           Int?
-  managerID          Int?
-  listingID          Int?
-  intern             intern?             @relation(fields: [internID], references: [internID], onDelete: NoAction, onUpdate: NoAction, map: "fk_internID")
-  internship_listing internship_listing? @relation(fields: [listingID], references: [listingID], onDelete: NoAction, onUpdate: NoAction, map: "fk_listingID")
-  manager            manager?            @relation(fields: [managerID], references: [managerID], onDelete: NoAction, onUpdate: NoAction, map: "fk_managerID")
-  internship_days    internship_days[]
+  internshipID    Int               @id @default(autoincrement())
+  internID        Int?
+  managerID       Int?
+  companyID       Int?
+  status          String?           @db.VarChar(15)
+  company         company?          @relation(fields: [companyID], references: [companyID], onDelete: NoAction, onUpdate: NoAction, map: "fk_company")
+  intern          intern?           @relation(fields: [internID], references: [internID], onDelete: NoAction, onUpdate: NoAction, map: "fk_internID")
+  manager         manager?          @relation(fields: [managerID], references: [managerID], onDelete: NoAction, onUpdate: NoAction, map: "fk_managerID")
+  internship_days internship_days[]
 
   @@index([internID], map: "fk_internID")
-  @@index([listingID], map: "fk_listingID_idx")
   @@index([managerID], map: "fk_managerID")
+  @@index([companyID], map: "fk_companyID_idx")
 }
 
 model internship_days {
@@ -62,6 +50,21 @@ model internship_days {
   internship     internship? @relation(fields: [internshipID], references: [internshipID], onDelete: NoAction, onUpdate: NoAction, map: "fk_internshipID")
 
   @@index([internshipID], map: "fk_internshipID")
+}
+
+model internship_listing {
+  listingID          Int       @id
+  companyID          Int?
+  position           String    @db.VarChar(100)
+  listingDescription String?   @db.Text
+  location           String?   @db.Text
+  startDate          DateTime? @db.Date
+  endDate            DateTime? @db.Date
+  requirements       String?   @db.Text
+  noOfPlaces         Int?
+  company            company?  @relation(fields: [companyID], references: [companyID], onDelete: NoAction, onUpdate: NoAction, map: "fk_companyID")
+
+  @@index([companyID], map: "fk_companyID")
 }
 
 model manager {

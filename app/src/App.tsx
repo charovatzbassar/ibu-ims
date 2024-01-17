@@ -1,12 +1,10 @@
+import { ReactElement } from "react";
 import { Route, Routes } from "react-router-dom";
-import React from "react";
-import SignInPage from "./pages/SignInPage";
-import Navigation from "./components/Navigation";
-import DashboardPage from "./pages/DashboardPage";
-import InternshipsPage from "./pages/InternshipsPage";
-import ProtectedRoute from "./utils/ProtectedRoute";
+import { DashboardPage, InternshipsPage, SignInPage } from "@/pages";
+import { Navigation } from "@/components";
+import { ProtectedRoute } from "@/utils";
 
-function App(): React.ReactElement {
+function App(): ReactElement {
   return (
     <Routes>
       <Route path="/auth/login" element={<SignInPage />} />
