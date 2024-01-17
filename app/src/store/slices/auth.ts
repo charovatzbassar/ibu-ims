@@ -36,9 +36,9 @@ const authSlice = createSlice({
       state.user = {
         token: jwtToken,
         role: role,
-        firstName: profile.name.givenName,
-        lastName: profile.name.familyName,
-        email: profile.emails[0].value,
+        firstName: profile?.name.givenName,
+        lastName: profile?.name.familyName,
+        email: profile?.emails[0].value,
       };
 
       localStorage.setItem("token", jwtToken);
@@ -48,7 +48,7 @@ const authSlice = createSlice({
 
 export const loginUser = createAsyncThunk("auth/google/user", async () => {
   const { data } = await appAxios.get("/auth/google/user");
-  return data.user;
+  return data.user || {};
 });
 
 export const { login, logout } = authSlice.actions;

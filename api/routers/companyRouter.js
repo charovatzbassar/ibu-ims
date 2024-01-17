@@ -1,5 +1,5 @@
 const express = require("express");
-const prisma = require("../prisma/prisma");
+const prisma = require("../prisma");
 const { catchAsync } = require("../utils");
 const { checkAuth,  checkRole } = require("../middleware");
 
