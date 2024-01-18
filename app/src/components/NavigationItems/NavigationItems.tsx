@@ -71,12 +71,17 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
           </ListItemIcon>
           <ListItemText primary="My Internships" />
         </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <Addchart />
-          </ListItemIcon>
-          <ListItemText primary="Create Listing" />
-        </ListItemButton>
+        <Link
+          to="/home/create-listing"
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <Addchart />
+            </ListItemIcon>
+            <ListItemText primary="Create Listing" />
+          </ListItemButton>
+        </Link>
         <ListItemButton>
           <ListItemIcon>
             <Info />
