@@ -25,7 +25,7 @@ export default function SignInPage(): React.ReactElement {
             <img src="../../public/logo-burch-small.png" width={300} alt="" />
           </Box>
           <Typography component="h1" variant="h5">
-            Sign in
+            Internship Management System
           </Typography>
           <Box component="div" sx={{ mt: 1 }}>
             <SignInButton />

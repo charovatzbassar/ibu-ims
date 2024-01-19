@@ -1,8 +1,6 @@
 import { InternshipListing } from "@/services/types";
 import { useForm } from "react-hook-form";
-import { TextField, Button, Switch } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { TextField, Button } from "@mui/material";
 import { useEffect } from "react";
 import { FormAction } from "@/utils";
 
@@ -28,8 +26,8 @@ const InternshipListingForm = (props: Props) => {
     case FormAction.CREATE:
       buttonMessage = "Create";
       break;
-    case FormAction.EDIT:
-      buttonMessage = "Edit";
+    case FormAction.UPDATE:
+      buttonMessage = "Update";
       break;
     default:
       buttonMessage = "";
@@ -37,7 +35,7 @@ const InternshipListingForm = (props: Props) => {
   }
 
   useEffect(() => {
-    if (action === FormAction.EDIT) {
+    if (data && action === FormAction.UPDATE) {
       reset({
         position: data?.position,
         listingDescription: data?.listingDescription,
@@ -52,18 +50,19 @@ const InternshipListingForm = (props: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {" "}
       <TextField
+        type="text"
         sx={{ margin: "10px" }}
-        label={action === FormAction.CREATE ? "Position" : ""}
+        label="Position"
         variant="outlined"
-        type="position"
         {...register("position", { required: "Position is required!" })}
         error={errors.position ? true : false}
         helperText={errors.position && errors.position.message}
       />
       <TextField
+        type="text"
         label="Description"
+        sx={{ margin: "10px" }}
         multiline
         rows={4}
         {...register("listingDescription", {
@@ -73,6 +72,40 @@ const InternshipListingForm = (props: Props) => {
         helperText={
           errors.listingDescription && errors.listingDescription.message
         }
+      />
+      <TextField
+        type="text"
+        sx={{ margin: "10px" }}
+        label="Location"
+        variant="outlined"
+        {...register("location", { required: "Location is required!" })}
+        error={errors.location ? true : false}
+        helperText={errors.location && errors.location.message}
+      />
+      <TextField
+        type="text"
+        label="Requirements"
+        sx={{ margin: "10px" }}
+        multiline
+        rows={4}
+        {...register("requirements", {
+          required: "Requirements are required!",
+        })}
+        error={errors.requirements ? true : false}
+        helperText={errors.requirements && errors.requirements.message}
+      />
+      <TextField
+        label="Number of places"
+        type="number"
+        min={1}
+        {...register("noOfPlaces", {
+          required: "Number of places is required!",
+        })}
+        error={errors.noOfPlaces ? true : false}
+        helperText={errors.noOfPlaces && errors.noOfPlaces.message}
+        InputLabelProps={{
+          shrink: true,
+        }}
       />
       <Button
         sx={{ margin: "10px" }}
