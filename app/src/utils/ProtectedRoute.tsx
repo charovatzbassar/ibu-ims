@@ -4,6 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { RootState } from "../store";
 import { loginUser } from "../store/slices/auth";
 import { AppDispatch } from "../store";
+import { CircularProgress } from "@mui/material";
 
 const ProtectedRoute: FC = () => {
   const user = useSelector((state: RootState) => state.auth.user);
@@ -20,7 +21,7 @@ const ProtectedRoute: FC = () => {
   }, [dispatch]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <CircularProgress />;
   }
 
   if (!loading && !user.token) {

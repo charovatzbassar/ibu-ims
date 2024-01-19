@@ -1,16 +1,18 @@
 import * as React from "react";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import MuiDrawer from "@mui/material/Drawer";
-import Box from "@mui/material/Box";
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import {
+  CssBaseline,
+  Box,
+  Typography,
+  List,
+  Toolbar,
+  Divider,
+  IconButton,
+  Drawer as MuiDrawer,
+  AppBar as MuiAppBar,
+} from "@mui/material";
+import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import { Menu, ChevronLeft } from "@mui/icons-material";
 import { Outlet } from "react-router-dom";
 import { NavigationItems } from "../";
 import { useSelector } from "react-redux";
@@ -97,7 +99,7 @@ export default function Dashboard() {
                 ...(open && { display: "none" }),
               }}
             >
-              <MenuIcon />
+              <Menu />
             </IconButton>
             <Typography
               component="h1"
@@ -121,7 +123,7 @@ export default function Dashboard() {
             }}
           >
             <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
+              <ChevronLeft />
             </IconButton>
           </Toolbar>
           <Divider />
