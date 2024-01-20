@@ -1,8 +1,12 @@
 import { InternshipListing } from "@/services/types";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { TextField, Button } from "@mui/material";
 import { useEffect } from "react";
 import { FormAction } from "@/utils";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 type Props = {
   onSubmit: (data: any) => void;
@@ -52,7 +56,7 @@ const InternshipListingForm = (props: Props) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
         type="text"
-        sx={{ margin: "10px" }}
+        sx={{ margin: "10px", display: "flex" }}
         label="Position"
         variant="outlined"
         {...register("position", { required: "Position is required!" })}
@@ -62,7 +66,7 @@ const InternshipListingForm = (props: Props) => {
       <TextField
         type="text"
         label="Description"
-        sx={{ margin: "10px" }}
+        sx={{ margin: "10px", display: "flex" }}
         multiline
         rows={4}
         {...register("listingDescription", {
@@ -75,17 +79,58 @@ const InternshipListingForm = (props: Props) => {
       />
       <TextField
         type="text"
-        sx={{ margin: "10px" }}
+        sx={{ margin: "10px", display: "flex" }}
         label="Location"
         variant="outlined"
         {...register("location", { required: "Location is required!" })}
         error={errors.location ? true : false}
         helperText={errors.location && errors.location.message}
       />
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer
+          sx={{ margin: "10px", display: "grid" }}
+          components={["DatePicker"]}
+        >
+          <Controller
+            name="startDate"
+            control={control}
+            defaultValue={null}
+            render={({ field }) => (
+              <DatePicker
+                {...field}
+                label="Start date"
+                onChange={(date) => field.onChange(date)}
+              />
+            )}
+          />
+        </DemoContainer>
+      </LocalizationProvider>
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer
+          sx={{ margin: "10px", display: "grid" }}
+          components={["DatePicker"]}
+        >
+          <Controller
+            name="endDate"
+            control={control}
+            defaultValue={null}
+            render={({ field }) => (
+              <DatePicker
+                {...field}
+                label="End date"
+                onChange={(date) => field.onChange(date)}
+              />
+            )}
+          />
+        </DemoContainer>
+      </LocalizationProvider>
+
       <TextField
         type="text"
         label="Requirements"
-        sx={{ margin: "10px" }}
+        sx={{ margin: "10px", display: "flex" }}
         multiline
         rows={4}
         {...register("requirements", {
@@ -97,6 +142,7 @@ const InternshipListingForm = (props: Props) => {
       <TextField
         label="Number of places"
         type="number"
+        sx={{ margin: "10px", display: "flex" }}
         min={1}
         {...register("noOfPlaces", {
           required: "Number of places is required!",
@@ -108,7 +154,7 @@ const InternshipListingForm = (props: Props) => {
         }}
       />
       <Button
-        sx={{ margin: "10px" }}
+        sx={{ margin: "10px", display: "flex" }}
         type="submit"
         variant="contained"
         color="primary"

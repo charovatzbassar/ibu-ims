@@ -48,7 +48,7 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
         </ListItemButton>
       </>
     );
-  } else if (props.role === "mentor") {
+  } else if (props.role === "manager") {
     items = (
       <>
         <ListItemButton>
