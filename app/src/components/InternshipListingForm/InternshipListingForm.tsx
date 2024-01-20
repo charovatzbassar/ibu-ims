@@ -1,6 +1,6 @@
 import { InternshipListing } from "@/services/types";
 import { Controller, useForm } from "react-hook-form";
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
 import { FormAction } from "@/utils";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -12,6 +12,8 @@ type Props = {
   onSubmit: (data: any) => void;
   data?: InternshipListing;
   action: FormAction;
+  isError: boolean;
+  isPending: boolean;
 };
 
 const InternshipListingForm = (props: Props) => {
@@ -60,7 +62,7 @@ const InternshipListingForm = (props: Props) => {
         label="Position"
         variant="outlined"
         {...register("position", { required: "Position is required!" })}
-        error={errors.position ? true : false}
+        error={!!errors.position}
         helperText={errors.position && errors.position.message}
       />
       <TextField
@@ -72,7 +74,7 @@ const InternshipListingForm = (props: Props) => {
         {...register("listingDescription", {
           required: "Description is required!",
         })}
-        error={errors.listingDescription ? true : false}
+        error={!!errors.listingDescription}
         helperText={
           errors.listingDescription && errors.listingDescription.message
         }
@@ -83,7 +85,7 @@ const InternshipListingForm = (props: Props) => {
         label="Location"
         variant="outlined"
         {...register("location", { required: "Location is required!" })}
-        error={errors.location ? true : false}
+        error={!!errors.location}
         helperText={errors.location && errors.location.message}
       />
 
@@ -136,7 +138,7 @@ const InternshipListingForm = (props: Props) => {
         {...register("requirements", {
           required: "Requirements are required!",
         })}
-        error={errors.requirements ? true : false}
+        error={!!errors.requirements}
         helperText={errors.requirements && errors.requirements.message}
       />
       <TextField
@@ -147,7 +149,7 @@ const InternshipListingForm = (props: Props) => {
         {...register("noOfPlaces", {
           required: "Number of places is required!",
         })}
-        error={errors.noOfPlaces ? true : false}
+        error={!!errors.noOfPlaces}
         helperText={errors.noOfPlaces && errors.noOfPlaces.message}
         InputLabelProps={{
           shrink: true,
@@ -159,7 +161,11 @@ const InternshipListingForm = (props: Props) => {
         variant="contained"
         color="primary"
       >
-        {buttonMessage} Listing
+        {!props.isPending ? (
+          buttonMessage + " Listing"
+        ) : (
+          <CircularProgress size={24} />
+        )}
       </Button>
     </form>
   );
