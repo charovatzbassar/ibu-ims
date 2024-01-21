@@ -1,1 +1,1 @@
-# IBU Internship App
+# IBU Internship Management System
