@@ -108,7 +108,7 @@ export default function Dashboard() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              IBU Internship
+              IBU Internship Management System
             </Typography>
             {user?.firstName} {user?.lastName}
           </Toolbar>

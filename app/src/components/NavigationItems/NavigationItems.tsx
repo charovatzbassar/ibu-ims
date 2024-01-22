@@ -22,6 +22,9 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
 
   let items;
 
+  switch (props.role) {
+  }
+
   if (props.role === "intern") {
     items = (
       <>
@@ -45,7 +48,7 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
         </ListItemButton>
       </>
     );
-  } else if (props.role === "mentor") {
+  } else if (props.role === "manager") {
     items = (
       <>
         <ListItemButton>
@@ -59,6 +62,12 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
             <Assignment />
           </ListItemIcon>
           <ListItemText primary="My Students" />
+        </ListItemButton>
+        <ListItemButton>
+          <ListItemIcon>
+            <Info />
+          </ListItemIcon>
+          <ListItemText primary="My Profile" />
         </ListItemButton>
       </>
     );
