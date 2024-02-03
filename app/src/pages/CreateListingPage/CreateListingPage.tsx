@@ -16,12 +16,12 @@ const CreateListingPage: React.FC = () => {
       location: data.location,
       requirements: data.requirements,
       noOfPlaces: Number(data.noOfPlaces),
-      startDate: new Date(data.startDate.$d)
+      startDate: new Date(data.startDate)
         .toLocaleDateString("en-GB")
         .split("/")
         .reverse()
         .join("-"),
-      endDate: new Date(data.endDate.$d)
+      endDate: new Date(data.endDate)
         .toLocaleDateString("en-GB")
         .split("/")
         .reverse()

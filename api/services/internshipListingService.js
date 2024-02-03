@@ -13,15 +13,22 @@ module.exports = {
       },
     });
 
+    const startDate = new Date(req.body.startDate);
+    const endDate = new Date(req.body.endDate);
+
+    if (startDate.getTime() > endDate.getTime()) {
+      return res
+        .status(400)
+        .json({ error: "Start date must be before end date" });
+    }
+
     const newListing = await prisma.internship_listing.create({
       data: {
         listingID: uuid(),
         companyID: Number(company.companyID),
         ...req.body,
-        ...(req.body.startDate
-          ? { startDate: new Date(req.body.startDate) }
-          : {}),
-        ...(req.body.endDate ? { endDate: new Date(req.body.endDate) } : {}),
+        ...(req.body.startDate ? { startDate } : {}),
+        ...(req.body.endDate ? { endDate } : {}),
       },
     });
     res.json(newListing);

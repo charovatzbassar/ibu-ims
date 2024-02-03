@@ -19,6 +19,15 @@ type Props = {
   isPending: boolean;
 };
 
+const getFormType = (action: FormAction) => {
+  switch (action) {
+    case FormAction.CREATE:
+      return "Create";
+    case FormAction.UPDATE:
+      return "Update";
+  }
+};
+
 const InternshipListingForm = (props: Props) => {
   const { onSubmit, data, action } = props;
   const {
@@ -28,20 +37,6 @@ const InternshipListingForm = (props: Props) => {
     control,
     formState: { errors },
   } = useForm<InternshipListingFormValues>();
-
-  let formType = "";
-
-  switch (action) {
-    case FormAction.CREATE:
-      formType = "Create";
-      break;
-    case FormAction.UPDATE:
-      formType = "Update";
-      break;
-    default:
-      formType = "";
-      break;
-  }
 
   useEffect(() => {
     if (data && action === FormAction.UPDATE) {
@@ -60,7 +55,7 @@ const InternshipListingForm = (props: Props) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Typography sx={{ textAlign: "left", fontSize: 25, margin: "10px" }}>
-        {formType} Listing
+        {getFormType(action)} Listing
       </Typography>
       <TextField
         type="text"
@@ -169,7 +164,7 @@ const InternshipListingForm = (props: Props) => {
           variant="contained"
           color="primary"
         >
-          {formType + " Listing"}
+          {getFormType(action) + " Listing"}
         </Button>
       ) : (
         <CircularProgress size={24} />
