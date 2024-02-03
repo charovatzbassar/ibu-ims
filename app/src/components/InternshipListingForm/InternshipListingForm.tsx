@@ -1,4 +1,7 @@
-import { InternshipListing } from "@/services/types";
+import {
+  InternshipListing,
+  InternshipListingFormValues,
+} from "@/services/types";
 import { Controller, useForm } from "react-hook-form";
 import { TextField, Button, CircularProgress } from "@mui/material";
 import { useEffect } from "react";
@@ -9,7 +12,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 type Props = {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: InternshipListingFormValues) => void;
   data?: InternshipListing;
   action: FormAction;
   isError: boolean;
@@ -24,7 +27,7 @@ const InternshipListingForm = (props: Props) => {
     reset,
     control,
     formState: { errors },
-  } = useForm();
+  } = useForm<InternshipListingFormValues>();
 
   let buttonMessage = "";
 
@@ -97,7 +100,6 @@ const InternshipListingForm = (props: Props) => {
           <Controller
             name="startDate"
             control={control}
-            defaultValue={null}
             render={({ field }) => (
               <DatePicker
                 {...field}
@@ -117,7 +119,6 @@ const InternshipListingForm = (props: Props) => {
           <Controller
             name="endDate"
             control={control}
-            defaultValue={null}
             render={({ field }) => (
               <DatePicker
                 {...field}
@@ -155,18 +156,19 @@ const InternshipListingForm = (props: Props) => {
           shrink: true,
         }}
       />
-      <Button
-        sx={{ margin: "10px", display: "flex" }}
-        type="submit"
-        variant="contained"
-        color="primary"
-      >
-        {!props.isPending ? (
-          buttonMessage + " Listing"
-        ) : (
-          <CircularProgress size={24} />
-        )}
-      </Button>
+
+      {!props.isPending ? (
+        <Button
+          sx={{ margin: "10px", display: "flex" }}
+          type="submit"
+          variant="contained"
+          color="primary"
+        >
+          {buttonMessage + " Listing"}
+        </Button>
+      ) : (
+        <CircularProgress size={24} />
+      )}
     </form>
   );
 };

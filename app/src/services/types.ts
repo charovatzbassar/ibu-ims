@@ -25,3 +25,13 @@ export type User = {
   readonly role: string;
   readonly token: string;
 };
+
+export type InternshipListingFormValues = {
+  position: string;
+  listingDescription: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  requirements: string;
+  noOfPlaces: number;
+};
