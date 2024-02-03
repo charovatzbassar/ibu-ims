@@ -44,13 +44,13 @@ passport.use(
         }
         role = "manager";
       } else {
-        // const user = await prisma.company.findUnique({
-        //   where: { contactEmail: profile.emails[0].value },
-        // });
+        const user = await prisma.company.findUnique({
+          where: { contactEmail: profile.emails[0].value },
+        });
 
-        // if (!user) {
-        //   return done(new Error("Unauthorized"), false);
-        // }
+        if (!user) {
+          return done(new Error("Unauthorized"), false);
+        }
         role = "company";
       }
 
