@@ -3,9 +3,11 @@ import { InternshipListingForm } from "@/components";
 import { FormAction } from "@/utils";
 import { useCreateInternshipListing } from "@/hooks";
 import { InternshipListingFormValues } from "@/services/types";
+import { Alert } from "@mui/material";
 
 const CreateListingPage: React.FC = () => {
-  const { mutate, isError, isPending } = useCreateInternshipListing();
+  const { mutate, isError, isPending, isSuccess } =
+    useCreateInternshipListing();
 
   const onSubmit = (data: InternshipListingFormValues) => {
     mutate({
@@ -29,6 +31,32 @@ const CreateListingPage: React.FC = () => {
 
   return (
     <>
+      {isSuccess && (
+        <div
+          style={{
+            textAlign: "left",
+            display: "flex",
+            flexDirection: "row-reverse",
+          }}
+        >
+          <Alert severity="success" sx={{ position: "fixed" }}>
+            Internship Listing successfully created!
+          </Alert>
+        </div>
+      )}
+      {isError && (
+        <div
+          style={{
+            textAlign: "left",
+            display: "flex",
+            flexDirection: "row-reverse",
+          }}
+        >
+          <Alert severity="error" sx={{ position: "fixed" }}>
+            An error occured. Please try again later.
+          </Alert>{" "}
+        </div>
+      )}
       <InternshipListingForm
         onSubmit={onSubmit}
         action={FormAction.CREATE}

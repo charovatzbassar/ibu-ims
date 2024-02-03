@@ -3,7 +3,7 @@ import {
   InternshipListingFormValues,
 } from "@/services/types";
 import { Controller, useForm } from "react-hook-form";
-import { TextField, Button, CircularProgress } from "@mui/material";
+import { TextField, Button, CircularProgress, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { FormAction } from "@/utils";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
@@ -29,17 +29,17 @@ const InternshipListingForm = (props: Props) => {
     formState: { errors },
   } = useForm<InternshipListingFormValues>();
 
-  let buttonMessage = "";
+  let formType = "";
 
   switch (action) {
     case FormAction.CREATE:
-      buttonMessage = "Create";
+      formType = "Create";
       break;
     case FormAction.UPDATE:
-      buttonMessage = "Update";
+      formType = "Update";
       break;
     default:
-      buttonMessage = "";
+      formType = "";
       break;
   }
 
@@ -59,6 +59,9 @@ const InternshipListingForm = (props: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <Typography sx={{ textAlign: "left", fontSize: 25, margin: "10px" }}>
+        {formType} Listing
+      </Typography>
       <TextField
         type="text"
         sx={{ margin: "10px", display: "flex" }}
@@ -166,7 +169,7 @@ const InternshipListingForm = (props: Props) => {
           variant="contained"
           color="primary"
         >
-          {buttonMessage + " Listing"}
+          {formType + " Listing"}
         </Button>
       ) : (
         <CircularProgress size={24} />

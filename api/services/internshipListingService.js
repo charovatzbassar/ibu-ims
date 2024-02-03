@@ -15,7 +15,7 @@ module.exports = {
 
     const newListing = await prisma.internship_listing.create({
       data: {
-        listingID: uuid().toString(),
+        listingID: uuid(),
         companyID: Number(company.companyID),
         ...req.body,
         ...(req.body.startDate
