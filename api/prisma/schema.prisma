@@ -53,7 +53,7 @@ model internship_days {
 }
 
 model internship_listing {
-  listingID          Int       @id
+  listingID          String    @id @db.VarChar(36)
   companyID          Int?
   position           String    @db.VarChar(100)
   listingDescription String?   @db.Text

@@ -8,8 +8,23 @@ const CreateListingPage: React.FC = () => {
   const { mutate, isError, isPending } = useCreateInternshipListing();
 
   const onSubmit = (data: InternshipListingFormValues) => {
-    console.log(data.startDate.$d.toISOString().split("T")[0]);
-    console.log(data.endDate.$d.toISOString().split("T")[0]);
+    mutate({
+      position: data.position,
+      listingDescription: data.listingDescription,
+      location: data.location,
+      requirements: data.requirements,
+      noOfPlaces: Number(data.noOfPlaces),
+      startDate: new Date(data.startDate.$d)
+        .toLocaleDateString("en-GB")
+        .split("/")
+        .reverse()
+        .join("-"),
+      endDate: new Date(data.endDate.$d)
+        .toLocaleDateString("en-GB")
+        .split("/")
+        .reverse()
+        .join("-"),
+    });
   };
 
   return (

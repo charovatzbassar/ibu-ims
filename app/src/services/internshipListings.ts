@@ -1,5 +1,5 @@
 import appAxios from "./appAxios";
-import { InternshipListing } from "./types";
+import { InternshipListing, InternshipListingFormValues } from "./types";
 
 export default class InternshipListingsService {
   public static getInternshipListings = async (): Promise<
@@ -14,8 +14,10 @@ export default class InternshipListingsService {
     return appAxios.get(`/internships/${id}`).then((res) => res.data);
   };
 
-  public static createInternshipListing = async () => {
-    return appAxios.post("/internships").then((res) => res.data);
+  public static createInternshipListing = async (
+    data: InternshipListingFormValues
+  ) => {
+    return appAxios.post("/internships", data).then((res) => res.data);
   };
 
   public static editInternshipListing = async (id: string) => {

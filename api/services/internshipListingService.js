@@ -1,4 +1,5 @@
 const prisma = require("../prisma");
+const { v4: uuid } = require("uuid");
 
 module.exports = {
   getInternshipListings: async (req, res) => {
@@ -14,6 +15,7 @@ module.exports = {
 
     const newListing = await prisma.internship_listing.create({
       data: {
+        listingID: uuid().toString(),
         companyID: Number(company.companyID),
         ...req.body,
         ...(req.body.startDate

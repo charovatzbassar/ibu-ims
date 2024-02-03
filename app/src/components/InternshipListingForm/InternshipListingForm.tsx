@@ -104,6 +104,7 @@ const InternshipListingForm = (props: Props) => {
               <DatePicker
                 {...field}
                 label="Start date"
+                format="DD/MM/YYYY"
                 onChange={(date) => field.onChange(date)}
               />
             )}
@@ -123,6 +124,7 @@ const InternshipListingForm = (props: Props) => {
               <DatePicker
                 {...field}
                 label="End date"
+                format="DD/MM/YYYY"
                 onChange={(date) => field.onChange(date)}
               />
             )}
