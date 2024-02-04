@@ -36,7 +36,7 @@ module.exports = {
   getInternshipListing: async (req, res) => {
     const listing = await prisma.internship_listing.findUnique({
       where: {
-        listingID: Number(req.params.id),
+        listingID: req.params.id,
       },
     });
 
@@ -61,7 +61,7 @@ module.exports = {
 
     const updatedListing = await prisma.internship_listing.update({
       where: {
-        listingID: Number(req.params.id),
+        listingID: req.params.id,
         companyID: Number(company.companyID),
       },
       data: {
@@ -94,7 +94,7 @@ module.exports = {
 
     const deletedListing = await prisma.internship_listing.delete({
       where: {
-        listingID: Number(req.params.id),
+        listingID: req.params.id,
         companyID: Number(company.companyID),
       },
     });

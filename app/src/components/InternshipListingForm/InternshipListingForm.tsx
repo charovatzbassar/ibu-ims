@@ -35,7 +35,7 @@ const InternshipListingForm = (props: Props) => {
     register,
     reset,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitSuccessful },
   } = useForm<InternshipListingFormValues>();
 
   useEffect(() => {
@@ -51,6 +51,8 @@ const InternshipListingForm = (props: Props) => {
       });
     }
   }, [data, reset, action]);
+
+  if (isSubmitSuccessful && action === FormAction.CREATE) reset();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

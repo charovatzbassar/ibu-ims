@@ -6,7 +6,7 @@ export type InternshipListing = {
   readonly location: string;
   readonly startDate: string;
   readonly endDate: string;
-  readonly requirements?: string;
+  readonly requirements: string;
   readonly noOfPlaces: number;
 };
 
