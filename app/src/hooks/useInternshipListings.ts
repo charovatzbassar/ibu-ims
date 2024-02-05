@@ -3,7 +3,7 @@ import { InternshipListingsService } from "@/services";
 
 const useInternshipListings = (searchTerm: string) => {
   return useQuery({
-    queryKey: ["internship-listings"],
+    queryKey: ["internship-listings", searchTerm],
     queryFn: () => InternshipListingsService.getInternshipListings(searchTerm),
   });
 };
