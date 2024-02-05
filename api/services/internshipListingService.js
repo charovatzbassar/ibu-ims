@@ -3,9 +3,16 @@ const { v4: uuid } = require("uuid");
 
 module.exports = {
   getInternshipListings: async (req, res) => {
+    const { searchTerm } = req.query;
+
     const allListings = await prisma.internship_listing.findMany({
       include: {
         company: true,
+      },
+      where: {
+        position: {
+          contains: searchTerm,
+        },
       },
     });
     res.json(allListings);

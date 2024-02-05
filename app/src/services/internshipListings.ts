@@ -2,10 +2,15 @@ import appAxios from "./appAxios";
 import { InternshipListing, InternshipListingFormValues } from "./types";
 
 export default class InternshipListingsService {
-  public static getInternshipListings = async (): Promise<
-    InternshipListing[]
-  > => {
-    return appAxios.get("/internship-listings").then((res) => res.data);
+  public static getInternshipListings = async (
+    searchTerm: string
+  ): Promise<InternshipListing[]> => {
+    let url: string = "/internship-listings";
+
+    if (searchTerm) {
+      url += `?searchTerm=${searchTerm}`;
+    }
+    return appAxios.get(url).then((res) => res.data);
   };
 
   public static getInternshipListing = async (
