@@ -46,7 +46,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/api/auth/google", authRouter);
-app.use("/api/internships", internshipListingRouter);
+app.use("/api/internship-listings", internshipListingRouter);
 app.use("/api/companies", companyRouter);
 
 app.all("*", (req, res, next) => {

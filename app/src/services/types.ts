@@ -1,6 +1,6 @@
 export type InternshipListing = {
   readonly listingID: string;
-  readonly companyID: number;
+  readonly company: Company;
   readonly position: string;
   readonly listingDescription: string;
   readonly location: string;

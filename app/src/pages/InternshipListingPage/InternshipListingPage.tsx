@@ -1,16 +1,16 @@
-import React from "react";
 import { useInternshipListing } from "@/hooks";
 import { useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
+import { InternshipListingContent } from "./components";
 
 const InternshipListingPage = () => {
   const { listingID } = useParams();
-  const { data, isLoading, isError } = useInternshipListing(listingID || "");
+  const { data, isPending, isError } = useInternshipListing(listingID || "");
 
   return (
     <>
-      {isLoading && <CircularProgress />}
-      {data?.position ? data.position : "Listing not found"}
+      {isPending && <CircularProgress />}
+      {!isPending && !isError && <InternshipListingContent data={data} />}
     </>
   );
 };
