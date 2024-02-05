@@ -2,8 +2,8 @@ import { useInternshipListings } from "@/hooks";
 import React from "react";
 import { CircularProgress } from "@mui/material";
 
-const InternshipsPage: React.FC = () => {
-  const { data, isPending, isError, error } = useInternshipListings();
+const InternshipListingsPage: React.FC = () => {
+  const { data, isPending } = useInternshipListings();
 
   return (
     <>
@@ -23,4 +23,4 @@ const InternshipsPage: React.FC = () => {
   );
 };
 
-export default InternshipsPage;
+export default InternshipListingsPage;

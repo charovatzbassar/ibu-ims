@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Internship API",
+    "title": "IBU IMS API",
     "description": "Endpoints",
     "version": "1.0.0"
   },
@@ -11,7 +11,7 @@
     "http"
   ],
   "paths": {
-    "/auth/google/": {
+    "/api/auth/google/": {
       "get": {
         "description": "",
         "responses": {
@@ -21,7 +21,7 @@
         }
       }
     },
-    "/auth/google/callback": {
+    "/api/auth/google/callback": {
       "get": {
         "description": "",
         "responses": {
@@ -31,7 +31,7 @@
         }
       }
     },
-    "/auth/google/logout": {
+    "/api/auth/google/logout": {
       "get": {
         "description": "",
         "parameters": [
@@ -48,7 +48,7 @@
         }
       }
     },
-    "/auth/google/user": {
+    "/api/auth/google/user": {
       "get": {
         "description": "",
         "responses": {
@@ -69,23 +69,6 @@
       },
       "post": {
         "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "startDate": {
-                  "example": "any"
-                },
-                "endDate": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -123,9 +106,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         }
       },
@@ -137,29 +117,11 @@
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "startDate": {
-                  "example": "any"
-                },
-                "endDate": {
-                  "example": "any"
-                }
-              }
-            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         }
       }
@@ -228,9 +190,6 @@
         "responses": {
           "200": {
             "description": "OK"
-          },
-          "401": {
-            "description": "Unauthorized"
           }
         }
       }

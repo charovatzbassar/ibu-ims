@@ -1,9 +1,9 @@
 import { useState, FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
-import { RootState } from "../store";
-import { loginUser } from "../store/slices/auth";
-import { AppDispatch } from "../store";
+import { RootState } from "@/store";
+import { loginUser } from "@/store/slices/auth";
+import { AppDispatch } from "@/store";
 import { CircularProgress } from "@mui/material";
 
 const ProtectedRoute: FC = () => {

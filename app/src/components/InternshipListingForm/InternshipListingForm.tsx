@@ -1,15 +1,51 @@
-import { InternshipListing } from "@/services/types";
-import { useForm } from "react-hook-form";
-import { TextField, Button, Switch } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { useEffect } from "react";
+import {
+  InternshipListing,
+  InternshipListingFormValues,
+} from "@/services/types";
+import { Controller, useForm } from "react-hook-form";
+import {
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Fade,
+  Modal,
+  Backdrop,
+} from "@mui/material";
+import React, { useEffect } from "react";
 import { FormAction } from "@/utils";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 type Props = {
-  onSubmit: (data: any) => void;
+  onSubmit: (data: InternshipListingFormValues) => void;
   data?: InternshipListing;
   action: FormAction;
+  isError: boolean;
+  isPending: boolean;
+};
+
+const getFormType = (action: FormAction) => {
+  switch (action) {
+    case FormAction.CREATE:
+      return "Create";
+    case FormAction.UPDATE:
+      return "Update";
+  }
+};
+
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
 };
 
 const InternshipListingForm = (props: Props) => {
@@ -19,25 +55,13 @@ const InternshipListingForm = (props: Props) => {
     register,
     reset,
     control,
-    formState: { errors },
-  } = useForm();
+    formState: { errors, isValid },
+  } = useForm<InternshipListingFormValues>();
 
-  let buttonMessage = "";
-
-  switch (action) {
-    case FormAction.CREATE:
-      buttonMessage = "Create";
-      break;
-    case FormAction.EDIT:
-      buttonMessage = "Edit";
-      break;
-    default:
-      buttonMessage = "";
-      break;
-  }
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
   useEffect(() => {
-    if (action === FormAction.EDIT) {
+    if (data && action === FormAction.UPDATE) {
       reset({
         position: data?.position,
         listingDescription: data?.listingDescription,
@@ -52,36 +76,153 @@ const InternshipListingForm = (props: Props) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {" "}
+      <Typography sx={{ textAlign: "left", fontSize: 25, margin: "10px" }}>
+        {getFormType(action)} Listing
+      </Typography>
       <TextField
-        sx={{ margin: "10px" }}
-        label={action === FormAction.CREATE ? "Position" : ""}
+        type="text"
+        sx={{ margin: "10px", display: "flex" }}
+        label="Position"
         variant="outlined"
-        type="position"
         {...register("position", { required: "Position is required!" })}
-        error={errors.position ? true : false}
+        error={!!errors.position}
         helperText={errors.position && errors.position.message}
       />
       <TextField
+        type="text"
         label="Description"
+        sx={{ margin: "10px", display: "flex" }}
         multiline
         rows={4}
         {...register("listingDescription", {
           required: "Description is required!",
         })}
-        error={errors.listingDescription ? true : false}
+        error={!!errors.listingDescription}
         helperText={
           errors.listingDescription && errors.listingDescription.message
         }
       />
+      <TextField
+        type="text"
+        sx={{ margin: "10px", display: "flex" }}
+        label="Location"
+        variant="outlined"
+        {...register("location", { required: "Location is required!" })}
+        error={!!errors.location}
+        helperText={errors.location && errors.location.message}
+      />
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer
+          sx={{ margin: "10px", display: "grid" }}
+          components={["DatePicker"]}
+        >
+          <Controller
+            name="startDate"
+            control={control}
+            render={({ field }) => (
+              <DatePicker
+                {...field}
+                label="Start date"
+                format="DD/MM/YYYY"
+                onChange={(date) => field.onChange(date)}
+              />
+            )}
+          />
+        </DemoContainer>
+      </LocalizationProvider>
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer
+          sx={{ margin: "10px", display: "grid" }}
+          components={["DatePicker"]}
+        >
+          <Controller
+            name="endDate"
+            control={control}
+            render={({ field }) => (
+              <DatePicker
+                {...field}
+                label="End date"
+                format="DD/MM/YYYY"
+                onChange={(date) => field.onChange(date)}
+              />
+            )}
+          />
+        </DemoContainer>
+      </LocalizationProvider>
+
+      <TextField
+        type="text"
+        label="Requirements"
+        sx={{ margin: "10px", display: "flex" }}
+        multiline
+        rows={4}
+        {...register("requirements", {
+          required: "Requirements are required!",
+        })}
+        error={!!errors.requirements}
+        helperText={errors.requirements && errors.requirements.message}
+      />
+      <TextField
+        label="Number of places"
+        type="number"
+        sx={{ margin: "10px", display: "flex" }}
+        min={1}
+        {...register("noOfPlaces", {
+          required: "Number of places is required!",
+        })}
+        error={!!errors.noOfPlaces}
+        helperText={errors.noOfPlaces && errors.noOfPlaces.message}
+        InputLabelProps={{
+          shrink: true,
+        }}
+      />
+
       <Button
-        sx={{ margin: "10px" }}
-        type="submit"
+        sx={{ margin: "10px", display: "flex" }}
+        onClick={isValid ? () => setModalOpen(true) : undefined}
         variant="contained"
         color="primary"
       >
-        {buttonMessage} Listing
+        {getFormType(action) + " Listing"}
       </Button>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={modalOpen}>
+          <Box sx={modalStyle}>
+            <Typography variant="h6" component="h2">
+              Are you sure you want to {getFormType(action).toLowerCase()} this
+              listing?
+            </Typography>
+
+            <Button
+              sx={{ marginTop: "10px" }}
+              variant="contained"
+              color="primary"
+              onClick={(e) => {
+                e.preventDefault();
+                setModalOpen(false);
+                handleSubmit(onSubmit)();
+              }}
+            >
+              Confirm
+            </Button>
+          </Box>
+        </Fade>
+      </Modal>
     </form>
   );
 };

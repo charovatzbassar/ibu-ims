@@ -35,7 +35,7 @@ const authSlice = createSlice({
 
       state.user = {
         token: jwtToken,
-        role: role,
+        role,
         firstName: profile?.name.givenName,
         lastName: profile?.name.familyName,
         email: profile?.emails[0].value,

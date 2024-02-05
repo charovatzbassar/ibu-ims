@@ -2,7 +2,7 @@ const swaggerAutogen = require("swagger-autogen")();
 
 const doc = {
   info: {
-    title: "Internship API",
+    title: "IBU IMS API",
     description: "Endpoints",
   },
   host: "localhost:8080",

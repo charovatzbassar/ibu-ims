@@ -1,12 +1,12 @@
 export type InternshipListing = {
-  readonly listingID: number;
+  readonly listingID: string;
   readonly companyID: number;
   readonly position: string;
   readonly listingDescription: string;
   readonly location: string;
   readonly startDate: string;
   readonly endDate: string;
-  readonly requirements?: string;
+  readonly requirements: string;
   readonly noOfPlaces: number;
 };
 
@@ -24,4 +24,14 @@ export type User = {
   readonly email: string;
   readonly role: string;
   readonly token: string;
+};
+
+export type InternshipListingFormValues = {
+  position: string;
+  listingDescription: string;
+  location: string;
+  startDate: string;
+  endDate: string;
+  requirements: string;
+  noOfPlaces: number;
 };
