@@ -3,8 +3,16 @@ import {
   InternshipListingFormValues,
 } from "@/services/types";
 import { Controller, useForm } from "react-hook-form";
-import { TextField, Button, CircularProgress, Typography } from "@mui/material";
-import { useEffect } from "react";
+import {
+  TextField,
+  Button,
+  Typography,
+  Box,
+  Fade,
+  Modal,
+  Backdrop,
+} from "@mui/material";
+import React, { useEffect } from "react";
 import { FormAction } from "@/utils";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -28,6 +36,18 @@ const getFormType = (action: FormAction) => {
   }
 };
 
+const modalStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
 const InternshipListingForm = (props: Props) => {
   const { onSubmit, data, action } = props;
   const {
@@ -35,8 +55,10 @@ const InternshipListingForm = (props: Props) => {
     register,
     reset,
     control,
-    formState: { errors, isSubmitSuccessful },
+    formState: { errors, isValid },
   } = useForm<InternshipListingFormValues>();
+
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
   useEffect(() => {
     if (data && action === FormAction.UPDATE) {
@@ -51,8 +73,6 @@ const InternshipListingForm = (props: Props) => {
       });
     }
   }, [data, reset, action]);
-
-  if (isSubmitSuccessful && action === FormAction.CREATE) reset();
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -159,18 +179,50 @@ const InternshipListingForm = (props: Props) => {
         }}
       />
 
-      {!props.isPending ? (
-        <Button
-          sx={{ margin: "10px", display: "flex" }}
-          type="submit"
-          variant="contained"
-          color="primary"
-        >
-          {getFormType(action) + " Listing"}
-        </Button>
-      ) : (
-        <CircularProgress size={24} />
-      )}
+      <Button
+        sx={{ margin: "10px", display: "flex" }}
+        onClick={isValid ? () => setModalOpen(true) : undefined}
+        variant="contained"
+        color="primary"
+      >
+        {getFormType(action) + " Listing"}
+      </Button>
+
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={modalOpen}>
+          <Box sx={modalStyle}>
+            <Typography variant="h6" component="h2">
+              Are you sure you want to {getFormType(action).toLowerCase()} this
+              listing?
+            </Typography>
+
+            <Button
+              sx={{ marginTop: "10px" }}
+              variant="contained"
+              color="primary"
+              onClick={(e) => {
+                e.preventDefault();
+                setModalOpen(false);
+                handleSubmit(onSubmit)();
+              }}
+            >
+              Confirm
+            </Button>
+          </Box>
+        </Fade>
+      </Modal>
     </form>
   );
 };

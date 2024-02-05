@@ -17,89 +17,88 @@ interface NavigationItemsProps {
   role: string;
 }
 
+const getNavigationItems = (role: string) => {
+  switch (role) {
+    case "intern":
+      return (
+        <>
+          <ListItemButton>
+            <ListItemIcon>
+              <BarChart />
+            </ListItemIcon>
+            <ListItemText primary="My Internship" />
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <Assignment />
+            </ListItemIcon>
+            <ListItemText primary="Internship Days" />
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <Info />
+            </ListItemIcon>
+            <ListItemText primary="My Profile" />
+          </ListItemButton>
+        </>
+      );
+    case "manager":
+      return (
+        <>
+          <ListItemButton>
+            <ListItemIcon>
+              <BarChart />
+            </ListItemIcon>
+            <ListItemText primary="My Internships" />
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <Assignment />
+            </ListItemIcon>
+            <ListItemText primary="My Students" />
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <Info />
+            </ListItemIcon>
+            <ListItemText primary="My Profile" />
+          </ListItemButton>
+        </>
+      );
+    case "company":
+      return (
+        <>
+          <ListItemButton>
+            <ListItemIcon>
+              <BarChart />
+            </ListItemIcon>
+            <ListItemText primary="My Internships" />
+          </ListItemButton>
+          <Link
+            to="/home/create-listing"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <Addchart />
+              </ListItemIcon>
+              <ListItemText primary="Create Listing" />
+            </ListItemButton>
+          </Link>
+          <ListItemButton>
+            <ListItemIcon>
+              <Info />
+            </ListItemIcon>
+            <ListItemText primary="Company Info" />
+          </ListItemButton>
+        </>
+      );
+  }
+};
+
 const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
   const dispatch = useDispatch();
 
-  let items;
-
-  switch (props.role) {
-  }
-
-  if (props.role === "intern") {
-    items = (
-      <>
-        <ListItemButton>
-          <ListItemIcon>
-            <BarChart />
-          </ListItemIcon>
-          <ListItemText primary="My Internship" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <Assignment />
-          </ListItemIcon>
-          <ListItemText primary="Internship Days" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <Info />
-          </ListItemIcon>
-          <ListItemText primary="My Profile" />
-        </ListItemButton>
-      </>
-    );
-  } else if (props.role === "manager") {
-    items = (
-      <>
-        <ListItemButton>
-          <ListItemIcon>
-            <BarChart />
-          </ListItemIcon>
-          <ListItemText primary="My Internships" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <Assignment />
-          </ListItemIcon>
-          <ListItemText primary="My Students" />
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <Info />
-          </ListItemIcon>
-          <ListItemText primary="My Profile" />
-        </ListItemButton>
-      </>
-    );
-  } else if (props.role === "company") {
-    items = (
-      <>
-        <ListItemButton>
-          <ListItemIcon>
-            <BarChart />
-          </ListItemIcon>
-          <ListItemText primary="My Internships" />
-        </ListItemButton>
-        <Link
-          to="/home/create-listing"
-          style={{ textDecoration: "none", color: "black" }}
-        >
-          <ListItemButton>
-            <ListItemIcon>
-              <Addchart />
-            </ListItemIcon>
-            <ListItemText primary="Create Listing" />
-          </ListItemButton>
-        </Link>
-        <ListItemButton>
-          <ListItemIcon>
-            <Info />
-          </ListItemIcon>
-          <ListItemText primary="Company Info" />
-        </ListItemButton>
-      </>
-    );
-  }
   return (
     <>
       <Link
@@ -114,7 +113,7 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
         </ListItemButton>
       </Link>
       <Link
-        to="/home/internships"
+        to="/home/internship-listings"
         style={{ textDecoration: "none", color: "black" }}
       >
         <ListItemButton>
@@ -124,7 +123,7 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
           <ListItemText primary="Internships" />
         </ListItemButton>
       </Link>
-      {items}{" "}
+      {getNavigationItems(props.role)}
       <ListItemButton onClick={() => dispatch(logout())}>
         <ListItemIcon>
           <Logout />

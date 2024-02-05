@@ -4,9 +4,10 @@ import { FormAction } from "@/utils";
 import { useCreateInternshipListing } from "@/hooks";
 import { InternshipListingFormValues } from "@/services/types";
 import { Alert } from "@mui/material";
+import { Navigate } from "react-router-dom";
 
 const CreateListingPage: React.FC = () => {
-  const { mutate, isError, isPending, isSuccess } =
+  const { mutate, isError, isPending, isSuccess, data } =
     useCreateInternshipListing();
 
   const onSubmit = (data: InternshipListingFormValues) => {
@@ -28,6 +29,10 @@ const CreateListingPage: React.FC = () => {
         .join("-"),
     });
   };
+
+  if (isSuccess && data?.listingID) {
+    return <Navigate to={`/home/internship-listings/${data.listingID}`} />;
+  }
 
   return (
     <>
