@@ -1,5 +1,5 @@
 import { useDeleteInternshipListing, useInternshipListing } from "@/hooks";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { InternshipListingContent } from "./components";
 import { isListingOwner } from "@/utils";
@@ -10,9 +10,10 @@ const InternshipListingPage = () => {
   const { listingID } = useParams();
   const { data, isPending, isError } = useInternshipListing(listingID || "");
   const {
-    data: deleteData,
+    mutate,
     isPending: isDeletionPending,
     isError: isDeletionError,
+    isSuccess: isDeletionSuccess,
   } = useDeleteInternshipListing(listingID || "");
 
   const user = useSelector((state: RootState) => state.auth.user);
@@ -23,8 +24,15 @@ const InternshipListingPage = () => {
     <>
       {isPending && <CircularProgress />}
       {!isPending && !isError && (
-        <InternshipListingContent data={data} isOwner={isOwner} />
+        <InternshipListingContent
+          data={data}
+          isOwner={isOwner}
+          onDelete={() => {
+            mutate();
+          }}
+        />
       )}
+      {isDeletionSuccess && <Navigate to="/home/dashboard" />}
     </>
   );
 };

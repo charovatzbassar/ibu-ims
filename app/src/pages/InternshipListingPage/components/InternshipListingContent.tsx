@@ -6,16 +6,55 @@ import {
   Divider,
   CardActions,
   Button,
+  Fade,
+  Box,
+  Modal,
+  Backdrop,
 } from "@mui/material";
+import React from "react";
+import { modalStyle } from "@/utils";
 
 type Props = {
   data?: InternshipListing;
   isOwner: boolean;
+  onDelete: () => void;
 };
 
 const InternshipListingContent = (props: Props) => {
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+
   return (
     <>
+      <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            timeout: 500,
+          },
+        }}
+      >
+        <Fade in={modalOpen}>
+          <Box sx={modalStyle}>
+            <Typography variant="h6" component="h2">
+              Are you sure you want to delete this listing?
+            </Typography>
+
+            <Button
+              sx={{ marginTop: "10px" }}
+              variant="contained"
+              color="error"
+              onClick={props.onDelete}
+            >
+              Confirm
+            </Button>
+          </Box>
+        </Fade>
+      </Modal>
       <Card
         sx={{
           minWidth: 275,
@@ -52,7 +91,11 @@ const InternshipListingContent = (props: Props) => {
             <Button variant="contained" color="warning">
               Edit
             </Button>
-            <Button variant="contained" color="error">
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => setModalOpen(true)}
+            >
               Delete
             </Button>
           </CardActions>

@@ -18,6 +18,7 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { modalStyle } from "@/utils";
 
 type Props = {
   onSubmit: (data: InternshipListingFormValues) => void;
@@ -34,18 +35,6 @@ const getFormType = (action: FormAction) => {
     case FormAction.UPDATE:
       return "Update";
   }
-};
-
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
 };
 
 const InternshipListingForm = (props: Props) => {
@@ -211,7 +200,7 @@ const InternshipListingForm = (props: Props) => {
             <Button
               sx={{ marginTop: "10px" }}
               variant="contained"
-              color="primary"
+              color="success"
               onClick={(e) => {
                 e.preventDefault();
                 setModalOpen(false);
