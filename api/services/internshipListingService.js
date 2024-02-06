@@ -65,6 +65,7 @@ module.exports = {
 
     const listing = await prisma.internship_listing.findUnique({
       where: {
+        listingID: req.params.id,
         companyID: Number(company.companyID),
       },
     });
@@ -98,6 +99,7 @@ module.exports = {
 
     const listing = await prisma.internship_listing.findUnique({
       where: {
+        listingID: req.params.id,
         companyID: Number(company.companyID),
       },
     });

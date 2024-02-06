@@ -1,5 +1,13 @@
 import { InternshipListing } from "@/services/types";
-import { Card, CardContent, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+  Box,
+  Divider,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 type Props = {
@@ -19,24 +27,39 @@ const InternshipListingItem = (props: Props) => {
       key={props.data?.listingID}
     >
       <CardContent>
-        <img
-          src={`data:image/jpeg;base64,${props.data?.company.companyLogo?.toString()}`}
-          alt="Company Logo"
-        />
-        <Typography variant="h5" component="div">
-          <Link to={`/home/internship-listings/${props.data?.listingID}`}>
+        <Box sx={{ marginY: "10px" }}>
+          <Typography variant="h5" component="div">
             {props.data?.position}
-          </Link>
+          </Typography>
+          <Typography variant="body2">
+            {props.data?.company.companyName} - {props.data?.location}
+          </Typography>
+        </Box>
+        <Divider />
+        <Box sx={{ marginY: "10px" }}>
+          <Typography variant="body2">
+            From: {new Date(props.data?.startDate || "").toDateString()}
+          </Typography>
+          <Typography variant="body2">
+            To: {new Date(props.data?.endDate || "").toDateString()}
+          </Typography>
+        </Box>
+        <Divider />
+        <Typography sx={{ marginY: "10px" }}>
+          Available openings: {props.data?.noOfPlaces}
         </Typography>
-        <Typography variant="body2">
-          {props.data?.company.companyName} - {props.data?.location}
-        </Typography>
-        <Typography variant="body2">
-          From: {new Date(props.data?.startDate || "").toDateString()}
-        </Typography>
-        <Typography variant="body2">
-          To: {new Date(props.data?.endDate || "").toDateString()}
-        </Typography>
+        <Divider />
+
+        <CardActions>
+          <Button color="primary" variant="contained">
+            <Link
+              to={`/home/internship-listings/${props.data?.listingID}`}
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              Learn More
+            </Link>
+          </Button>
+        </CardActions>
       </CardContent>
     </Card>
   );
