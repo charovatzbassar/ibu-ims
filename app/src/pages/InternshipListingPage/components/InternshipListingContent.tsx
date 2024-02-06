@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { modalStyle } from "@/utils";
+import { Link } from "react-router-dom";
 
 type Props = {
   data?: InternshipListing;
@@ -43,7 +44,13 @@ const InternshipListingContent = (props: Props) => {
             <Typography variant="h6" component="h2">
               Are you sure you want to delete this listing?
             </Typography>
-
+            <Typography
+              variant="h6"
+              component="h4"
+              sx={{ fontSize: 15, color: "gray" }}
+            >
+              This action cannot be undone.
+            </Typography>
             <Button
               sx={{ marginTop: "10px" }}
               variant="contained"
@@ -99,13 +106,24 @@ const InternshipListingContent = (props: Props) => {
               Available spots: {props.data?.noOfPlaces}
             </Typography>
           </Box>
+          <Divider />
+          <Box>
+            <Typography sx={{ marginTop: "10px" }}>
+              Requirements: {props.data?.requirements}
+            </Typography>
+          </Box>
         </CardContent>
         {props.isOwner && (
           <>
             <Divider />
             <CardActions sx={{ margin: "10px" }}>
               <Button variant="contained" color="warning">
-                Edit
+                <Link
+                  to={`/home/internship-listings/${props.data?.listingID}/edit`}
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  Edit
+                </Link>
               </Button>
               <Button
                 variant="contained"

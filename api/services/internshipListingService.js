@@ -27,6 +27,12 @@ module.exports = {
     const startDate = new Date(req.body.startDate);
     const endDate = new Date(req.body.endDate);
 
+    if (startDate.getTime() < new Date().getTime()) {
+      return res
+        .status(400)
+        .json({ error: "Start date must be in the future" });
+    }
+
     if (startDate.getTime() > endDate.getTime()) {
       return res
         .status(400)

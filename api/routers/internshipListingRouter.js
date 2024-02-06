@@ -18,7 +18,7 @@ router
 router
   .route("/:id")
   .get(catchAsync(internshipListingService.getInternshipListing))
-  .patch(
+  .put(
     checkRole("company"),
     catchAsync(internshipListingService.updateInternshipListing)
   )
