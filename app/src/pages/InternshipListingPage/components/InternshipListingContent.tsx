@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import { modalStyle } from "@/utils";
-import { userInfo } from "os";
 
 type Props = {
   data?: InternshipListing;
@@ -49,7 +48,10 @@ const InternshipListingContent = (props: Props) => {
               sx={{ marginTop: "10px" }}
               variant="contained"
               color="error"
-              onClick={props.onDelete}
+              onClick={() => {
+                setModalOpen(false);
+                props.onDelete();
+              }}
             >
               Confirm
             </Button>
@@ -101,7 +103,7 @@ const InternshipListingContent = (props: Props) => {
         {props.isOwner && (
           <>
             <Divider />
-            <CardActions>
+            <CardActions sx={{ margin: "10px" }}>
               <Button variant="contained" color="warning">
                 Edit
               </Button>

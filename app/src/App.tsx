@@ -27,6 +27,10 @@ function App(): ReactElement {
           />
           <Route element={<RoleRoute role="company" />}>
             <Route path="create-listing" element={<CreateListingPage />} />
+            <Route
+              path="internship-listings/:listingID/edit"
+              element={<CreateListingPage />}
+            />
           </Route>
         </Route>
       </Route>

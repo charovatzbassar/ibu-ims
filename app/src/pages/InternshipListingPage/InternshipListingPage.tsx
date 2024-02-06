@@ -1,6 +1,6 @@
 import { useDeleteInternshipListing, useInternshipListing } from "@/hooks";
 import { Navigate, useParams } from "react-router-dom";
-import { Button, CircularProgress } from "@mui/material";
+import { Alert, Button, CircularProgress } from "@mui/material";
 import { InternshipListingContent } from "./components";
 import { isListingOwner } from "@/utils";
 import { useSelector } from "react-redux";
@@ -11,7 +11,6 @@ const InternshipListingPage = () => {
   const { data, isPending, isError } = useInternshipListing(listingID || "");
   const {
     mutate,
-    isPending: isDeletionPending,
     isError: isDeletionError,
     isSuccess: isDeletionSuccess,
   } = useDeleteInternshipListing(listingID || "");
@@ -33,6 +32,19 @@ const InternshipListingPage = () => {
         />
       )}
       {isDeletionSuccess && <Navigate to="/home/dashboard" />}
+      {isDeletionError && (
+        <div
+          style={{
+            textAlign: "left",
+            display: "flex",
+            flexDirection: "row-reverse",
+          }}
+        >
+          <Alert severity="error" sx={{ position: "fixed" }}>
+            An error occured. Please try again later.
+          </Alert>{" "}
+        </div>
+      )}
       {user.role === "intern" && (
         <Button color="success" variant="contained" sx={{ margin: "10px" }}>
           Apply

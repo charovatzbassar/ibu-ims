@@ -9,6 +9,7 @@ import {
   Assignment,
   Dashboard,
   Addchart,
+  FormatListBulleted,
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/slices/auth";
@@ -74,6 +75,12 @@ const getNavigationItems = (role: string) => {
             </ListItemIcon>
             <ListItemText primary="My Internships" />
           </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <FormatListBulleted />
+            </ListItemIcon>
+            <ListItemText primary="My Listings" />
+          </ListItemButton>
           <Link
             to="/home/create-listing"
             style={{ textDecoration: "none", color: "black" }}
@@ -120,7 +127,7 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
           <ListItemIcon>
             <People />
           </ListItemIcon>
-          <ListItemText primary="Internships" />
+          <ListItemText primary="Internship Listings" />
         </ListItemButton>
       </Link>
       {getNavigationItems(props.role)}
