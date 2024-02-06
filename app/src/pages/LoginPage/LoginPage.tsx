@@ -8,7 +8,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const defaultTheme = createTheme();
 
-export default function SignInPage(): React.ReactElement {
+export default function LoginPage(): React.ReactElement {
   return (
     <Background>
       <ThemeProvider theme={defaultTheme}>

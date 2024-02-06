@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import {
   DashboardPage,
   InternshipListingsPage,
-  SignInPage,
+  LoginPage,
   CreateListingPage,
   InternshipListingPage,
 } from "@/pages";
@@ -13,7 +13,7 @@ import { ProtectedRoute, RoleRoute } from "@/utils";
 function App(): ReactElement {
   return (
     <Routes>
-      <Route path="/auth/login" element={<SignInPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route element={<ProtectedRoute />}>
         <Route path="/home" element={<Navigation />}>
           <Route path="dashboard" element={<DashboardPage />} />
@@ -27,6 +27,10 @@ function App(): ReactElement {
           />
           <Route element={<RoleRoute role="company" />}>
             <Route path="create-listing" element={<CreateListingPage />} />
+            <Route
+              path="internship-listings/:listingID/edit"
+              element={<CreateListingPage />}
+            />
           </Route>
         </Route>
       </Route>

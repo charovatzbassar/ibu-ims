@@ -25,7 +25,7 @@ const ProtectedRoute: FC = () => {
   }
 
   if (!loading && !user.token) {
-    return <Navigate to="/auth/login" />;
+    return <Navigate to="/login" />;
   }
 
   return <Outlet />;

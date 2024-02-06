@@ -1,6 +1,6 @@
 export type InternshipListing = {
   readonly listingID: string;
-  readonly companyID: number;
+  readonly company: Company;
   readonly position: string;
   readonly listingDescription: string;
   readonly location: string;
@@ -19,11 +19,11 @@ export type Company = {
 };
 
 export type User = {
-  readonly firstName: string;
-  readonly lastName: string;
-  readonly email: string;
-  readonly role: string;
-  readonly token: string;
+  readonly firstName: string | null;
+  readonly lastName: string | null;
+  readonly email: string | null;
+  readonly role: string | null;
+  readonly token: string | null;
 };
 
 export type InternshipListingFormValues = {

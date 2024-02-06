@@ -25,7 +25,7 @@ const authSlice = createSlice({
         state = initialState;
         localStorage.removeItem("token");
         localStorage.removeItem("expiration");
-        window.location.href = "/auth/login";
+        window.location.href = "/login";
       });
     },
   },

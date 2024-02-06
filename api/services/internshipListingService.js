@@ -3,7 +3,18 @@ const { v4: uuid } = require("uuid");
 
 module.exports = {
   getInternshipListings: async (req, res) => {
-    const allListings = await prisma.internship_listing.findMany();
+    const { searchTerm } = req.query;
+
+    const allListings = await prisma.internship_listing.findMany({
+      include: {
+        company: true,
+      },
+      where: {
+        position: {
+          contains: searchTerm,
+        },
+      },
+    });
     res.json(allListings);
   },
   createInternshipListing: async (req, res) => {
@@ -38,6 +49,9 @@ module.exports = {
       where: {
         listingID: req.params.id,
       },
+      include: {
+        company: true,
+      },
     });
 
     res.json(listing);
@@ -51,6 +65,7 @@ module.exports = {
 
     const listing = await prisma.internship_listing.findUnique({
       where: {
+        listingID: req.params.id,
         companyID: Number(company.companyID),
       },
     });
@@ -84,6 +99,7 @@ module.exports = {
 
     const listing = await prisma.internship_listing.findUnique({
       where: {
+        listingID: req.params.id,
         companyID: Number(company.companyID),
       },
     });
