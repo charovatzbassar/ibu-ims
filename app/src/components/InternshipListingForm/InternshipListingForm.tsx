@@ -63,7 +63,6 @@ const InternshipListingForm = (props: Props) => {
     }
   }, [data, reset, action]);
 
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Typography sx={{ textAlign: "left", fontSize: 25, margin: "10px" }}>

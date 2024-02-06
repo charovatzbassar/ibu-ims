@@ -24,7 +24,6 @@ type Props = {
 const InternshipListingContent = (props: Props) => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
-
   return (
     <>
       <Modal
@@ -45,7 +44,13 @@ const InternshipListingContent = (props: Props) => {
             <Typography variant="h6" component="h2">
               Are you sure you want to delete this listing?
             </Typography>
-
+            <Typography
+              variant="h6"
+              component="h4"
+              sx={{ fontSize: 15, color: "gray" }}
+            >
+              This action cannot be undone.
+            </Typography>
             <Button
               sx={{ marginTop: "10px" }}
               variant="contained"
@@ -99,6 +104,12 @@ const InternshipListingContent = (props: Props) => {
           <Box>
             <Typography sx={{ marginY: "10px" }}>
               Available spots: {props.data?.noOfPlaces}
+            </Typography>
+          </Box>
+          <Divider />
+          <Box>
+            <Typography sx={{ marginTop: "10px" }}>
+              Requirements: {props.data?.requirements}
             </Typography>
           </Box>
         </CardContent>

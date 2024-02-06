@@ -25,8 +25,13 @@ export default class InternshipListingsService {
     return appAxios.post("/internship-listings", data).then((res) => res.data);
   };
 
-  public static editInternshipListing = async (id: string) => {
-    return appAxios.put(`/internship-listings/${id}`).then((res) => res.data);
+  public static editInternshipListing = async (
+    id: string,
+    newData: InternshipListingFormValues
+  ) => {
+    return appAxios
+      .put(`/internship-listings/${id}`, newData)
+      .then((res) => res.data);
   };
 
   public static deleteInternshipListing = async (id: string) => {

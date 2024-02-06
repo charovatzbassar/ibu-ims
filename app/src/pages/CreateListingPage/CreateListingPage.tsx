@@ -36,19 +36,6 @@ const CreateListingPage: React.FC = () => {
 
   return (
     <>
-      {isSuccess && (
-        <div
-          style={{
-            textAlign: "left",
-            display: "flex",
-            flexDirection: "row-reverse",
-          }}
-        >
-          <Alert severity="success" sx={{ position: "fixed" }}>
-            Internship Listing successfully created!
-          </Alert>
-        </div>
-      )}
       {isError && (
         <div
           style={{
