@@ -55,13 +55,14 @@ const InternshipListingForm = (props: Props) => {
         position: data?.position,
         listingDescription: data?.listingDescription,
         location: data?.location,
-        startDate: data?.startDate,
-        endDate: data?.endDate,
+        // startDate: data?.startDate,
+        // endDate: data?.endDate,
         requirements: data?.requirements,
         noOfPlaces: data?.noOfPlaces,
       });
     }
   }, [data, reset, action]);
+
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

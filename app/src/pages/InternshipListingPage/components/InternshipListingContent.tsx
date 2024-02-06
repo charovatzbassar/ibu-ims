@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { modalStyle } from "@/utils";
+import { Link } from "react-router-dom";
 
 type Props = {
   data?: InternshipListing;
@@ -22,6 +23,7 @@ type Props = {
 
 const InternshipListingContent = (props: Props) => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+
 
   return (
     <>
@@ -105,7 +107,12 @@ const InternshipListingContent = (props: Props) => {
             <Divider />
             <CardActions sx={{ margin: "10px" }}>
               <Button variant="contained" color="warning">
-                Edit
+                <Link
+                  to={`/home/internship-listings/${props.data?.listingID}/edit`}
+                  style={{ textDecoration: "none", color: "white" }}
+                >
+                  Edit
+                </Link>
               </Button>
               <Button
                 variant="contained"
