@@ -1,6 +1,6 @@
 import { useDeleteInternshipListing, useInternshipListing } from "@/hooks";
 import { Navigate, useParams } from "react-router-dom";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { InternshipListingContent } from "./components";
 import { isListingOwner } from "@/utils";
 import { useSelector } from "react-redux";
@@ -33,6 +33,11 @@ const InternshipListingPage = () => {
         />
       )}
       {isDeletionSuccess && <Navigate to="/home/dashboard" />}
+      {user.role === "intern" && (
+        <Button color="success" variant="contained" sx={{ margin: "10px" }}>
+          Apply
+        </Button>
+      )}
     </>
   );
 };

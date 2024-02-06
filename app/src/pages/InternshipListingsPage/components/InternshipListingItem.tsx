@@ -46,7 +46,7 @@ const InternshipListingItem = (props: Props) => {
         </Box>
         <Divider />
         <Typography sx={{ marginY: "10px" }}>
-          Available openings: {props.data?.noOfPlaces}
+          Available spots: {props.data?.noOfPlaces}
         </Typography>
         <Divider />
 

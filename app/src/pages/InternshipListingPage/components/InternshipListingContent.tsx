@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { modalStyle } from "@/utils";
+import { userInfo } from "os";
 
 type Props = {
   data?: InternshipListing;
@@ -66,39 +67,53 @@ const InternshipListingContent = (props: Props) => {
         key={props.data?.listingID}
       >
         <CardContent>
-          <Typography variant="h5" component="div">
-            {props.data?.position}
-          </Typography>
-          <Typography variant="body2">
-            {props.data?.company.companyName} - {props.data?.location}
-          </Typography>
+          <Box sx={{ marginY: "10px" }}>
+            <Typography variant="h5" component="div">
+              {props.data?.position}
+            </Typography>
+            <Typography variant="body2">
+              {props.data?.company.companyName} - {props.data?.location}
+            </Typography>
+          </Box>
           <Divider />
-          <Typography sx={{ marginY: "10px" }}>
-            {props.data?.listingDescription}
-          </Typography>
+          <Box sx={{ marginY: "10px" }}>
+            <Typography sx={{ marginY: "10px" }}>
+              {props.data?.listingDescription}
+            </Typography>
+          </Box>
           <Divider />
 
-          <Typography variant="body2">
-            From: {new Date(props.data?.startDate || "").toDateString()}
-          </Typography>
-          <Typography variant="body2">
-            To: {new Date(props.data?.endDate || "").toDateString()}
-          </Typography>
+          <Box sx={{ marginY: "10px" }}>
+            <Typography variant="body2">
+              From: {new Date(props.data?.startDate || "").toDateString()}
+            </Typography>
+            <Typography variant="body2">
+              To: {new Date(props.data?.endDate || "").toDateString()}
+            </Typography>
+          </Box>
           <Divider />
+          <Box>
+            <Typography sx={{ marginY: "10px" }}>
+              Available spots: {props.data?.noOfPlaces}
+            </Typography>
+          </Box>
         </CardContent>
         {props.isOwner && (
-          <CardActions>
-            <Button variant="contained" color="warning">
-              Edit
-            </Button>
-            <Button
-              variant="contained"
-              color="error"
-              onClick={() => setModalOpen(true)}
-            >
-              Delete
-            </Button>
-          </CardActions>
+          <>
+            <Divider />
+            <CardActions>
+              <Button variant="contained" color="warning">
+                Edit
+              </Button>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => setModalOpen(true)}
+              >
+                Delete
+              </Button>
+            </CardActions>
+          </>
         )}
       </Card>
     </>
