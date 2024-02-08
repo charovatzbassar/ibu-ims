@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import {
   DashboardPage,
   InternshipListingsPage,
@@ -8,6 +8,7 @@ import {
   InternshipListingPage,
   EditListingPage,
   MyListingsPage,
+  ProfileInfoPage,
 } from "@/pages";
 import { Navigation } from "@/components";
 import { ProtectedRoute, RoleRoute } from "@/utils";
@@ -27,6 +28,7 @@ function App(): ReactElement {
             path="internship-listings/:listingID"
             element={<InternshipListingPage />}
           />
+          <Route path="profile-info" element={<ProfileInfoPage />} />
           <Route element={<RoleRoute role="company" />}>
             <Route path="create-listing" element={<CreateListingPage />} />
             <Route
@@ -37,7 +39,7 @@ function App(): ReactElement {
           </Route>
         </Route>
       </Route>
-      <Route path="*" element={<h1>404</h1>} />
+      <Route path="*" element={<Navigate to="/home/dashboard" />} />
     </Routes>
   );
 }

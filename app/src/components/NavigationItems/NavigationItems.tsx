@@ -35,12 +35,6 @@ const getNavigationItems = (role: string) => {
             </ListItemIcon>
             <ListItemText primary="Internship Days" />
           </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <Info />
-            </ListItemIcon>
-            <ListItemText primary="My Profile" />
-          </ListItemButton>
         </>
       );
     case "manager":
@@ -57,12 +51,6 @@ const getNavigationItems = (role: string) => {
               <Assignment />
             </ListItemIcon>
             <ListItemText primary="My Students" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <Info />
-            </ListItemIcon>
-            <ListItemText primary="My Profile" />
           </ListItemButton>
         </>
       );
@@ -97,12 +85,6 @@ const getNavigationItems = (role: string) => {
               <ListItemText primary="Create Listing" />
             </ListItemButton>
           </Link>
-          <ListItemButton>
-            <ListItemIcon>
-              <Info />
-            </ListItemIcon>
-            <ListItemText primary="Company Info" />
-          </ListItemButton>
         </>
       );
   }
@@ -136,6 +118,17 @@ const NavigationItems: React.FC<NavigationItemsProps> = (props) => {
         </ListItemButton>
       </Link>
       {getNavigationItems(props.role)}
+      <Link
+        to="/home/profile-info"
+        style={{ textDecoration: "none", color: "black" }}
+      >
+        <ListItemButton>
+          <ListItemIcon>
+            <Info />
+          </ListItemIcon>
+          <ListItemText primary="Profile Info" />
+        </ListItemButton>
+      </Link>
       <ListItemButton onClick={() => dispatch(logout())}>
         <ListItemIcon>
           <Logout />
