@@ -7,6 +7,7 @@ import {
   CreateListingPage,
   InternshipListingPage,
   EditListingPage,
+  MyListingsPage,
 } from "@/pages";
 import { Navigation } from "@/components";
 import { ProtectedRoute, RoleRoute } from "@/utils";
@@ -32,7 +33,7 @@ function App(): ReactElement {
               path="internship-listings/:listingID/edit"
               element={<EditListingPage />}
             />
-            <Route path="my-listings"></Route>
+            <Route path="my-listings" element={<MyListingsPage />} />
           </Route>
         </Route>
       </Route>

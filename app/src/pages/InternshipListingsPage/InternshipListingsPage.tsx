@@ -34,7 +34,6 @@ const InternshipListingsPage: React.FC = () => {
     data && Math.ceil(data?.length / itemsPerPage);
 
   const onSearch = (data) => {
-    console.log(data.searchTerm);
     setSearchParams({ searchTerm: data.searchTerm });
     queryClient.invalidateQueries({
       queryKey: ["internship-listings", data.searchTerm],

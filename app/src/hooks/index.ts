@@ -5,3 +5,4 @@ export { default as useCompany } from "./useCompany";
 export { default as useCreateInternshipListing } from "./useCreateInternshipListing";
 export { default as useEditInternshipListing } from "./useEditInternshipListing";
 export { default as useDeleteInternshipListing } from "./useDeleteInternshipListing";
+export { default as useInternshipListingsByCompany } from "./useInternshipListingsByCompany";
