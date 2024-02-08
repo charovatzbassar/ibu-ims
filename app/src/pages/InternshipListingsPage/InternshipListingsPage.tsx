@@ -8,7 +8,7 @@ import {
   InputBase,
   Typography,
 } from "@mui/material";
-import { InternshipListingItem } from "./components";
+import { InternshipListingItem } from "@/components";
 import { Search } from "@mui/icons-material";
 import { useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
