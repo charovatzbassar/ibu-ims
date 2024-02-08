@@ -44,6 +44,7 @@ const InternshipListingForm = (props: Props) => {
     register,
     reset,
     control,
+    trigger,
     formState: { errors, isValid },
   } = useForm<InternshipListingFormValues>();
 
@@ -108,9 +109,7 @@ const InternshipListingForm = (props: Props) => {
             name="startDate"
             control={control}
             defaultValue={
-              FormAction.UPDATE
-                ? new Date(data?.startDate || "")
-                : undefined
+              FormAction.UPDATE ? new Date(data?.startDate || "") : undefined
             }
             render={({ field }) => (
               <DatePicker
@@ -132,9 +131,7 @@ const InternshipListingForm = (props: Props) => {
             name="endDate"
             control={control}
             defaultValue={
-              FormAction.UPDATE
-                ? new Date(data?.endDate || "")
-                : undefined
+              FormAction.UPDATE ? new Date(data?.endDate || "") : undefined
             }
             render={({ field }) => (
               <DatePicker
@@ -176,7 +173,7 @@ const InternshipListingForm = (props: Props) => {
 
       <Button
         sx={{ margin: "10px", display: "flex" }}
-        onClick={isValid ? () => setModalOpen(true) : undefined}
+        onClick={isValid ? () => setModalOpen(true) : () => trigger()}
         variant="contained"
         color="primary"
       >
