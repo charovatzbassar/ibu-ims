@@ -63,6 +63,7 @@ module.exports = {
     res.json(listing);
   },
   updateInternshipListing: async (req, res) => {
+
     const company = await prisma.company.findUnique({
       where: {
         contactEmail: req.user.profile.emails[0].value,

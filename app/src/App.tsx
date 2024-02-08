@@ -32,9 +32,11 @@ function App(): ReactElement {
               path="internship-listings/:listingID/edit"
               element={<EditListingPage />}
             />
+            <Route path="my-listings"></Route>
           </Route>
         </Route>
       </Route>
+      <Route path="*" element={<h1>404</h1>} />
     </Routes>
   );
 }
