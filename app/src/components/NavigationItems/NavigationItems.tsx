@@ -75,12 +75,17 @@ const getNavigationItems = (role: string) => {
             </ListItemIcon>
             <ListItemText primary="My Internships" />
           </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <FormatListBulleted />
-            </ListItemIcon>
-            <ListItemText primary="My Listings" />
-          </ListItemButton>
+          <Link
+            to="/home/my-listings"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <FormatListBulleted />
+              </ListItemIcon>
+              <ListItemText primary="My Listings" />
+            </ListItemButton>
+          </Link>
           <Link
             to="/home/create-listing"
             style={{ textDecoration: "none", color: "black" }}

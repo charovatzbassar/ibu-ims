@@ -16,6 +16,10 @@ router
   );
 
 router
+  .route("/company")
+  .get(catchAsync(internshipListingService.getInternshipListingsByCompany));
+
+router
   .route("/:id")
   .get(catchAsync(internshipListingService.getInternshipListing))
   .put(

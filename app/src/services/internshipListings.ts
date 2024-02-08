@@ -39,4 +39,10 @@ export default class InternshipListingsService {
       .delete(`/internship-listings/${id}`)
       .then((res) => res.data);
   };
+
+  public static getInternshipListingsByCompany = async (): Promise<
+    InternshipListing[]
+  > => {
+    return appAxios.get("/internship-listings/company").then((res) => res.data);
+  };
 }

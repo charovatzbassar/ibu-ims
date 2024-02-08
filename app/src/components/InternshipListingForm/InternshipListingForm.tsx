@@ -15,7 +15,7 @@ import {
 import React, { useEffect } from "react";
 import { FormAction } from "@/utils";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { modalStyle } from "@/utils";
@@ -52,13 +52,11 @@ const InternshipListingForm = (props: Props) => {
   useEffect(() => {
     if (data && action === FormAction.UPDATE) {
       reset({
-        position: data?.position,
-        listingDescription: data?.listingDescription,
-        location: data?.location,
-        // startDate: data?.startDate,
-        // endDate: data?.endDate,
-        requirements: data?.requirements,
-        noOfPlaces: data?.noOfPlaces,
+        position: data.position,
+        listingDescription: data.listingDescription,
+        location: data.location,
+        requirements: data.requirements,
+        noOfPlaces: data.noOfPlaces,
       });
     }
   }, [data, reset, action]);
@@ -101,7 +99,7 @@ const InternshipListingForm = (props: Props) => {
         helperText={errors.location && errors.location.message}
       />
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DemoContainer
           sx={{ margin: "10px", display: "grid" }}
           components={["DatePicker"]}
@@ -109,11 +107,15 @@ const InternshipListingForm = (props: Props) => {
           <Controller
             name="startDate"
             control={control}
+            defaultValue={
+              FormAction.UPDATE
+                ? new Date(data?.startDate || "")
+                : undefined
+            }
             render={({ field }) => (
               <DatePicker
                 {...field}
                 label="Start date"
-                format="DD/MM/YYYY"
                 onChange={(date) => field.onChange(date)}
               />
             )}
@@ -121,7 +123,7 @@ const InternshipListingForm = (props: Props) => {
         </DemoContainer>
       </LocalizationProvider>
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
         <DemoContainer
           sx={{ margin: "10px", display: "grid" }}
           components={["DatePicker"]}
@@ -129,11 +131,15 @@ const InternshipListingForm = (props: Props) => {
           <Controller
             name="endDate"
             control={control}
+            defaultValue={
+              FormAction.UPDATE
+                ? new Date(data?.endDate || "")
+                : undefined
+            }
             render={({ field }) => (
               <DatePicker
                 {...field}
                 label="End date"
-                format="DD/MM/YYYY"
                 onChange={(date) => field.onChange(date)}
               />
             )}

@@ -123,4 +123,20 @@ module.exports = {
 
     res.json(deletedListing);
   },
+
+  getInternshipListingsByCompany: async (req, res) => {
+    const allListings = await prisma.internship_listing.findMany({
+      include: {
+        company: true,
+      },
+      where: {
+        company: {
+          contactEmail: {
+            equals: req.user.profile.emails[0].value,
+          },
+        },
+      },
+    });
+    res.json(allListings);
+  },
 };
