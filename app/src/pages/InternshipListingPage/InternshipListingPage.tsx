@@ -1,4 +1,8 @@
-import { useDeleteInternshipListing, useInternshipListing } from "@/hooks";
+import {
+  useCreateApplication,
+  useDeleteInternshipListing,
+  useInternshipListing,
+} from "@/hooks";
 import { Navigate, useParams } from "react-router-dom";
 import { Alert, Button, CircularProgress } from "@mui/material";
 import { InternshipListingContent } from "./components";
@@ -14,6 +18,8 @@ const InternshipListingPage = () => {
     isError: isDeletionError,
     isSuccess: isDeletionSuccess,
   } = useDeleteInternshipListing(listingID || "");
+
+  const { mutate: apply } = useCreateApplication();
 
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -46,7 +52,12 @@ const InternshipListingPage = () => {
         </div>
       )}
       {user.role === "intern" && (
-        <Button color="success" variant="contained" sx={{ margin: "10px" }}>
+        <Button
+          color="success"
+          variant="contained"
+          sx={{ margin: "10px" }}
+          onClick={() => apply(data?.listingID || "")}
+        >
           Apply
         </Button>
       )}

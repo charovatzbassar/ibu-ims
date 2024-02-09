@@ -18,11 +18,12 @@ model company {
 }
 
 model intern {
-  internID    Int          @id @default(autoincrement())
-  firstName   String?      @db.VarChar(25)
-  lastName    String?      @db.VarChar(25)
-  dateOfBirth DateTime?    @db.Date
-  email       String?      @unique(map: "email") @db.VarChar(35)
+  internID    Int           @id @default(autoincrement())
+  firstName   String?       @db.VarChar(25)
+  lastName    String?       @db.VarChar(25)
+  dateOfBirth DateTime?     @db.Date
+  email       String?       @unique(map: "email") @db.VarChar(35)
+  application application[]
   internship  internship[]
 }
 
@@ -53,16 +54,17 @@ model internship_days {
 }
 
 model internship_listing {
-  listingID          String    @id @db.VarChar(36)
+  listingID          String        @id @db.VarChar(36)
   companyID          Int?
-  position           String    @db.VarChar(100)
-  listingDescription String?   @db.Text
-  location           String?   @db.Text
-  startDate          DateTime? @db.Date
-  endDate            DateTime? @db.Date
-  requirements       String?   @db.Text
+  position           String        @db.VarChar(100)
+  listingDescription String?       @db.Text
+  location           String?       @db.Text
+  startDate          DateTime?     @db.Date
+  endDate            DateTime?     @db.Date
+  requirements       String?       @db.Text
   noOfPlaces         Int?
-  company            company?  @relation(fields: [companyID], references: [companyID], onDelete: NoAction, onUpdate: NoAction, map: "fk_companyID")
+  application        application[]
+  company            company?      @relation(fields: [companyID], references: [companyID], onDelete: NoAction, onUpdate: NoAction, map: "fk_companyID")
 
   @@index([companyID], map: "fk_companyID")
 }
@@ -74,4 +76,16 @@ model manager {
   dateOfBirth DateTime?    @db.Date
   email       String?      @unique(map: "email") @db.VarChar(35)
   internship  internship[]
+}
+
+model application {
+  applicationID      String              @id @db.VarChar(36)
+  listingID          String?             @db.VarChar(36)
+  internID           Int?
+  applicationStatus  String?             @db.VarChar(15)
+  intern             intern?             @relation(fields: [internID], references: [internID], onDelete: NoAction, onUpdate: NoAction, map: "applicationinternid")
+  internship_listing internship_listing? @relation(fields: [listingID], references: [listingID], onDelete: NoAction, onUpdate: NoAction, map: "applicationlistingid")
+
+  @@index([internID], map: "applicationinternid")
+  @@index([listingID], map: "applicationlistingid")
 }

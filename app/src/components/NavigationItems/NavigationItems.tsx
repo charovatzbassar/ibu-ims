@@ -10,6 +10,7 @@ import {
   Dashboard,
   Addchart,
   FormatListBulleted,
+  AccessTime,
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/slices/auth";
@@ -28,6 +29,12 @@ const getNavigationItems = (role: string) => {
               <BarChart />
             </ListItemIcon>
             <ListItemText primary="My Internship" />
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <AccessTime />
+            </ListItemIcon>
+            <ListItemText primary="My Applications" />
           </ListItemButton>
           <ListItemButton>
             <ListItemIcon>

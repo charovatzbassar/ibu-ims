@@ -35,3 +35,10 @@ export type InternshipListingFormValues = {
   requirements: string;
   noOfPlaces: number;
 };
+
+export type Application = {
+  readonly applicationID: string;
+  readonly listingID: string;
+  readonly internID: number;
+  readonly applicationStatus: string;
+};
