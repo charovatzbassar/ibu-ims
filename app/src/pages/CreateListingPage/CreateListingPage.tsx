@@ -1,9 +1,8 @@
 import React from "react";
-import { InternshipListingForm } from "@/components";
+import { ErrorAlert, InternshipListingForm } from "@/components";
 import { FormAction } from "@/utils";
 import { useCreateInternshipListing } from "@/hooks";
 import { InternshipListingFormValues } from "@/services/types";
-import { Alert } from "@mui/material";
 import { Navigate } from "react-router-dom";
 
 const CreateListingPage: React.FC = () => {
@@ -36,19 +35,7 @@ const CreateListingPage: React.FC = () => {
 
   return (
     <>
-      {isError && (
-        <div
-          style={{
-            textAlign: "left",
-            display: "flex",
-            flexDirection: "row-reverse",
-          }}
-        >
-          <Alert severity="error" sx={{ position: "fixed" }}>
-            An error occured. Please try again later.
-          </Alert>{" "}
-        </div>
-      )}
+      {isError && <ErrorAlert />}
       <InternshipListingForm
         onSubmit={onSubmit}
         action={FormAction.CREATE}

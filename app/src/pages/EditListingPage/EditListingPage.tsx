@@ -1,11 +1,10 @@
-import { InternshipListingForm } from "@/components";
+import { ErrorAlert, InternshipListingForm } from "@/components";
 import { FormAction, isListingOwner } from "@/utils";
 import { useEditInternshipListing, useInternshipListing } from "@/hooks";
 import { Navigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import { InternshipListingFormValues } from "@/services/types";
-import { Alert } from "@mui/material";
 
 const EditListingPage = () => {
   const { listingID } = useParams();
@@ -47,19 +46,7 @@ const EditListingPage = () => {
       {!isListingOwner(data, user) && (
         <Navigate to="/home/internship-listings" />
       )}
-      {isError && (
-        <div
-          style={{
-            textAlign: "left",
-            display: "flex",
-            flexDirection: "row-reverse",
-          }}
-        >
-          <Alert severity="error" sx={{ position: "fixed" }}>
-            An error occured. Please try again later.
-          </Alert>{" "}
-        </div>
-      )}
+      {isError && <ErrorAlert />}
       <InternshipListingForm
         action={FormAction.UPDATE}
         onSubmit={onSubmit}
