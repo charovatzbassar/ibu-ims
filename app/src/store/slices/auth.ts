@@ -9,6 +9,7 @@ const initialState = {
     lastName: null,
     email: null,
     role: null,
+    photo: null,
     token,
   },
 };
@@ -39,6 +40,7 @@ const authSlice = createSlice({
         firstName: profile?.name.givenName,
         lastName: profile?.name.familyName,
         email: profile?.emails[0].value,
+        photo: profile?.photos[0].value,
       };
 
       localStorage.setItem("token", jwtToken);

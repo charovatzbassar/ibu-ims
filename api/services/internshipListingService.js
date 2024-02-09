@@ -10,9 +10,20 @@ module.exports = {
         company: true,
       },
       where: {
-        position: {
-          contains: searchTerm,
-        },
+        OR: [
+          {
+            position: {
+              contains: searchTerm,
+            },
+          },
+          {
+            company: {
+              companyName: {
+                contains: searchTerm,
+              },
+            },
+          },
+        ],
       },
     });
     res.json(allListings);

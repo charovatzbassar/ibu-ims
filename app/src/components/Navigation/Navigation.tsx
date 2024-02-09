@@ -111,6 +111,16 @@ export default function Dashboard() {
               IBU Internship Management System
             </Typography>
             {user?.firstName} {user?.lastName}
+            <img
+              src={user?.photo || ""}
+              alt="Profile Photo"
+              style={{
+                width: "60px",
+                paddingRight: " 10px",
+                paddingLeft: " 10px",
+                borderRadius: "50%",
+              }}
+            />
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>

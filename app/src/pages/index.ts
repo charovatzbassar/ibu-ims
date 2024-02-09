@@ -5,3 +5,4 @@ export { default as CreateListingPage } from "./CreateListingPage";
 export { default as InternshipListingPage } from "./InternshipListingPage";
 export { default as EditListingPage } from "./EditListingPage";
 export { default as MyListingsPage } from "./MyListingsPage";
+export { default as ProfileInfoPage } from "./ProfileInfoPage";
