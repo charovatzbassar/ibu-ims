@@ -109,13 +109,16 @@ const InternshipListingForm = (props: Props) => {
             name="startDate"
             control={control}
             defaultValue={
-              FormAction.UPDATE ? new Date(data?.startDate || "") : undefined
+              FormAction.UPDATE && data?.startDate
+                ? new Date(data.startDate)
+                : null
             }
             render={({ field }) => (
               <DatePicker
                 {...field}
                 label="Start date"
                 onChange={(date) => field.onChange(date)}
+                value={field.value || null}
               />
             )}
           />
@@ -131,13 +134,14 @@ const InternshipListingForm = (props: Props) => {
             name="endDate"
             control={control}
             defaultValue={
-              FormAction.UPDATE ? new Date(data?.endDate || "") : undefined
+              FormAction.UPDATE && data?.endDate ? new Date(data.endDate) : null
             }
             render={({ field }) => (
               <DatePicker
                 {...field}
                 label="End date"
                 onChange={(date) => field.onChange(date)}
+                value={field.value || null}
               />
             )}
           />
