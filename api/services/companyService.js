@@ -16,7 +16,7 @@ module.exports = {
   getCompany: async (req, res) => {
     const company = await prisma.company.findUnique({
       where: {
-        companyID: Number(req.params.id),
+        companyID: req.params.id,
       },
     });
 
@@ -29,13 +29,13 @@ module.exports = {
       },
     });
 
-    if (company.companyID !== Number(req.params.id)) {
+    if (company.companyID !== req.params.id) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
     const updatedCompany = await prisma.company.update({
       where: {
-        companyID: Number(req.params.id),
+        companyID: req.params.id,
       },
       data: {
         ...req.body,
@@ -47,7 +47,7 @@ module.exports = {
   deleteCompany: async (req, res) => {
     const deletedCompany = await prisma.company.delete({
       where: {
-        companyID: Number(req.params.id),
+        companyID: req.params.id,
       },
     });
 

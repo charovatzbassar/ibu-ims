@@ -3,23 +3,13 @@ import {
   InternshipListingFormValues,
 } from "@/services/types";
 import { Controller, useForm } from "react-hook-form";
-import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Fade,
-  Modal,
-  Card,
-  Backdrop,
-} from "@mui/material";
+import { TextField, Button, Typography, Card } from "@mui/material";
 import React, { useEffect } from "react";
 import { FormAction } from "@/utils";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { modalStyle } from "@/utils";
 import { ConfirmModal } from "..";
 
 type Props = {
@@ -191,7 +181,7 @@ const InternshipListingForm = (props: Props) => {
 
         <ConfirmModal
           onClick={(e) => {
-            e.preventDefault();
+            e!.preventDefault();
             setModalOpen(false);
             handleSubmit(onSubmit)();
           }}
@@ -204,7 +194,6 @@ const InternshipListingForm = (props: Props) => {
             listing?
           </Typography>
         </ConfirmModal>
-
       </form>
     </Card>
   );

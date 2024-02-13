@@ -58,7 +58,7 @@
         }
       }
     },
-    "/api/internships/": {
+    "/api/internship-listings/": {
       "get": {
         "description": "",
         "responses": {
@@ -76,7 +76,17 @@
         }
       }
     },
-    "/api/internships/{id}": {
+    "/api/internship-listings/company": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/internship-listings/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -93,7 +103,7 @@
           }
         }
       },
-      "delete": {
+      "put": {
         "description": "",
         "parameters": [
           {
@@ -109,7 +119,7 @@
           }
         }
       },
-      "patch": {
+      "delete": {
         "description": "",
         "parameters": [
           {
@@ -161,7 +171,7 @@
           }
         }
       },
-      "delete": {
+      "put": {
         "description": "",
         "parameters": [
           {
@@ -177,7 +187,7 @@
           }
         }
       },
-      "patch": {
+      "delete": {
         "description": "",
         "parameters": [
           {
@@ -187,6 +197,24 @@
             "type": "string"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/applications/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "description": "",
         "responses": {
           "200": {
             "description": "OK"

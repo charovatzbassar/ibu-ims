@@ -1,7 +1,12 @@
 import React from "react";
 import { useInternshipListingsByCompany } from "@/hooks";
-import { InternshipListingItem } from "@/components";
-import { Pagination, PaginationItem } from "@mui/material";
+import { ErrorAlert, InternshipListingItem } from "@/components";
+import {
+  CircularProgress,
+  Pagination,
+  PaginationItem,
+  Typography,
+} from "@mui/material";
 
 const MyListingsPage = () => {
   const { data, isPending, isError } = useInternshipListingsByCompany();
@@ -20,6 +25,8 @@ const MyListingsPage = () => {
 
   return (
     <>
+      {isPending && <CircularProgress />}
+      {isError && <ErrorAlert />}
       {data && data.length !== 0 && (
         <div>
           {data.slice(startIndex, endIndex).map((internshipListing) => {
@@ -45,6 +52,13 @@ const MyListingsPage = () => {
               />
             )}
           />
+        </div>
+      )}
+      {data && data.length === 0 && (
+        <div>
+          <Typography>
+            No Listings Found. Start by creating a listing!
+          </Typography>
         </div>
       )}
     </>
