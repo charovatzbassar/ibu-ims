@@ -5,12 +5,13 @@ import {
 } from "@/hooks";
 import { Navigate, useParams } from "react-router-dom";
 import { Alert, Button, CircularProgress, Typography } from "@mui/material";
-import { InternshipListingContent } from "./components";
+import { InternshipListingContent, ApplicationTable } from "./components";
 import { isListingOwner } from "@/utils";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import React from "react";
 import { ConfirmModal, ErrorAlert } from "@/components";
+import { useApplications } from "@/hooks";
 
 const InternshipListingPage = () => {
   const { listingID } = useParams();
@@ -21,11 +22,16 @@ const InternshipListingPage = () => {
     isSuccess: isDeletionSuccess,
   } = useDeleteInternshipListing(listingID || "");
 
+  const {
+    data: applications,
+    isPending: isApplicationsPending,
+    isError: isApplicationsError,
+  } = useApplications(listingID || "");
+
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
   const {
     mutate: apply,
-    isPending: isApplicationPending,
     isError: isApplicationError,
     isSuccess: isApplicationSuccess,
   } = useCreateApplication();
@@ -49,6 +55,7 @@ const InternshipListingPage = () => {
           </Alert>{" "}
         </div>
       )}
+      {isApplicationError && <ErrorAlert />}
       {isPending && <CircularProgress />}
       {!isPending && !isError && (
         <InternshipListingContent
@@ -58,6 +65,10 @@ const InternshipListingPage = () => {
             deleteListing();
           }}
         />
+      )}
+      {isApplicationsPending && <CircularProgress />}
+      {!isApplicationsPending && !isApplicationsError && (
+        <ApplicationTable data={applications} />
       )}
       {isDeletionSuccess && <Navigate to="/home/dashboard" />}
       {isDeletionError && <ErrorAlert />}

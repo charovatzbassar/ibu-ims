@@ -9,7 +9,8 @@ router.use(checkAuth);
 
 router
   .route("/")
-  .get(checkRole("company"), catchAsync(applicationService.getApplications))
   .post(checkRole("intern"), catchAsync(applicationService.createApplication));
+
+router.route("/:listingID").get(catchAsync(applicationService.getApplications));
 
 module.exports = router;

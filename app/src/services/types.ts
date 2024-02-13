@@ -11,11 +11,19 @@ export type InternshipListing = {
 };
 
 export type Company = {
-  readonly companyID: number;
+  readonly companyID: string;
   readonly companyName: string;
   readonly location: string;
   readonly contactEmail: string;
   readonly companyLogo: string;
+};
+
+export type Intern = {
+  readonly internID: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly dateOfBirth: string | null;
+  readonly email: string;
 };
 
 export type User = {
@@ -39,6 +47,8 @@ export type InternshipListingFormValues = {
 export type Application = {
   readonly applicationID: string;
   readonly listingID: string;
-  readonly internID: number;
+  readonly internID: string;
   readonly applicationStatus: string;
+  readonly intern: Intern;
+  readonly internshipListing: InternshipListing;
 };

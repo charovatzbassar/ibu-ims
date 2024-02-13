@@ -7,4 +7,8 @@ export default class ApplicationsService {
       .post("/applications", { listingID })
       .then((res) => res.data);
   };
+
+  public static getApplications = async (listingID: string) => {
+    return appAxios.get(`/applications/${listingID}`).then((res) => res.data);
+  };
 }

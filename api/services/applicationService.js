@@ -5,12 +5,13 @@ module.exports = {
   getApplications: async (req, res) => {
     const allApplications = await prisma.application.findMany({
       include: {
+        internship_listing: true,
         intern: true,
       },
       where: {
-        intern: {
-          email: req.user.profile.emails[0].value,
-        },
+        internship_listing: {
+          listingID: req.params.listingID,
+        }
       },
     });
 
