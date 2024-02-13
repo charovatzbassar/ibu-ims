@@ -56,7 +56,7 @@ const InternshipListingItem = (props: Props) => {
               to={`/home/internship-listings/${props.data?.listingID}`}
               style={{ textDecoration: "none", color: "white" }}
             >
-              Learn More
+              Details
             </Link>
           </Button>
         </CardActions>

@@ -47,7 +47,6 @@ const InternshipListingContent = (props: Props) => {
       <Card
         sx={{
           minWidth: 275,
-          margin: "10px",
           display: "flex",
           flexDirection: "column",
           flexWrap: "wrap",

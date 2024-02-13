@@ -67,9 +67,9 @@ const InternshipListingPage = () => {
         />
       )}
       {isApplicationsPending && <CircularProgress />}
-      {!isApplicationsPending && !isApplicationsError && (
-        <ApplicationTable data={applications} />
-      )}
+      {user.role === "company" &&
+        !isApplicationsPending &&
+        !isApplicationsError && <ApplicationTable data={applications} />}
       {isDeletionSuccess && <Navigate to="/home/dashboard" />}
       {isDeletionError && <ErrorAlert />}
       {user.role === "intern" && (
