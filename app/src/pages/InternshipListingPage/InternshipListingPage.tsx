@@ -71,18 +71,24 @@ const InternshipListingPage = () => {
       {user.role === "company" && isApplicationsPending && isOwner && (
         <CircularProgress />
       )}
-      {user.role === "company" && isOwner && applications?.length === 0 && (
+      {user.role === "company" && isOwner && (
         <Card sx={{ padding: "20px", marginY: "20px" }}>
-          There are no pending applications.
+          {applications?.length === 0 &&
+            approvedApplications?.length !== data?.noOfPlaces &&
+            "There are no pending applications."}{" "}
+          {approvedApplications?.length === data?.noOfPlaces &&
+            "All places have been filled."}
         </Card>
       )}
       {user.role === "company" &&
         applications?.length > 0 &&
         !isApplicationsPending &&
         !isApplicationsError &&
-        isOwner && (
+        isOwner &&
+        approvedApplications?.length < 4 && (
           <ApplicationTable data={applications} modifyHook={modifyHook} />
         )}
+
       {user.role === "company" &&
         approvedApplications?.length > 0 &&
         !isApprovedApplicationsPending &&
