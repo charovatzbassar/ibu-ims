@@ -9,3 +9,4 @@ export { default as useInternshipListingsByCompany } from "./useInternshipListin
 export { default as useCreateApplication } from "./useCreateApplication";
 export { default as useApplications } from "./useApplications";
 export { default as useModifyApplicationStatus } from "./useModifyApplicationStatus";
+export { default as useCreateInternship } from "./useCreateInternship";

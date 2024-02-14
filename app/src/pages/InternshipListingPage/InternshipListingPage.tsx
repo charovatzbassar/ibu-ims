@@ -1,5 +1,6 @@
 import {
   useCreateApplication,
+  useCreateInternship,
   useDeleteInternshipListing,
   useInternshipListing,
   useModifyApplicationStatus,
@@ -47,6 +48,9 @@ const InternshipListingPage = () => {
   } = useCreateApplication();
 
   const modifyHook = useModifyApplicationStatus();
+
+  const { mutate: createInternship, isSuccess: createInternshipSuccess } =
+    useCreateInternship();
 
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -129,7 +133,10 @@ const InternshipListingPage = () => {
             <ConfirmModal
               onClick={() => {
                 setStartInternshipModalOpen(false);
-                console.log("start internship");
+                createInternship({
+                  companyID: data?.company.companyID || "",
+                  internID: approvedApplications[0].internID,
+                });
               }}
               buttonColor="success"
               modalOpen={startInternshipModalOpen}
