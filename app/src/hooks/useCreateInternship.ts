@@ -4,10 +4,8 @@ import { useMutation } from "@tanstack/react-query";
 
 const useCreateInternship = () => {
   return useMutation({
-    mutationFn: (data: {
-      companyID: string;
-      internID: string;
-    }) => InternshipsService.createInternship(data.companyID, data.internID),
+    mutationFn: (data: { companyID: string; interns: string[] }) =>
+      InternshipsService.createInternship(data.companyID, data.interns),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["internships"] });
     },

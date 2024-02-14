@@ -58,6 +58,7 @@ const InternshipListingPage = () => {
 
   return (
     <>
+      {createInternshipSuccess && <Navigate to="/home/dashboard" />}
       {modifyHook.isSuccess && (
         <SuccessAlert content="Application status updated successfully!" />
       )}
@@ -100,7 +101,8 @@ const InternshipListingPage = () => {
         !isApplicationsPending &&
         !isApplicationsError &&
         isOwner &&
-        approvedApplications?.length < 4 && (
+        data?.noOfPlaces &&
+        approvedApplications?.length < data.noOfPlaces && (
           <ApplicationTable data={applications} modifyHook={modifyHook} />
         )}
 
@@ -135,7 +137,7 @@ const InternshipListingPage = () => {
                 setStartInternshipModalOpen(false);
                 createInternship({
                   companyID: data?.company.companyID || "",
-                  internID: approvedApplications[0].internID,
+                  interns: approvedApplications.map((app) => app.internID),
                 });
               }}
               buttonColor="success"
