@@ -2,7 +2,9 @@ const prisma = require("../prisma");
 const { v4: uuid } = require("uuid");
 
 module.exports = {
-  getApplications: async (req, res) => {
+  getApplicationsByStatus: async (req, res) => {
+    const { listingID, status } = req.params;
+
     const allApplications = await prisma.application.findMany({
       include: {
         internship_listing: true,
@@ -10,12 +12,28 @@ module.exports = {
       },
       where: {
         internship_listing: {
-          listingID: req.params.listingID,
-        }
+          listingID,
+        },
+        applicationStatus: status,
       },
     });
 
     res.json(allApplications);
+  },
+  modifyApplicationStatus: async (req, res) => {
+    const { listingID } = req.params;
+    const { status } = req.body;
+
+    const updatedApplication = await prisma.application.updateMany({
+      where: {
+        listingID,
+      },
+      data: {
+        applicationStatus: status,
+      },
+    });
+
+    res.json(updatedApplication);
   },
   createApplication: async (req, res) => {
     const { listingID } = req.body;

@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import React from "react";
 import { ConfirmModal, ErrorAlert } from "@/components";
-import { useApplications } from "@/hooks";
+import { useApplications, useModifyApplicationStatus } from "@/hooks";
 
 const InternshipListingPage = () => {
   const { listingID } = useParams();
@@ -26,7 +26,7 @@ const InternshipListingPage = () => {
     data: applications,
     isPending: isApplicationsPending,
     isError: isApplicationsError,
-  } = useApplications(listingID || "");
+  } = useApplications(listingID || "", "PENDING");
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
@@ -35,6 +35,10 @@ const InternshipListingPage = () => {
     isError: isApplicationError,
     isSuccess: isApplicationSuccess,
   } = useCreateApplication();
+
+  const { mutate: updateApplicationStatus } = useModifyApplicationStatus(
+    listingID || ""
+  );
 
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -69,7 +73,12 @@ const InternshipListingPage = () => {
       {isApplicationsPending && <CircularProgress />}
       {user.role === "company" &&
         !isApplicationsPending &&
-        !isApplicationsError && <ApplicationTable data={applications} />}
+        !isApplicationsError && (
+          <ApplicationTable
+            data={applications}
+            updateApplicationStatus={updateApplicationStatus}
+          />
+        )}
       {isDeletionSuccess && <Navigate to="/home/dashboard" />}
       {isDeletionError && <ErrorAlert />}
       {user.role === "intern" && (

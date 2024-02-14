@@ -11,6 +11,18 @@ router
   .route("/")
   .post(checkRole("intern"), catchAsync(applicationService.createApplication));
 
-router.route("/:listingID").get(catchAsync(applicationService.getApplications));
+router
+  .route("/:listingID")
+  .put(
+    checkRole("company"),
+    catchAsync(applicationService.modifyApplicationStatus)
+  );
+
+router
+  .route("/:listingID/:status")
+  .get(
+    checkRole("company"),
+    catchAsync(applicationService.getApplicationsByStatus)
+  );
 
 module.exports = router;

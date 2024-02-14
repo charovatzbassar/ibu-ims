@@ -12,10 +12,10 @@ import {
 
 type Props = {
   data: Application[];
+  updateApplicationStatus: (status: string) => void;
 };
 
 const ApplicationTable = (props: Props) => {
-  console.log(props.data);
   return (
     <TableContainer component={Paper} sx={{ marginTop: "20px" }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -43,6 +43,7 @@ const ApplicationTable = (props: Props) => {
                   color="success"
                   variant="contained"
                   sx={{ margin: "5px" }}
+                  onClick={() => props.updateApplicationStatus("APPROVED")}
                 >
                   Approve
                 </Button>
