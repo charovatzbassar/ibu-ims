@@ -2,14 +2,10 @@ import {
   useCreateApplication,
   useDeleteInternshipListing,
   useInternshipListing,
+  useModifyApplicationStatus,
 } from "@/hooks";
 import { Navigate, useParams } from "react-router-dom";
-import {
-  Button,
-  Card,
-  CircularProgress,
-  Typography,
-} from "@mui/material";
+import { Button, Card, CircularProgress, Typography } from "@mui/material";
 import { InternshipListingContent, ApplicationTable } from "./components";
 import { isListingOwner } from "@/utils";
 import { useSelector } from "react-redux";
@@ -19,7 +15,9 @@ import { ConfirmModal, ErrorAlert, SuccessAlert } from "@/components";
 import { useApplications } from "@/hooks";
 
 const InternshipListingPage = () => {
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const { listingID } = useParams();
+
   const { data, isPending, isError } = useInternshipListing(listingID || "");
   const {
     mutate: deleteListing,
@@ -33,7 +31,11 @@ const InternshipListingPage = () => {
     isError: isApplicationsError,
   } = useApplications(listingID || "", "PENDING");
 
-  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const {
+    data: approvedApplications,
+    isPending: isApprovedApplicationsPending,
+    isError: isApprovedApplicationsError,
+  } = useApplications(listingID || "", "APPROVED");
 
   const {
     mutate: apply,
@@ -41,12 +43,17 @@ const InternshipListingPage = () => {
     isSuccess: isApplicationSuccess,
   } = useCreateApplication();
 
+  const modifyHook = useModifyApplicationStatus();
+
   const user = useSelector((state: RootState) => state.auth.user);
 
   const isOwner = isListingOwner(data, user);
 
   return (
     <>
+      {modifyHook.isSuccess && (
+        <SuccessAlert content="Application status updated successfully!" />
+      )}
       {isApplicationSuccess && (
         <SuccessAlert content="Application submitted successfully!" />
       )}
@@ -74,10 +81,30 @@ const InternshipListingPage = () => {
         !isApplicationsPending &&
         !isApplicationsError &&
         isOwner && (
-          <ApplicationTable
-            data={applications}
-          />
+          <ApplicationTable data={applications} modifyHook={modifyHook} />
         )}
+      {user.role === "company" &&
+        approvedApplications?.length > 0 &&
+        !isApprovedApplicationsPending &&
+        !isApprovedApplicationsError &&
+        isOwner && (
+          <>
+            <Typography variant="h6" component="h2" sx={{ marginTop: "10px" }}>
+              Approved Applications
+            </Typography>
+            <ApplicationTable data={approvedApplications} />
+          </>
+        )}
+      {user.role === "company" &&
+        approvedApplications?.length === 0 &&
+        isOwner && (
+          <>
+            <Card sx={{ padding: "20px", marginY: "20px" }}>
+              There are no approved applications.
+            </Card>
+          </>
+        )}
+      {user.role === "company" && isApplicationsError && <ErrorAlert />}
       {isDeletionSuccess && <Navigate to="/home/dashboard" />}
       {isDeletionError && <ErrorAlert />}
       {user.role === "intern" && (
