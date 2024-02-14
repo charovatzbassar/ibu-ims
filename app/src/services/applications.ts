@@ -14,9 +14,9 @@ export default class ApplicationsService {
   };
 
   public static modifyApplicationStatus = async (
-    listingID: string,
+    applicationID: string,
     status: string
   ) => {
-    return appAxios.put(`/applications/${listingID}`, { status });
+    return appAxios.put(`/applications/${applicationID}`, { status });
   };
 }

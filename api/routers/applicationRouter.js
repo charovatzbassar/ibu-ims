@@ -12,7 +12,7 @@ router
   .post(checkRole("intern"), catchAsync(applicationService.createApplication));
 
 router
-  .route("/:listingID")
+  .route("/:applicationID")
   .put(
     checkRole("company"),
     catchAsync(applicationService.modifyApplicationStatus)

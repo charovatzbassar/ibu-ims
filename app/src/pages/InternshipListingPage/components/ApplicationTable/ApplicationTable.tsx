@@ -1,3 +1,4 @@
+import { useModifyApplicationStatus } from "@/hooks";
 import { Application } from "@/services/types";
 import {
   TableContainer,
@@ -12,10 +13,11 @@ import {
 
 type Props = {
   data: Application[];
-  updateApplicationStatus: (status: string) => void;
 };
 
 const ApplicationTable = (props: Props) => {
+  const { mutate } = useModifyApplicationStatus();
+
   return (
     <TableContainer component={Paper} sx={{ marginTop: "20px" }}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -43,7 +45,12 @@ const ApplicationTable = (props: Props) => {
                   color="success"
                   variant="contained"
                   sx={{ margin: "5px" }}
-                  onClick={() => props.updateApplicationStatus("APPROVED")}
+                  onClick={() =>
+                    mutate({
+                      applicationID: application.applicationID,
+                      status: "APPROVED",
+                    })
+                  }
                 >
                   Approve
                 </Button>
@@ -51,6 +58,12 @@ const ApplicationTable = (props: Props) => {
                   color="error"
                   variant="contained"
                   sx={{ margin: "5px" }}
+                  onClick={() =>
+                    mutate({
+                      applicationID: application.applicationID,
+                      status: "REJECTED",
+                    })
+                  }
                 >
                   Reject
                 </Button>

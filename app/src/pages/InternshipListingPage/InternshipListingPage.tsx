@@ -4,14 +4,19 @@ import {
   useInternshipListing,
 } from "@/hooks";
 import { Navigate, useParams } from "react-router-dom";
-import { Alert, Button, CircularProgress, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
 import { InternshipListingContent, ApplicationTable } from "./components";
 import { isListingOwner } from "@/utils";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import React from "react";
-import { ConfirmModal, ErrorAlert } from "@/components";
-import { useApplications, useModifyApplicationStatus } from "@/hooks";
+import { ConfirmModal, ErrorAlert, SuccessAlert } from "@/components";
+import { useApplications } from "@/hooks";
 
 const InternshipListingPage = () => {
   const { listingID } = useParams();
@@ -36,10 +41,6 @@ const InternshipListingPage = () => {
     isSuccess: isApplicationSuccess,
   } = useCreateApplication();
 
-  const { mutate: updateApplicationStatus } = useModifyApplicationStatus(
-    listingID || ""
-  );
-
   const user = useSelector((state: RootState) => state.auth.user);
 
   const isOwner = isListingOwner(data, user);
@@ -47,19 +48,9 @@ const InternshipListingPage = () => {
   return (
     <>
       {isApplicationSuccess && (
-        <div
-          style={{
-            textAlign: "left",
-            display: "flex",
-            flexDirection: "row-reverse",
-          }}
-        >
-          <Alert severity="success" sx={{ position: "fixed" }}>
-            Applied successfully!
-          </Alert>{" "}
-        </div>
+        <SuccessAlert content="Application submitted successfully!" />
       )}
-      {isApplicationError && <ErrorAlert />}
+      {user.role === "company" && isApplicationError && <ErrorAlert />}
       {isPending && <CircularProgress />}
       {!isPending && !isError && (
         <InternshipListingContent
@@ -70,13 +61,21 @@ const InternshipListingPage = () => {
           }}
         />
       )}
-      {isApplicationsPending && <CircularProgress />}
+      {user.role === "company" && isApplicationsPending && isOwner && (
+        <CircularProgress />
+      )}
+      {user.role === "company" && isOwner && applications?.length === 0 && (
+        <Card sx={{ padding: "20px", marginY: "20px" }}>
+          There are no pending applications.
+        </Card>
+      )}
       {user.role === "company" &&
+        applications?.length > 0 &&
         !isApplicationsPending &&
-        !isApplicationsError && (
+        !isApplicationsError &&
+        isOwner && (
           <ApplicationTable
             data={applications}
-            updateApplicationStatus={updateApplicationStatus}
           />
         )}
       {isDeletionSuccess && <Navigate to="/home/dashboard" />}

@@ -21,12 +21,12 @@ module.exports = {
     res.json(allApplications);
   },
   modifyApplicationStatus: async (req, res) => {
-    const { listingID } = req.params;
+    const { applicationID } = req.params;
     const { status } = req.body;
 
     const updatedApplication = await prisma.application.updateMany({
       where: {
-        listingID,
+        applicationID,
       },
       data: {
         applicationStatus: status,
