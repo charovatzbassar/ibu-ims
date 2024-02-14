@@ -2,10 +2,10 @@ import React from "react";
 import { useInternshipListingsByCompany } from "@/hooks";
 import { ErrorAlert, InternshipListingItem } from "@/components";
 import {
+  Card,
   CircularProgress,
   Pagination,
   PaginationItem,
-  Typography,
 } from "@mui/material";
 
 const MyListingsPage = () => {
@@ -56,9 +56,9 @@ const MyListingsPage = () => {
       )}
       {data && data.length === 0 && (
         <div>
-          <Typography>
+          <Card sx={{ padding: "20px" }}>
             No Listings Found. Start by creating a listing!
-          </Typography>
+          </Card>
         </div>
       )}
     </>
