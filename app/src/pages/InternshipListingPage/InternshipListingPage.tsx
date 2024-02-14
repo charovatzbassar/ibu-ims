@@ -16,6 +16,9 @@ import { useApplications } from "@/hooks";
 
 const InternshipListingPage = () => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [startInternshipModalOpen, setStartInternshipModalOpen] =
+    React.useState<boolean>(false);
+
   const { listingID } = useParams();
 
   const { data, isPending, isError } = useInternshipListing(listingID || "");
@@ -58,6 +61,8 @@ const InternshipListingPage = () => {
         <SuccessAlert content="Application submitted successfully!" />
       )}
       {user.role === "company" && isApplicationError && <ErrorAlert />}
+      {isDeletionError && <ErrorAlert />}
+
       {isPending && <CircularProgress />}
       {!isPending && !isError && (
         <InternshipListingContent
@@ -71,15 +76,21 @@ const InternshipListingPage = () => {
       {user.role === "company" && isApplicationsPending && isOwner && (
         <CircularProgress />
       )}
-      {user.role === "company" && isOwner && (
-        <Card sx={{ padding: "20px", marginY: "20px" }}>
-          {applications?.length === 0 &&
-            approvedApplications?.length !== data?.noOfPlaces &&
-            "There are no pending applications."}{" "}
-          {approvedApplications?.length === data?.noOfPlaces &&
-            "All places have been filled."}
-        </Card>
-      )}
+      {user.role === "company" &&
+        isOwner &&
+        applications?.length === 0 &&
+        approvedApplications?.length !== data?.noOfPlaces && (
+          <Card sx={{ padding: "20px", marginY: "20px" }}>
+            There are no pending applications.
+          </Card>
+        )}
+      {user.role === "company" &&
+        isOwner &&
+        approvedApplications?.length === data?.noOfPlaces && (
+          <Card sx={{ padding: "20px", marginY: "20px" }}>
+            All places have been filled.
+          </Card>
+        )}
       {user.role === "company" &&
         applications?.length > 0 &&
         !isApplicationsPending &&
@@ -101,6 +112,36 @@ const InternshipListingPage = () => {
             <ApplicationTable data={approvedApplications} />
           </>
         )}
+
+      {user.role === "company" &&
+        approvedApplications?.length > 0 &&
+        isOwner && (
+          <>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ marginY: "10px" }}
+              onClick={() => setStartInternshipModalOpen(true)}
+            >
+              Start Internship
+            </Button>
+
+            <ConfirmModal
+              onClick={() => {
+                setStartInternshipModalOpen(false);
+                console.log("start internship");
+              }}
+              buttonColor="success"
+              modalOpen={startInternshipModalOpen}
+              closeModal={() => setStartInternshipModalOpen(false)}
+            >
+              <Typography variant="h6" component="h2">
+                Are you sure you wish to start the internship?
+              </Typography>
+            </ConfirmModal>
+          </>
+        )}
+
       {user.role === "company" &&
         approvedApplications?.length === 0 &&
         isOwner && (
@@ -110,9 +151,7 @@ const InternshipListingPage = () => {
             </Card>
           </>
         )}
-      {user.role === "company" && isApplicationsError && <ErrorAlert />}
       {isDeletionSuccess && <Navigate to="/home/dashboard" />}
-      {isDeletionError && <ErrorAlert />}
       {user.role === "intern" && (
         <>
           <Button

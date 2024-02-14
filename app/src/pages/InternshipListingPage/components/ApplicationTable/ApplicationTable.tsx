@@ -33,7 +33,7 @@ const ApplicationTable = (props: Props) => {
   const [rejectModalOpen, setRejectModalOpen] = React.useState<boolean>(false);
   const [page, setPage] = React.useState<number>(1);
 
-  const itemsPerPage: number = 8;
+  const itemsPerPage: number = 4;
   const startIndex: number = (page - 1) * itemsPerPage;
   const endIndex: number = startIndex + itemsPerPage;
 
