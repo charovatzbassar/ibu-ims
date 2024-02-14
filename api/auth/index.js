@@ -2,6 +2,8 @@ const passport = require("passport");
 const { Strategy: GoogleStrategy } = require("passport-google-oauth20");
 const prisma = require("../prisma");
 const { sign } = require("jsonwebtoken");
+const { APIError } = require("../utils");
+const { v4: uuid } = require("uuid");
 
 passport.use(
   new GoogleStrategy(
@@ -21,6 +23,7 @@ passport.use(
         if (!user) {
           await prisma.intern.create({
             data: {
+              internID: uuid(),
               email: profile.emails[0].value,
               firstName: profile.name.givenName,
               lastName: profile.name.familyName,
@@ -36,6 +39,7 @@ passport.use(
         if (!user) {
           await prisma.manager.create({
             data: {
+              managerID: uuid(),
               email: profile.emails[0].value,
               firstName: profile.name.givenName,
               lastName: profile.name.familyName,
@@ -49,7 +53,7 @@ passport.use(
         });
 
         if (!user) {
-          return done(new Error("Unauthorized"), false);
+          return done(new APIError("Unauthorized", 401), false);
         }
         role = "company";
       }

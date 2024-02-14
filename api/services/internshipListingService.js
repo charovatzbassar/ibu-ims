@@ -53,7 +53,7 @@ module.exports = {
     const newListing = await prisma.internship_listing.create({
       data: {
         listingID: uuid(),
-        companyID: Number(company.companyID),
+        companyID: company.companyID,
         ...req.body,
         ...(req.body.startDate ? { startDate } : {}),
         ...(req.body.endDate ? { endDate } : {}),
@@ -83,7 +83,7 @@ module.exports = {
     const listing = await prisma.internship_listing.findUnique({
       where: {
         listingID: req.params.id,
-        companyID: Number(company.companyID),
+        companyID: company.companyID,
       },
     });
 
@@ -94,7 +94,7 @@ module.exports = {
     const updatedListing = await prisma.internship_listing.update({
       where: {
         listingID: req.params.id,
-        companyID: Number(company.companyID),
+        companyID: company.companyID,
       },
       data: {
         ...req.body,
@@ -117,7 +117,7 @@ module.exports = {
     const listing = await prisma.internship_listing.findUnique({
       where: {
         listingID: req.params.id,
-        companyID: Number(company.companyID),
+        companyID: company.companyID,
       },
     });
 
@@ -125,10 +125,16 @@ module.exports = {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
+    const deletedApplications = await prisma.application.deleteMany({
+      where: {
+        listingID: req.params.id,
+      },
+    });
+
     const deletedListing = await prisma.internship_listing.delete({
       where: {
         listingID: req.params.id,
-        companyID: Number(company.companyID),
+        companyID: company.companyID,
       },
     });
 

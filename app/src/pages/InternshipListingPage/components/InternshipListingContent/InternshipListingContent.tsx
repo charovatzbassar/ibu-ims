@@ -6,14 +6,11 @@ import {
   Divider,
   CardActions,
   Button,
-  Fade,
   Box,
-  Modal,
-  Backdrop,
 } from "@mui/material";
 import React from "react";
-import { modalStyle } from "@/utils";
 import { Link } from "react-router-dom";
+import { ConfirmModal } from "@/components";
 
 type Props = {
   data?: InternshipListing;
@@ -26,49 +23,30 @@ const InternshipListingContent = (props: Props) => {
 
   return (
     <>
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={modalOpen}
-        onClose={() => setModalOpen(false)}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
+      <ConfirmModal
+        onClick={() => {
+          setModalOpen(false);
+          props.onDelete();
         }}
+        modalOpen={modalOpen}
+        closeModal={() => setModalOpen(false)}
+        buttonColor="error"
       >
-        <Fade in={modalOpen}>
-          <Box sx={modalStyle}>
-            <Typography variant="h6" component="h2">
-              Are you sure you want to delete this listing?
-            </Typography>
-            <Typography
-              variant="h6"
-              component="h4"
-              sx={{ fontSize: 15, color: "gray" }}
-            >
-              This action cannot be undone.
-            </Typography>
-            <Button
-              sx={{ marginTop: "10px" }}
-              variant="contained"
-              color="error"
-              onClick={() => {
-                setModalOpen(false);
-                props.onDelete();
-              }}
-            >
-              Confirm
-            </Button>
-          </Box>
-        </Fade>
-      </Modal>
+        <Typography variant="h6" component="h2">
+          Are you sure you want to delete this listing?
+        </Typography>
+        <Typography
+          variant="h6"
+          component="h4"
+          sx={{ fontSize: 15, color: "gray" }}
+        >
+          This action cannot be undone.
+        </Typography>
+      </ConfirmModal>
+
       <Card
         sx={{
           minWidth: 275,
-          margin: "10px",
           display: "flex",
           flexDirection: "column",
           flexWrap: "wrap",

@@ -3,23 +3,14 @@ import {
   InternshipListingFormValues,
 } from "@/services/types";
 import { Controller, useForm } from "react-hook-form";
-import {
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Fade,
-  Modal,
-  Card,
-  Backdrop,
-} from "@mui/material";
+import { TextField, Button, Typography, Card } from "@mui/material";
 import React, { useEffect } from "react";
 import { FormAction } from "@/utils";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { modalStyle } from "@/utils";
+import { ConfirmModal } from "..";
 
 type Props = {
   onSubmit: (data: InternshipListingFormValues) => void;
@@ -64,7 +55,7 @@ const InternshipListingForm = (props: Props) => {
   }, [data, reset, action]);
 
   return (
-    <Card sx={{padding: "20px"}}>
+    <Card sx={{ padding: "20px" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Typography sx={{ textAlign: "left", fontSize: 25, margin: "10px" }}>
           {getFormType(action)} Listing
@@ -188,41 +179,21 @@ const InternshipListingForm = (props: Props) => {
           {getFormType(action) + " Listing"}
         </Button>
 
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          open={modalOpen}
-          onClose={() => setModalOpen(false)}
-          closeAfterTransition
-          slots={{ backdrop: Backdrop }}
-          slotProps={{
-            backdrop: {
-              timeout: 500,
-            },
+        <ConfirmModal
+          onClick={(e) => {
+            e!.preventDefault();
+            setModalOpen(false);
+            handleSubmit(onSubmit)();
           }}
+          modalOpen={modalOpen}
+          closeModal={() => setModalOpen(false)}
+          buttonColor="success"
         >
-          <Fade in={modalOpen}>
-            <Box sx={modalStyle}>
-              <Typography variant="h6" component="h2">
-                Are you sure you want to {getFormType(action).toLowerCase()}{" "}
-                this listing?
-              </Typography>
-
-              <Button
-                sx={{ marginTop: "10px" }}
-                variant="contained"
-                color="success"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setModalOpen(false);
-                  handleSubmit(onSubmit)();
-                }}
-              >
-                Confirm
-              </Button>
-            </Box>
-          </Fade>
-        </Modal>
+          <Typography variant="h6" component="h2">
+            Are you sure you want to {getFormType(action).toLowerCase()} this
+            listing?
+          </Typography>
+        </ConfirmModal>
       </form>
     </Card>
   );

@@ -1,4 +1,6 @@
 const modalStyle = {
+  display: "flex",
+  flexDirection: "column",
   position: "absolute",
   top: "50%",
   left: "50%",
