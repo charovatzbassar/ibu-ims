@@ -9,6 +9,9 @@ import {
   TableBody,
   Paper,
   Button,
+  Pagination,
+  PaginationItem,
+  Divider,
 } from "@mui/material";
 import { UseMutationResult } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
@@ -28,10 +31,22 @@ const ApplicationTable = (props: Props) => {
   const [approveModalOpen, setApproveModalOpen] =
     React.useState<boolean>(false);
   const [rejectModalOpen, setRejectModalOpen] = React.useState<boolean>(false);
+  const [page, setPage] = React.useState<number>(1);
+
+  const itemsPerPage: number = 8;
+  const startIndex: number = (page - 1) * itemsPerPage;
+  const endIndex: number = startIndex + itemsPerPage;
+
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    setPage(value);
+  };
+
+  const totalPages: number | undefined =
+    props.data && Math.ceil(props.data?.length / itemsPerPage);
 
   return (
     <>
-      <TableContainer component={Paper} sx={{ marginTop: "20px" }}>
+      <TableContainer component={Paper} sx={{ marginY: "20px" }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
@@ -44,7 +59,7 @@ const ApplicationTable = (props: Props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.data.map((application) => (
+            {props.data.slice(startIndex, endIndex).map((application) => (
               <TableRow
                 key={application.applicationID}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -108,6 +123,25 @@ const ApplicationTable = (props: Props) => {
             ))}
           </TableBody>
         </Table>
+        <Divider />
+        <Pagination
+          sx={{
+            marginY: 2,
+            display: "flex",
+            justifyContent: "center",
+          }}
+          count={totalPages}
+          page={page}
+          color="primary"
+          onChange={handleChange}
+          renderItem={(item) => (
+            <PaginationItem
+              component="button"
+              {...item}
+              onClick={() => handleChange(null, item.page)}
+            />
+          )}
+        />
       </TableContainer>
     </>
   );
