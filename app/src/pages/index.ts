@@ -6,3 +6,4 @@ export { default as InternshipListingPage } from "./InternshipListingPage";
 export { default as EditListingPage } from "./EditListingPage";
 export { default as MyListingsPage } from "./MyListingsPage";
 export { default as ProfileInfoPage } from "./ProfileInfoPage";
+export { default as MyInternshipsPage } from "./MyInternshipsPage";

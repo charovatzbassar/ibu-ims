@@ -14,6 +14,7 @@ import { RootState } from "@/store";
 import React from "react";
 import { ConfirmModal, ErrorAlert, SuccessAlert } from "@/components";
 import { useApplications } from "@/hooks";
+import { Application } from "@/services/types";
 
 const InternshipListingPage = () => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
@@ -58,7 +59,7 @@ const InternshipListingPage = () => {
 
   return (
     <>
-      {createInternshipSuccess && <Navigate to="/home/dashboard" />}
+      {createInternshipSuccess && <Navigate to="/home/my-internships" />}
       {modifyHook.isSuccess && (
         <SuccessAlert content="Application status updated successfully!" />
       )}
@@ -137,7 +138,9 @@ const InternshipListingPage = () => {
                 setStartInternshipModalOpen(false);
                 createInternship({
                   companyID: data?.company.companyID || "",
-                  interns: approvedApplications.map((app) => app.internID),
+                  interns: approvedApplications.map(
+                    (app: Application) => app.internID
+                  ),
                 });
               }}
               buttonColor="success"

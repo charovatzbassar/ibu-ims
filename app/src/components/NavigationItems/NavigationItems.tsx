@@ -47,12 +47,17 @@ const getNavigationItems = (role: string) => {
     case "manager":
       return (
         <>
-          <ListItemButton>
-            <ListItemIcon>
-              <BarChart />
-            </ListItemIcon>
-            <ListItemText primary="My Internships" />
-          </ListItemButton>
+          <Link
+            to="/home/my-internships"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <BarChart />
+              </ListItemIcon>
+              <ListItemText primary="My Internships" />
+            </ListItemButton>
+          </Link>
           <ListItemButton>
             <ListItemIcon>
               <Assignment />
@@ -64,12 +69,17 @@ const getNavigationItems = (role: string) => {
     case "company":
       return (
         <>
-          <ListItemButton>
-            <ListItemIcon>
-              <BarChart />
-            </ListItemIcon>
-            <ListItemText primary="My Internships" />
-          </ListItemButton>
+          <Link
+            to="/home/my-internships"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <BarChart />
+              </ListItemIcon>
+              <ListItemText primary="My Internships" />
+            </ListItemButton>
+          </Link>
           <Link
             to="/home/my-listings"
             style={{ textDecoration: "none", color: "black" }}

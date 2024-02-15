@@ -9,6 +9,7 @@ router.use(checkAuth);
 
 router
   .route("/")
+  .get(checkRole("company"), catchAsync(internshipService.getInternships))
   .post(checkRole("company"), catchAsync(internshipService.createInternship));
 
 module.exports = router;
