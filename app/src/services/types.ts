@@ -26,6 +26,14 @@ export type Intern = {
   readonly email: string;
 };
 
+export type Manager = {
+  readonly managerID: string;
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly dateOfBirth: string | null;
+  readonly email: string;
+};
+
 export type User = {
   readonly firstName: string | null;
   readonly lastName: string | null;
@@ -51,4 +59,13 @@ export type Application = {
   readonly applicationStatus: string;
   readonly intern: Intern;
   readonly internshipListing: InternshipListing;
+};
+
+export type Internship = {
+  readonly internshipID: string;
+  readonly intern: Intern;
+  readonly company: Company;
+  readonly manager: Manager;
+  readonly status: string;
+  readonly finalReport: string;
 };

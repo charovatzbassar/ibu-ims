@@ -1,14 +1,17 @@
 import { useInternships } from "@/hooks";
 import React from "react";
+import { InternshipItem } from "./components";
 
 type Props = {};
 
 const MyInternshipsPage = (props: Props) => {
   const { data } = useInternships();
 
-  console.log(data);
-
-  return <div>MyInternshipsPage</div>;
+  return (
+    <>
+      <InternshipItem data={data} />
+    </>
+  );
 };
 
 export default MyInternshipsPage;
