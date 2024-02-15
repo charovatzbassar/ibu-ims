@@ -28,9 +28,11 @@ const MyInternshipsPage = () => {
       <div>
         {data &&
           data.length !== 0 &&
-          data?.map((internship: Internship) => (
-            <InternshipItem key={internship.internshipID} data={internship} />
-          ))}
+          data
+            ?.slice(startIndex, endIndex)
+            .map((internship: Internship) => (
+              <InternshipItem key={internship.internshipID} data={internship} />
+            ))}
 
         <Pagination
           sx={{ marginY: 2, display: "flex", justifyContent: "center" }}
