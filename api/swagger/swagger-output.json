@@ -205,6 +205,58 @@
       }
     },
     "/api/applications/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/applications/{applicationID}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "applicationID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/applications/{listingID}/{status}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "listingID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/internships/": {
       "get": {
         "description": "",
         "responses": {

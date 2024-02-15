@@ -5,11 +5,12 @@ export default class InternshipsService {
     return appAxios.get("/internships").then((res) => res.data);
   };
   public static createInternship = async (
+    listingID: string,
     companyID: string,
     interns: string[]
   ) => {
     return appAxios
-      .post("/internships", { companyID, interns })
+      .post("/internships", { listingID, companyID, interns })
       .then((res) => res.data);
   };
 }

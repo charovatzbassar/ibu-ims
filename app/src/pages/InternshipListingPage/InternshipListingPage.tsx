@@ -59,6 +59,7 @@ const InternshipListingPage = () => {
 
   return (
     <>
+      {!data && <ErrorAlert />}
       {createInternshipSuccess && <Navigate to="/home/my-internships" />}
       {modifyHook.isSuccess && (
         <SuccessAlert content="Application status updated successfully!" />
@@ -137,6 +138,7 @@ const InternshipListingPage = () => {
               onClick={() => {
                 setStartInternshipModalOpen(false);
                 createInternship({
+                  listingID,
                   companyID: data?.company.companyID || "",
                   interns: approvedApplications.map(
                     (app: Application) => app.internID

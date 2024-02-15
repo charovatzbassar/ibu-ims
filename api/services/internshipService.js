@@ -25,12 +25,13 @@ module.exports = {
     res.json(internships);
   },
   createInternship: async (req, res) => {
-    const { companyID, interns } = req.body;
+    const { companyID, interns, listingID } = req.body;
 
     const newInternships = interns.map((intern) => {
       return {
         internshipID: uuid(),
         companyID,
+        listingID,
         internID: intern,
         managerID: "97f7397c-babe-47b2-814f-0fdb8958023d",
         status: "ONGOING",
@@ -40,6 +41,15 @@ module.exports = {
 
     const createdInternships = await prisma.internship.createMany({
       data: newInternships,
+    });
+
+    const listing = await prisma.internship_listing.update({
+      where: {
+        listingID,
+      },
+      data: {
+        listingStatus: "INACTIVE",
+      },
     });
 
     res.json(createdInternships);

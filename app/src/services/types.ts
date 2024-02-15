@@ -8,6 +8,7 @@ export type InternshipListing = {
   readonly endDate: string;
   readonly requirements: string;
   readonly noOfPlaces: number;
+  readonly listingStatus: string;
 };
 
 export type Company = {
@@ -67,5 +68,6 @@ export type Internship = {
   readonly company: Company;
   readonly manager: Manager;
   readonly status: string;
+  readonly listingID: string;
   readonly finalReport: string;
 };

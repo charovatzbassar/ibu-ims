@@ -10,6 +10,7 @@ module.exports = {
         company: true,
       },
       where: {
+        listingStatus: "ACTIVE",
         OR: [
           {
             position: {
@@ -57,6 +58,7 @@ module.exports = {
         ...req.body,
         ...(req.body.startDate ? { startDate } : {}),
         ...(req.body.endDate ? { endDate } : {}),
+        listingStatus: "ACTIVE",
       },
     });
     res.json(newListing);
