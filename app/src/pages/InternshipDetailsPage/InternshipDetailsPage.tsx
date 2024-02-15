@@ -1,6 +1,6 @@
 import { useInternship } from "@/hooks";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import {
   CircularProgress,
   Card,
@@ -38,9 +38,14 @@ const InternshipDetailsPage = () => {
           </CardContent>
           <Divider />
           <CardActions>
-            <Button variant="contained" sx={{ margin: "10px" }}>
-              Fill Out Report
-            </Button>
+            <Link
+              to={`/home/my-internships/${internshipID}/report`}
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <Button variant="contained" sx={{ margin: "10px" }}>
+                Fill Out Report
+              </Button>
+            </Link>
           </CardActions>
         </Card>
       )}

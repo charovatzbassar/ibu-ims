@@ -8,3 +8,4 @@ export { default as MyListingsPage } from "./MyListingsPage";
 export { default as ProfileInfoPage } from "./ProfileInfoPage";
 export { default as MyInternshipsPage } from "./MyInternshipsPage";
 export { default as InternshipDetailsPage } from "./InternshipDetailsPage";
+export { default as InternshipReportPage } from "./InternshipReportPage";
