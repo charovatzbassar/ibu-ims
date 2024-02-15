@@ -5,8 +5,9 @@ import {
   Typography,
   Button,
   CardActions,
+  Divider,
 } from "@mui/material";
-import React from "react";
+import { Box } from "@mui/system";
 
 type Props = {
   data: Internship;
@@ -14,19 +15,24 @@ type Props = {
 
 const InternshipItem = (props: Props) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {props.data.intern.firstName} {props.data.intern.lastName} -{" "}
+          {props.data.internship_listing.position}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
-        </Typography>
+        <Divider />
+        <Box sx={{ marginTop: "10px" }}>
+          <Typography variant="body2" color="text.secondary">
+            Started at: {props.data.internship_listing.startDate.slice(0, 10)}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Ends at: {props.data.internship_listing.endDate.slice(0, 10)}
+          </Typography>
+        </Box>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Details</Button>
       </CardActions>
     </Card>
   );

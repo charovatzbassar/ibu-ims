@@ -57,7 +57,7 @@ const MyListingsPage = () => {
       {data && data.length === 0 && (
         <div>
           <Card sx={{ padding: "20px" }}>
-            No Listings Found. Start by creating a listing!
+            No Active Listings Found. Start by creating a listing!
           </Card>
         </div>
       )}

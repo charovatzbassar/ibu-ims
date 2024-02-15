@@ -14,8 +14,10 @@ module.exports = {
         company: true,
         intern: true,
         manager: true,
+        internship_listing: true,
       },
       where: {
+        status: "ONGOING",
         company: {
           companyID: company.companyID,
         },

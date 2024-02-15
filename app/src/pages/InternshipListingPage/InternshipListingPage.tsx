@@ -138,7 +138,7 @@ const InternshipListingPage = () => {
               onClick={() => {
                 setStartInternshipModalOpen(false);
                 createInternship({
-                  listingID,
+                  listingID: listingID || "",
                   companyID: data?.company.companyID || "",
                   interns: approvedApplications.map(
                     (app: Application) => app.internID

@@ -149,6 +149,7 @@ module.exports = {
         company: true,
       },
       where: {
+        listingStatus: "ACTIVE",
         company: {
           contactEmail: {
             equals: req.user.profile.emails[0].value,

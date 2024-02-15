@@ -65,9 +65,13 @@ export type Application = {
 export type Internship = {
   readonly internshipID: string;
   readonly intern: Intern;
+  readonly internID: string;
   readonly company: Company;
+  readonly companyID: string;
   readonly manager: Manager;
+  readonly managerID: string;
   readonly status: string;
   readonly listingID: string;
+  readonly internship_listing: InternshipListing;
   readonly finalReport: string;
 };
