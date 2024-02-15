@@ -12,3 +12,4 @@ export { default as useModifyApplicationStatus } from "./useModifyApplicationSta
 export { default as useCreateInternship } from "./useCreateInternship";
 export { default as useInternships } from "./useInternships";
 export { default as useInternship } from "./useInternship";
+export { default as useCreateInternshipFinalReport } from "./useCreateInternshpFinalReport";

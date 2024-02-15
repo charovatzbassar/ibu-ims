@@ -16,4 +16,12 @@ export default class InternshipsService {
       .post("/internships", { listingID, companyID, interns })
       .then((res) => res.data);
   };
+  public static createInternshipFinalReport = async (
+    internshipID: string,
+    finalReport: string
+  ) => {
+    return appAxios
+      .put(`/internships/${internshipID}`, { finalReport })
+      .then((res) => res.data);
+  };
 }
