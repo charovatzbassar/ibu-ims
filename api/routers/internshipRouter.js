@@ -11,5 +11,9 @@ router
   .route("/")
   .get(checkRole("company"), catchAsync(internshipService.getInternships))
   .post(checkRole("company"), catchAsync(internshipService.createInternship));
+  
+router
+  .route("/:internshipID")
+  .get(checkRole("company"), catchAsync(internshipService.getInternship));
 
 module.exports = router;

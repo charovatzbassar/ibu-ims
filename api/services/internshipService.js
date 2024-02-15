@@ -26,6 +26,31 @@ module.exports = {
 
     res.json(internships);
   },
+  getInternship: async (req, res) => {
+    const company = await prisma.company.findUnique({
+      where: {
+        contactEmail: req.user.profile.emails[0].value,
+      },
+    });
+
+    const internship = await prisma.internship.findUnique({
+      include: {
+        company: true,
+        intern: true,
+        manager: true,
+        internship_listing: true,
+      },
+      where: {
+        internshipID: req.params.internshipID,
+        status: "ONGOING",
+        company: {
+          companyID: company.companyID,
+        },
+      },
+    });
+
+    res.json(internship);
+  },
   createInternship: async (req, res) => {
     const { companyID, interns, listingID } = req.body;
 

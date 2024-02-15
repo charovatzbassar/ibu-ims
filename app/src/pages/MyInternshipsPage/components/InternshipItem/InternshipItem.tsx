@@ -34,9 +34,14 @@ const InternshipItem = (props: Props) => {
       </CardContent>
       <Divider />
       <CardActions>
-        <Button variant="contained" sx={{ margin: "10px" }}>
-          Details
-        </Button>
+        <Link
+          to={`/home/my-internships/${props.data.internshipID}`}
+          style={{ textDecoration: "none", color: "white" }}
+        >
+          <Button variant="contained" sx={{ margin: "10px" }}>
+            Details
+          </Button>
+        </Link>
       </CardActions>
     </Card>
   );
