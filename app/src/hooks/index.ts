@@ -17,3 +17,4 @@ export { default as useInternshipForIntern } from "./useInternshipForIntern";
 export { default as useCreateInternshipDay } from "./useCreateInternshipDay";
 export { default as useModifyInternshipDayStatus } from "./useModifyInternshipDayStatus";
 export { default as useInternshipDays } from "./useInternshipDays";
+export { default as useApproveAllInternshipDays } from "./useApproveAllInternshipDays";

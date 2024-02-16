@@ -21,6 +21,7 @@ module.exports = {
       },
       where: {
         internshipID,
+        status: "PENDING",
         internship: {
           companyID: company.companyID,
         },
@@ -61,7 +62,7 @@ module.exports = {
 
     const company = await prisma.company.findUnique({
       where: {
-        email: req.user.profile.emails[0].value,
+        contactEmail: req.user.profile.emails[0].value,
       },
     });
 
@@ -70,12 +71,53 @@ module.exports = {
     }
 
     const internshipDay = await prisma.internship_day.update({
+      include: {
+        internship: true,
+      },
       where: {
         dayID,
-        companyID: company.companyID,
+        internship: {
+          companyID: company.companyID,
+        },
       },
       data: {
         status,
+      },
+    });
+
+    return res.json(internshipDay);
+  },
+
+  approveAllInternshipDays: async (req, res) => {
+    const { internshipID } = req.params;
+    const company = await prisma.company.findUnique({
+      where: {
+        contactEmail: req.user.profile.emails[0].value,
+      },
+    });
+
+    if (!company) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const internship = await prisma.internship.findUnique({
+      where: {
+        internshipID,
+        companyID: company.companyID,
+      },
+    });
+
+    if (!internship) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const internshipDay = await prisma.internship_day.updateMany({
+      where: {
+        internshipID,
+        status: "PENDING",
+      },
+      data: {
+        status: "APPROVED",
       },
     });
 

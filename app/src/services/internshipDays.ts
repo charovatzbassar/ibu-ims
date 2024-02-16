@@ -19,4 +19,8 @@ export default class InternshipDaysService {
   ) => {
     return appAxios.put(`/internship-days/${dayID}`, { status });
   };
+
+  public static approveAllInternshipDays = async (internshipID: string) => {
+    return appAxios.put(`/internship-days/${internshipID}/all`);
+  };
 }
