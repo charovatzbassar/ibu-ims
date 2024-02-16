@@ -22,33 +22,42 @@ const MyInternshipsPage = () => {
 
   return (
     <>
-      <Typography variant="h5" sx={{ marginY: "10px" }}>
-        My Internships
-      </Typography>
-      <div>
-        {data &&
-          data.length !== 0 &&
-          data
-            ?.slice(startIndex, endIndex)
-            .map((internship: Internship) => (
-              <InternshipItem key={internship.internshipID} data={internship} />
-            ))}
+      {data?.length === 0 ? (
+        <Typography>No internships found.</Typography>
+      ) : (
+        <>
+          <Typography variant="h5" sx={{ marginY: "10px" }}>
+            My Internships
+          </Typography>
+          <div>
+            {data &&
+              data.length !== 0 &&
+              data
+                ?.slice(startIndex, endIndex)
+                .map((internship: Internship) => (
+                  <InternshipItem
+                    key={internship.internshipID}
+                    data={internship}
+                  />
+                ))}
 
-        <Pagination
-          sx={{ marginY: 2, display: "flex", justifyContent: "center" }}
-          count={totalPages}
-          page={page}
-          color="primary"
-          onChange={handleChange}
-          renderItem={(item) => (
-            <PaginationItem
-              component="button"
-              {...item}
-              onClick={() => handleChange(null, item.page)}
+            <Pagination
+              sx={{ marginY: 2, display: "flex", justifyContent: "center" }}
+              count={totalPages}
+              page={page}
+              color="primary"
+              onChange={handleChange}
+              renderItem={(item) => (
+                <PaginationItem
+                  component="button"
+                  {...item}
+                  onClick={() => handleChange(null, item.page)}
+                />
+              )}
             />
-          )}
-        />
-      </div>
+          </div>
+        </>
+      )}
     </>
   );
 };

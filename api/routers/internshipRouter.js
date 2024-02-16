@@ -13,6 +13,13 @@ router
   .post(checkRole("company"), catchAsync(internshipService.createInternship));
 
 router
+  .route("/intern")
+  .get(
+    checkRole("intern"),
+    catchAsync(internshipService.getInternshipByIntern)
+  );
+
+router
   .route("/:internshipID")
   .get(checkRole("company"), catchAsync(internshipService.getInternship))
   .put(

@@ -26,22 +26,21 @@ const getNavigationItems = (role: string) => {
         <>
           <ListItemButton>
             <ListItemIcon>
-              <BarChart />
-            </ListItemIcon>
-            <ListItemText primary="My Internship" />
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
               <AccessTime />
             </ListItemIcon>
             <ListItemText primary="My Applications" />
           </ListItemButton>
-          <ListItemButton>
-            <ListItemIcon>
-              <Assignment />
-            </ListItemIcon>
-            <ListItemText primary="Internship Days" />
-          </ListItemButton>
+          <Link
+            to="/home/my-internship"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <BarChart />
+              </ListItemIcon>
+              <ListItemText primary="My Internship" />
+            </ListItemButton>
+          </Link>
         </>
       );
     case "manager":

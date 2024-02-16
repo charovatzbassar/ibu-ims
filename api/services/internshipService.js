@@ -33,6 +33,10 @@ module.exports = {
       },
     });
 
+    if (!company) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
     const internship = await prisma.internship.findUnique({
       include: {
         company: true,
@@ -46,6 +50,32 @@ module.exports = {
         company: {
           companyID: company.companyID,
         },
+      },
+    });
+
+    res.json(internship);
+  },
+  getInternshipByIntern: async (req, res) => {
+    const intern = await prisma.intern.findUnique({
+      where: {
+        email: req.user.profile.emails[0].value,
+      },
+    });
+
+    if (!intern) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const internship = await prisma.internship.findUnique({
+      include: {
+        company: true,
+        intern: true,
+        manager: true,
+        internship_listing: true,
+      },
+      where: {
+        internID: intern.internID,
+        status: "ONGOING",
       },
     });
 

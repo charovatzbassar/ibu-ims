@@ -12,6 +12,7 @@ const {
   authRouter,
   applicationRouter,
   internshipRouter,
+  internshipDayRouter,
 } = require("./routers");
 const { APIError } = require("./utils");
 const swaggerDocs = require("./swagger/swagger-output.json");
@@ -52,6 +53,7 @@ app.use("/api/internship-listings", internshipListingRouter);
 app.use("/api/companies", companyRouter);
 app.use("/api/applications", applicationRouter);
 app.use("/api/internships", internshipRouter);
+app.use("/api/internship-days", internshipDayRouter);
 
 app.all("*", (req, res, next) => {
   next(new APIError("Page not found", 404));

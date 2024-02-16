@@ -24,4 +24,7 @@ export default class InternshipsService {
       .put(`/internships/${internshipID}`, { finalReport })
       .then((res) => res.data);
   };
+  public static getInternshipForIntern = async () => {
+    return appAxios.get("/internships/intern").then((res) => res.data);
+  };
 }
