@@ -7,6 +7,11 @@ const router = express.Router();
 
 router
   .route("/:internshipID")
+  .get(
+    checkAuth,
+    checkRole("company"),
+    catchAsync(internshipDayService.getInternshipDays)
+  )
   .post(
     checkAuth,
     checkRole("intern"),

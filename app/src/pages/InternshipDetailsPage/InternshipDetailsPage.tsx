@@ -1,4 +1,4 @@
-import { useInternship } from "@/hooks";
+import { useInternship, useInternshipDays } from "@/hooks";
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -15,6 +15,10 @@ import {
 const InternshipDetailsPage = () => {
   const { internshipID } = useParams();
   const { data, isPending } = useInternship(internshipID || "");
+
+  const { data: internshipDays } = useInternshipDays(internshipID || "");
+
+  console.log(internshipDays);
 
   return (
     <>

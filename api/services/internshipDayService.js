@@ -2,6 +2,33 @@ const prisma = require("../prisma");
 const { v4: uuid } = require("uuid");
 
 module.exports = {
+  getInternshipDays: async (req, res) => {
+    const { internshipID } = req.params;
+
+    const company = await prisma.company.findUnique({
+      where: {
+        contactEmail: req.user.profile.emails[0].value,
+      },
+    });
+
+    if (!company) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const internshipDays = await prisma.internship_day.findMany({
+      include: {
+        internship: true,
+      },
+      where: {
+        internshipID,
+        internship: {
+          companyID: company.companyID,
+        },
+      },
+    });
+
+    return res.json(internshipDays);
+  },
   createInternshipDay: async (req, res) => {
     const { internshipID } = req.params;
     const { description } = req.body;
