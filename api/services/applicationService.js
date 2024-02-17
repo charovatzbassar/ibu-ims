@@ -97,6 +97,32 @@ module.exports = {
         .json({ error: "Internship listing does not exist." });
     }
 
+    const existingApplication = await prisma.application.findUnique({
+      where: {
+        listingID,
+        internID: intern.internID,
+      },
+    });
+
+    if (existingApplication) {
+      return res
+        .status(400)
+        .json({ error: "You have already applied for this listing." });
+    }
+
+    const ongoingInternship = await prisma.internship.findUnique({
+      where: {
+        internID: intern.internID,
+        status: "ONGOING",
+      },
+    });
+
+    if (ongoingInternship) {
+      return res
+        .status(400)
+        .json({ error: "You already have an ongoing internship." });
+    }
+
     const newApplication = await prisma.application.create({
       data: {
         applicationID: uuid(),

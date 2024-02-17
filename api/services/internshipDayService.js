@@ -57,6 +57,8 @@ module.exports = {
 
     const currentDate = new Date();
 
+    // Check if the internship day already exists, and if it is outside the internship period
+
     const newInternshipDay = await prisma.internship_day.create({
       data: {
         dayID: uuid(),
