@@ -9,8 +9,14 @@ router.use(checkAuth);
 
 router
   .route("/")
-  .get(checkRole("company"), catchAsync(internshipService.getInternships))
   .post(checkRole("company"), catchAsync(internshipService.createInternship));
+
+router
+  .route("/company")
+  .get(
+    checkRole("company"),
+    catchAsync(internshipService.getInternshipsCompany)
+  );
 
 router
   .route("/intern")
@@ -20,11 +26,31 @@ router
   );
 
 router
+  .route("/manager")
+  .get(
+    checkRole("manager"),
+    catchAsync(internshipService.getInternshipsManager)
+  );
+
+router
   .route("/:internshipID")
-  .get(checkRole("company"), catchAsync(internshipService.getInternship))
   .put(
     checkRole("company"),
     catchAsync(internshipService.createInternshipFinalReport)
+  );
+
+router
+  .route("/:internshipID/company")
+  .get(
+    checkRole("company"),
+    catchAsync(internshipService.getInternshipCompany)
+  );
+
+router
+  .route("/:internshipID/manager")
+  .get(
+    checkRole("manager"),
+    catchAsync(internshipService.getInternshipManager)
   );
 
 module.exports = router;

@@ -24,7 +24,7 @@ const InternshipDayForm = (props: Props) => {
           label={`Write your day description here`}
           multiline
           fullWidth
-          error={!!errors.finalReport}
+          error={!!errors.description}
           helperText={errors.description && errors.description.message}
           rows={15}
         />

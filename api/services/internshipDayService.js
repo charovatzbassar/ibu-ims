@@ -41,20 +41,33 @@ module.exports = {
     });
 
     if (!intern) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(400).json({ message: "Intern does not exist." });
     }
 
-    const internshipDay = await prisma.internship_day.create({
+    const internship = await prisma.internship.findUnique({
+      where: {
+        internshipID,
+        internID: intern.internID,
+      },
+    });
+
+    if (!internship) {
+      return res.status(400).json({ message: "Internship does not exist." });
+    }
+
+    const currentDate = new Date();
+
+    const newInternshipDay = await prisma.internship_day.create({
       data: {
         dayID: uuid(),
         dayDescription: description,
         internshipID,
         status: "PENDING",
-        workdayDate: new Date(),
+        workdayDate: currentDate,
       },
     });
 
-    return res.json(internshipDay);
+    return res.json(newInternshipDay);
   },
   modifyInternshipDayStatus: async (req, res) => {
     const { dayID } = req.params;
@@ -67,7 +80,20 @@ module.exports = {
     });
 
     if (!company) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(400).json({ message: "Company does not exist." });
+    }
+
+    const day = await prisma.internship_day.findUnique({
+      where: {
+        dayID,
+        internship: {
+          companyID: company.companyID,
+        },
+      },
+    });
+
+    if (!day) {
+      return res.status(400).json({ message: "Day does not exist." });
     }
 
     const internshipDay = await prisma.internship_day.update({
@@ -90,6 +116,7 @@ module.exports = {
 
   approveAllInternshipDays: async (req, res) => {
     const { internshipID } = req.params;
+
     const company = await prisma.company.findUnique({
       where: {
         contactEmail: req.user.profile.emails[0].value,
@@ -97,7 +124,7 @@ module.exports = {
     });
 
     if (!company) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(400).json({ message: "Company does not exist." });
     }
 
     const internship = await prisma.internship.findUnique({
@@ -108,7 +135,7 @@ module.exports = {
     });
 
     if (!internship) {
-      return res.status(401).json({ message: "Unauthorized" });
+      return res.status(400).json({ message: "Internship does not exist." });
     }
 
     const internshipDay = await prisma.internship_day.updateMany({

@@ -139,7 +139,6 @@ const InternshipListingPage = () => {
                 setStartInternshipModalOpen(false);
                 createInternship({
                   listingID: listingID || "",
-                  companyID: data?.company.companyID || "",
                   interns: approvedApplications.map(
                     (app: Application) => app.internID
                   ),

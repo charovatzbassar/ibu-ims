@@ -2,19 +2,25 @@ import appAxios from "./appAxios";
 
 export default class InternshipsService {
   public static getInternships = async () => {
-    return appAxios.get("/internships").then((res) => res.data);
+    return appAxios
+      .get("/internships")
+      .then((res) => res.data)
+      .catch((error) => error);
   };
   public static getInternship = async (internshipID: string) => {
-    return appAxios.get(`/internships/${internshipID}`).then((res) => res.data);
+    return appAxios
+      .get(`/internships/${internshipID}`)
+      .then((res) => res.data)
+      .catch((error) => error);
   };
   public static createInternship = async (
     listingID: string,
-    companyID: string,
     interns: string[]
   ) => {
     return appAxios
-      .post("/internships", { listingID, companyID, interns })
-      .then((res) => res.data);
+      .post("/internships", { listingID, interns })
+      .then((res) => res.data)
+      .catch((error) => error);
   };
   public static createInternshipFinalReport = async (
     internshipID: string,
@@ -22,9 +28,13 @@ export default class InternshipsService {
   ) => {
     return appAxios
       .put(`/internships/${internshipID}`, { finalReport })
-      .then((res) => res.data);
+      .then((res) => res.data)
+      .catch((error) => error);
   };
   public static getInternshipForIntern = async () => {
-    return appAxios.get("/internships/intern").then((res) => res.data);
+    return appAxios
+      .get("/internships/intern")
+      .then((res) => res.data)
+      .catch((error) => error);
   };
 }

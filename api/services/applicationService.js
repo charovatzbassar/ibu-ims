@@ -5,6 +5,29 @@ module.exports = {
   getApplicationsByStatus: async (req, res) => {
     const { listingID, status } = req.params;
 
+    const company = await prisma.company.findUnique({
+      where: {
+        email: req.user.profile.emails[0].value,
+      },
+    });
+
+    if (!company) {
+      return res.status(400).json({ error: "Company does not exist." });
+    }
+
+    const listing = await prisma.internship_listing.findUnique({
+      where: {
+        listingID,
+        companyID: company.companyID,
+      },
+    });
+
+    if (!listing) {
+      return res
+        .status(400)
+        .json({ error: "Internship listing does not exist." });
+    }
+
     const allApplications = await prisma.application.findMany({
       include: {
         internship_listing: true,
@@ -13,6 +36,7 @@ module.exports = {
       where: {
         internship_listing: {
           listingID,
+          companyID: company.companyID,
         },
         applicationStatus: status,
       },
@@ -24,9 +48,22 @@ module.exports = {
     const { applicationID } = req.params;
     const { status } = req.body;
 
+    const company = await prisma.company.findUnique({
+      where: {
+        email: req.user.profile.emails[0].value,
+      },
+    });
+
+    if (!company) {
+      return res.status(400).json({ error: "Company does not exist." });
+    }
+
     const updatedApplication = await prisma.application.updateMany({
       where: {
         applicationID,
+        internship_listing: {
+          companyID: company.companyID,
+        },
       },
       data: {
         applicationStatus: status,
@@ -44,14 +81,20 @@ module.exports = {
       },
     });
 
+    if (!intern) {
+      return res.status(400).json({ error: "Intern does not exist." });
+    }
+
     const listing = await prisma.internship_listing.findUnique({
       where: {
         listingID,
       },
     });
 
-    if (!intern || !listing) {
-      return res.status(401).json({ error: "Unauthorized" });
+    if (!listing) {
+      return res
+        .status(400)
+        .json({ error: "Internship listing does not exist." });
     }
 
     const newApplication = await prisma.application.create({

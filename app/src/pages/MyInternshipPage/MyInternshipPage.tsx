@@ -13,7 +13,9 @@ import { InternshipDayForm } from "./components";
 const MyInternshipPage = () => {
   const { data, isPending } = useInternshipForIntern();
 
-  const { mutate, onSuccess } = useCreateInternshipDay(data?.internshipID || "");
+  const { mutate, onSuccess, isError, error } = useCreateInternshipDay(
+    data?.internshipID || ""
+  );
 
   return (
     <>

@@ -17,7 +17,7 @@ router
     checkRole("intern"),
     catchAsync(internshipDayService.createInternshipDay)
   );
-  
+
 router
   .route("/:internshipID/all")
   .put(

@@ -10,19 +10,28 @@ export default class InternshipListingsService {
     if (searchTerm) {
       url += `?searchTerm=${searchTerm}`;
     }
-    return appAxios.get(url).then((res) => res.data);
+    return appAxios
+      .get(url)
+      .then((res) => res.data)
+      .catch((error) => error);
   };
 
   public static getInternshipListing = async (
     id: string
   ): Promise<InternshipListing> => {
-    return appAxios.get(`/internship-listings/${id}`).then((res) => res.data);
+    return appAxios
+      .get(`/internship-listings/${id}`)
+      .then((res) => res.data)
+      .catch((error) => error);
   };
 
   public static createInternshipListing = async (
     data: InternshipListingFormValues
   ) => {
-    return appAxios.post("/internship-listings", data).then((res) => res.data);
+    return appAxios
+      .post("/internship-listings", data)
+      .then((res) => res.data)
+      .catch((error) => error);
   };
 
   public static editInternshipListing = async (
@@ -31,18 +40,23 @@ export default class InternshipListingsService {
   ) => {
     return appAxios
       .put(`/internship-listings/${id}`, newData)
-      .then((res) => res.data);
+      .then((res) => res.data)
+      .catch((error) => error);
   };
 
   public static deleteInternshipListing = async (id: string) => {
     return appAxios
       .delete(`/internship-listings/${id}`)
-      .then((res) => res.data);
+      .then((res) => res.data)
+      .catch((error) => error);
   };
 
   public static getInternshipListingsByCompany = async (): Promise<
     InternshipListing[]
   > => {
-    return appAxios.get("/internship-listings/company").then((res) => res.data);
+    return appAxios
+      .get("/internship-listings/company")
+      .then((res) => res.data)
+      .catch((error) => error);
   };
 }

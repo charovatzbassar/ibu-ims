@@ -36,19 +36,23 @@ module.exports = {
       },
     });
 
+    if (!company) {
+      return res.status(400).json({ error: "Company does not exist." });
+    }
+
     const startDate = new Date(req.body.startDate);
     const endDate = new Date(req.body.endDate);
 
     if (startDate.getTime() < new Date().getTime()) {
       return res
         .status(400)
-        .json({ error: "Start date must be in the future" });
+        .json({ error: "Start date must be in the future." });
     }
 
     if (startDate.getTime() > endDate.getTime()) {
       return res
         .status(400)
-        .json({ error: "Start date must be before end date" });
+        .json({ error: "Start date must be before end date." });
     }
 
     const newListing = await prisma.internship_listing.create({
@@ -82,15 +86,8 @@ module.exports = {
       },
     });
 
-    const listing = await prisma.internship_listing.findUnique({
-      where: {
-        listingID: req.params.id,
-        companyID: company.companyID,
-      },
-    });
-
-    if (!listing) {
-      return res.status(401).json({ error: "Unauthorized" });
+    if (!company) {
+      return res.status(400).json({ error: "Company does not exist." });
     }
 
     const updatedListing = await prisma.internship_listing.update({
@@ -116,20 +113,16 @@ module.exports = {
       },
     });
 
-    const listing = await prisma.internship_listing.findUnique({
-      where: {
-        listingID: req.params.id,
-        companyID: company.companyID,
-      },
-    });
-
-    if (!listing) {
-      return res.status(401).json({ error: "Unauthorized" });
+    if (!company) {
+      return res.status(400).json({ error: "Company does not exist." });
     }
 
     const deletedApplications = await prisma.application.deleteMany({
       where: {
         listingID: req.params.id,
+        internship_listing: {
+          companyID: company.companyID,
+        },
       },
     });
 
