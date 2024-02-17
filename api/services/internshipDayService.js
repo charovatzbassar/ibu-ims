@@ -45,6 +45,9 @@ module.exports = {
     }
 
     const internship = await prisma.internship.findUnique({
+      include: {
+        internship_listing: true,
+      },
       where: {
         internshipID,
         internID: intern.internID,
@@ -57,7 +60,30 @@ module.exports = {
 
     const currentDate = new Date();
 
-    // Check if the internship day already exists, and if it is outside the internship period
+    if (currentDate < internship.internship_listing.startDate) {
+      return res.status(400).json({
+        message: "Your internship has not started yet.",
+      });
+    }
+
+    if (currentDate > internship.internship_listing.endDate) {
+      return res.status(400).json({
+        message: "Your internship has ended.",
+      });
+    }
+
+    const existingInternshipDay = await prisma.internship_day.findFirst({
+      where: {
+        internshipID,
+        workdayDate: currentDate,
+      },
+    });
+
+    if (existingInternshipDay) {
+      return res.status(400).json({
+        message: "You have already filled out today's date. See you tomorrow!",
+      });
+    }
 
     const newInternshipDay = await prisma.internship_day.create({
       data: {
