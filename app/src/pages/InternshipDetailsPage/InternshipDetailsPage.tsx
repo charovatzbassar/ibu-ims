@@ -62,16 +62,16 @@ const InternshipDetailsPage = () => {
           <Card sx={{ marginY: "10px" }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {data.intern.firstName} {data.intern.lastName} -{" "}
-                {data.internship_listing.position}
+                {data.intern?.firstName} {data.intern?.lastName} -{" "}
+                {data.internship_listing?.position}
               </Typography>
               <Divider />
               <Box sx={{ marginTop: "10px" }}>
                 <Typography variant="body2" color="text.secondary">
-                  Started at: {data.internship_listing.startDate.slice(0, 10)}
+                  Started at: {data.internship_listing?.startDate.slice(0, 10)}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Ends at: {data.internship_listing.endDate.slice(0, 10)}
+                  Ends at: {data.internship_listing?.endDate.slice(0, 10)}
                 </Typography>
               </Box>
             </CardContent>

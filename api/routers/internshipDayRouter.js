@@ -9,19 +9,19 @@ router
   .route("/:internshipID")
   .get(
     checkAuth,
-    checkRole("company"),
+    checkRole(["company"]),
     catchAsync(internshipDayService.getInternshipDays)
   )
   .post(
     checkAuth,
-    checkRole("intern"),
+    checkRole(["intern"]),
     catchAsync(internshipDayService.createInternshipDay)
   );
 
 router
   .route("/:internshipID/all")
   .put(
-    checkRole("company"),
+    checkRole(["company"]),
     catchAsync(internshipDayService.approveAllInternshipDays)
   );
 
@@ -29,7 +29,7 @@ router
   .route("/:dayID")
   .put(
     checkAuth,
-    checkRole("company"),
+    checkRole(["company"]),
     catchAsync(internshipDayService.modifyInternshipDayStatus)
   );
 

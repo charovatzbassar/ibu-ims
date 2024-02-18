@@ -2,15 +2,22 @@ const prisma = require("../prisma");
 const { v4: uuid } = require("uuid");
 
 module.exports = {
-  getInternshipsCompany: async (req, res) => {
-    const company = await prisma.company.findUnique({
-      where: {
-        contactEmail: req.user.profile.emails[0].value,
-      },
-    });
+  getInternships: async (req, res) => {
+    const userData =
+      req.user.role === "company"
+        ? await prisma.company.findFirst({
+            where: {
+              contactEmail: req.user.profile.emails[0].value,
+            },
+          })
+        : await prisma.manager.findFirst({
+            where: {
+              email: req.user.profile.emails[0].value,
+            },
+          });
 
-    if (!company) {
-      return res.status(400).json({ error: "Company does not exist." });
+    if (!userData) {
+      return res.status(400).json({ error: "User does not exist." });
     }
 
     const internships = await prisma.internship.findMany({
@@ -22,51 +29,38 @@ module.exports = {
       },
       where: {
         status: "ONGOING",
-        company: {
-          companyID: company.companyID,
-        },
+        OR: [
+          {
+            companyID: userData.companyID,
+          },
+          {
+            managerID: userData.managerID,
+          },
+        ],
       },
     });
 
     res.json(internships);
   },
-  getInternshipsManager: async (req, res) => {
-    const manager = await prisma.manager.findUnique({
-      where: {
-        email: req.user.profile.emails[0].value,
-      },
-    });
 
-    if (!manager) {
-      return res.status(400).json({ error: "Manager does not exist." });
-    }
+  getInternship: async (req, res) => {
+    const { internshipID } = req.params;
 
-    const internships = await prisma.internship.findMany({
-      include: {
-        company: true,
-        intern: true,
-        manager: true,
-        internship_listing: true,
-      },
-      where: {
-        status: "ONGOING",
-        manager: {
-          managerID: manager.managerID,
-        },
-      },
-    });
+    const userData =
+      req.user.role === "company"
+        ? await prisma.company.findFirst({
+            where: {
+              contactEmail: req.user.profile.emails[0].value,
+            },
+          })
+        : await prisma.manager.findFirst({
+            where: {
+              email: req.user.profile.emails[0].value,
+            },
+          });
 
-    res.json(internships);
-  },
-  getInternshipCompany: async (req, res) => {
-    const company = await prisma.company.findUnique({
-      where: {
-        contactEmail: req.user.profile.emails[0].value,
-      },
-    });
-
-    if (!company) {
-      return res.status(400).json({ error: "Company does not exist." });
+    if (!userData) {
+      return res.status(400).json({ error: "User does not exist." });
     }
 
     const internship = await prisma.internship.findUnique({
@@ -77,45 +71,22 @@ module.exports = {
         internship_listing: true,
       },
       where: {
-        internshipID: req.params.internshipID,
+        internshipID,
         status: "ONGOING",
-        company: {
-          companyID: company.companyID,
-        },
+        OR: [
+          {
+            companyID: userData.companyID,
+          },
+          {
+            managerID: userData.managerID,
+          },
+        ],
       },
     });
 
     res.json(internship);
   },
-  getInternshipManager: async (req, res) => {
-    const manager = await prisma.manager.findUnique({
-      where: {
-        email: req.user.profile.emails[0].value,
-      },
-    });
 
-    if (!manager) {
-      return res.status(400).json({ error: "Manager does not exist." });
-    }
-
-    const internship = await prisma.internship.findUnique({
-      include: {
-        company: true,
-        intern: true,
-        manager: true,
-        internship_listing: true,
-      },
-      where: {
-        internshipID: req.params.internshipID,
-        status: "ONGOING",
-        manager: {
-          managerID: manager.managerID,
-        },
-      },
-    });
-
-    res.json(internship);
-  },
   getInternshipByIntern: async (req, res) => {
     const intern = await prisma.intern.findUnique({
       where: {

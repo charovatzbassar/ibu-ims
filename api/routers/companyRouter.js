@@ -15,7 +15,7 @@ router
 router
   .route("/:id")
   .get(catchAsync(companyService.getCompany))
-  .put(checkRole("company"), catchAsync(companyService.updateCompany))
+  .put(checkRole(["company"]), catchAsync(companyService.updateCompany))
   .delete(catchAsync(companyService.deleteCompany));
 
 module.exports = router;

@@ -1,6 +1,6 @@
-module.exports = (role) => {
+module.exports = (roles) => {
   return (req, res, next) => {
-    if (req.isAuthenticated() && req.user.role === role) {
+    if (req.isAuthenticated() && roles.includes(req.user.role)) {
       return next();
     }
     res.redirect("/");

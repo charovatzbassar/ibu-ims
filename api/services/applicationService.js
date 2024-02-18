@@ -7,7 +7,7 @@ module.exports = {
 
     const company = await prisma.company.findUnique({
       where: {
-        email: req.user.profile.emails[0].value,
+        contactEmail: req.user.profile.emails[0].value,
       },
     });
 
@@ -50,7 +50,7 @@ module.exports = {
 
     const company = await prisma.company.findUnique({
       where: {
-        email: req.user.profile.emails[0].value,
+        contactEmail: req.user.profile.emails[0].value,
       },
     });
 
@@ -97,7 +97,7 @@ module.exports = {
         .json({ error: "Internship listing does not exist." });
     }
 
-    const existingApplication = await prisma.application.findUnique({
+    const existingApplication = await prisma.application.findFirst({
       where: {
         listingID,
         internID: intern.internID,
@@ -110,7 +110,7 @@ module.exports = {
         .json({ error: "You have already applied for this listing." });
     }
 
-    const ongoingInternship = await prisma.internship.findUnique({
+    const ongoingInternship = await prisma.internship.findFirst({
       where: {
         internID: intern.internID,
         status: "ONGOING",

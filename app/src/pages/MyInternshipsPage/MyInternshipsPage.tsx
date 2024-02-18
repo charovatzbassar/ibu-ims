@@ -5,7 +5,7 @@ import { Internship } from "@/services/types";
 import React from "react";
 
 const MyInternshipsPage = () => {
-  const { data } = useInternships();
+  const { data, isPending } = useInternships();
 
   const [page, setPage] = React.useState<number>(1);
 
@@ -22,7 +22,7 @@ const MyInternshipsPage = () => {
 
   return (
     <>
-      {data?.length === 0 ? (
+      {data?.length === 0 && !isPending ? (
         <Typography>No internships found.</Typography>
       ) : (
         <>
@@ -33,7 +33,7 @@ const MyInternshipsPage = () => {
             {data &&
               data.length !== 0 &&
               data
-                ?.slice(startIndex, endIndex)
+                .slice(startIndex, endIndex)
                 .map((internship: Internship) => (
                   <InternshipItem
                     key={internship.internshipID}
