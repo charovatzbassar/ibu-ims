@@ -1,6 +1,10 @@
 import { Alert } from "@mui/material";
 
-const ErrorAlert = () => {
+type Props = {
+  message?: string;
+};
+
+const ErrorAlert = (props: Props) => {
   return (
     <div
       style={{
@@ -10,7 +14,7 @@ const ErrorAlert = () => {
       }}
     >
       <Alert severity="error" sx={{ position: "fixed" }}>
-        An error occured.
+        {props.message ? props.message : "An error occurred"}
       </Alert>{" "}
     </div>
   );

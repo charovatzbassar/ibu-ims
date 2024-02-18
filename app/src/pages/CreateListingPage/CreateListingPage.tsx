@@ -35,7 +35,7 @@ const CreateListingPage: React.FC = () => {
 
   return (
     <>
-      {isError && <ErrorAlert />}
+      {data && <ErrorAlert message={data.response.data.error} />}
       <InternshipListingForm
         onSubmit={onSubmit}
         action={FormAction.CREATE}
