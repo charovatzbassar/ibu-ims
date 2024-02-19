@@ -59,11 +59,11 @@ const InternshipDetailsPage = () => {
   const totalPages: number | undefined =
     internshipDays && Math.ceil(internshipDays?.length / itemsPerPage);
 
-  const isOwner = isInternshipOwner(data, user);
+  const isOwner: boolean = isInternshipOwner(data, user);
 
   return (
     <>
-      {!isOwner && <Navigate to="/home/dashboard" />}
+      {data && !isOwner && <Navigate to="/home/dashboard" />}
       {isPending && <CircularProgress />}
       {data && isOwner && (
         <>
