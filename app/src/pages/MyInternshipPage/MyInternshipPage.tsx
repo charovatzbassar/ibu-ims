@@ -7,20 +7,26 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import React from "react";
 import { InternshipDayForm } from "./components";
+import { ErrorAlert, SuccessAlert } from "@/components";
 
 const MyInternshipPage = () => {
   const { data, isPending } = useInternshipForIntern();
 
-  const { mutate, onSuccess, isError, error } = useCreateInternshipDay(
-    data?.internshipID || ""
-  );
-
-  if (data) console.log(data);
+  const {
+    mutate,
+    data: mutateData,
+    isSuccess,
+  } = useCreateInternshipDay(data?.internshipID || "");
 
   return (
     <>
+      {!mutateData?.response.data.message && isSuccess && (
+        <SuccessAlert content="Day submitted successfully. See you tomorrow!" />
+      )}
+      {mutateData && mutateData.response.data.message && (
+        <ErrorAlert message={mutateData.response.data.message} />
+      )}
       {isPending && <CircularProgress />}
       {!data && (
         <Card sx={{ padding: "10px" }}>You have no ongoing internship.</Card>
@@ -35,10 +41,12 @@ const MyInternshipPage = () => {
               <Divider />
               <Box sx={{ marginTop: "10px" }}>
                 <Typography variant="body2" color="text.secondary">
-                  Started at: {data.internship_listing.startDate.slice(0, 10)}
+                  Started at:{" "}
+                  {new Date(data.internship_listing.startDate).toDateString()}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Ends at: {data.internship_listing.endDate.slice(0, 10)}
+                  Ends at:{" "}
+                  {new Date(data.internship_listing.endDate).toDateString()}
                 </Typography>
               </Box>
             </CardContent>

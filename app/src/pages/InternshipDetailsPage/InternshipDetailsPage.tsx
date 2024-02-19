@@ -5,7 +5,7 @@ import {
   useModifyInternshipDayStatus,
 } from "@/hooks";
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import {
   CircularProgress,
   Card,
@@ -26,6 +26,9 @@ import {
 } from "@mui/material";
 import { InternshipDay } from "@/services/types";
 import { InternshipDayItem } from "./components";
+import { isInternshipOwner } from "@/utils";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 const InternshipDetailsPage = () => {
   const { internshipID } = useParams();
@@ -43,6 +46,8 @@ const InternshipDetailsPage = () => {
 
   const [page, setPage] = React.useState<number>(1);
 
+  const user = useSelector((state: RootState) => state.auth.user);
+
   const itemsPerPage: number = 7;
   const startIndex: number = (page - 1) * itemsPerPage;
   const endIndex: number = startIndex + itemsPerPage;
@@ -54,10 +59,13 @@ const InternshipDetailsPage = () => {
   const totalPages: number | undefined =
     internshipDays && Math.ceil(internshipDays?.length / itemsPerPage);
 
+  const isOwner = isInternshipOwner(data, user);
+
   return (
     <>
+      {!isOwner && <Navigate to="/home/dashboard" />}
       {isPending && <CircularProgress />}
-      {data && (
+      {data && isOwner && (
         <>
           <Card sx={{ marginY: "10px" }}>
             <CardContent>
@@ -102,7 +110,11 @@ const InternshipDetailsPage = () => {
               {!isDaysPending && (
                 <Box sx={{ marginTop: "15px" }}>
                   {internshipDays.length === 0 && (
-                    <Typography variant="body2" color="text.secondary">
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ marginY: "10px" }}
+                    >
                       There are no workdays for this internship.
                     </Typography>
                   )}
@@ -132,33 +144,37 @@ const InternshipDetailsPage = () => {
                   )}
                 </Box>
               )}
-              <Pagination
-                sx={{
-                  marginY: 2,
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-                count={totalPages}
-                page={page}
-                color="primary"
-                onChange={handleChange}
-                renderItem={(item) => (
-                  <PaginationItem
-                    component="button"
-                    {...item}
-                    onClick={() => handleChange(null, item.page)}
+              {internshipDays && internshipDays.length > 0 && (
+                <>
+                  <Pagination
+                    sx={{
+                      marginY: 2,
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                    count={totalPages}
+                    page={page}
+                    color="primary"
+                    onChange={handleChange}
+                    renderItem={(item) => (
+                      <PaginationItem
+                        component="button"
+                        {...item}
+                        onClick={() => handleChange(null, item.page)}
+                      />
+                    )}
                   />
-                )}
-              />
-              <Button
-                variant="contained"
-                color="success"
-                onClick={() => {
-                  approveAllInternshipDays();
-                }}
-              >
-                Approve all
-              </Button>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => {
+                      approveAllInternshipDays();
+                    }}
+                  >
+                    Approve all
+                  </Button>
+                </>
+              )}
             </CardContent>
           </Card>
         </>
