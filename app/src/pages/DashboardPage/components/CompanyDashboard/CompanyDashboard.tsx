@@ -1,9 +1,17 @@
-import React from "react";
+import { useInternshipListingsByCompany, useInternships } from "@/hooks";
+import { Internships, MyListings } from "..";
+import { Box } from "@mui/system";
 
-type Props = {};
+const CompanyDashboard = () => {
+  const { data: internships } = useInternships();
+  const { data: listings } = useInternshipListingsByCompany();
 
-const CompanyDashboard = (props: Props) => {
-  return <div>CompanyDashboard</div>;
+  return (
+    <Box>
+      <Internships data={internships} />
+      <MyListings data={listings} />
+    </Box>
+  );
 };
 
 export default CompanyDashboard;

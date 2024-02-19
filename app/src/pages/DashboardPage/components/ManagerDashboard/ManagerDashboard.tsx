@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+const ManagerDashboard = () => {
+  return <div>ManagerDashboard</div>;
+};
 
-const ManagerDashboard = (props: Props) => {
-  return (
-    <div>ManagerDashboard</div>
-  )
-}
-
-export default ManagerDashboard
+export default ManagerDashboard;

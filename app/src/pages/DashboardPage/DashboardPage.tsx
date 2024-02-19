@@ -1,5 +1,4 @@
 import React from "react";
-import { BarChart, PieChart } from "@mui/x-charts";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 import {

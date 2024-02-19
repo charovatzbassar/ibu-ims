@@ -1,11 +1,7 @@
-import React from 'react'
+import React from "react";
 
-type Props = {}
+const InternDashboard = () => {
+  return <div>InternDashboard</div>;
+};
 
-const InternDashboard = (props: Props) => {
-  return (
-    <div>InternDashboard</div>
-  )
-}
-
-export default InternDashboard
+export default InternDashboard;
