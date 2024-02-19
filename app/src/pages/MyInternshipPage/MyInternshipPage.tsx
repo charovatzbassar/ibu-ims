@@ -1,0 +1,65 @@
+import { useCreateInternshipDay, useInternshipForIntern } from "@/hooks";
+import {
+  Card,
+  CardContent,
+  CircularProgress,
+  Divider,
+  Typography,
+} from "@mui/material";
+import { Box } from "@mui/system";
+import { InternshipDayForm } from "./components";
+import { ErrorAlert, SuccessAlert } from "@/components";
+
+const MyInternshipPage = () => {
+  const { data, isPending } = useInternshipForIntern();
+
+  const {
+    mutate,
+    data: mutateData,
+    isSuccess,
+  } = useCreateInternshipDay(data?.internshipID || "");
+
+  return (
+    <>
+      {!mutateData?.response.data.message && isSuccess && (
+        <SuccessAlert content="Day submitted successfully. See you tomorrow!" />
+      )}
+      {mutateData && mutateData.response.data.message && (
+        <ErrorAlert message={mutateData.response.data.message} />
+      )}
+      {isPending && <CircularProgress />}
+      {!data && (
+        <Card sx={{ padding: "10px" }}>You have no ongoing internship.</Card>
+      )}
+      {data && (
+        <>
+          <Card sx={{ marginY: "10px" }}>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {data.internship_listing.position}
+              </Typography>
+              <Divider />
+              <Box sx={{ marginTop: "10px" }}>
+                <Typography variant="body2" color="text.secondary">
+                  Started at:{" "}
+                  {new Date(data.internship_listing.startDate).toDateString()}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Ends at:{" "}
+                  {new Date(data.internship_listing.endDate).toDateString()}
+                </Typography>
+              </Box>
+            </CardContent>
+          </Card>
+          <InternshipDayForm
+            onSubmit={(data) => {
+              mutate(data.description);
+            }}
+          />
+        </>
+      )}
+    </>
+  );
+};
+
+export default MyInternshipPage;

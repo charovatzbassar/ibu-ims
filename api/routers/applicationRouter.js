@@ -9,19 +9,29 @@ router.use(checkAuth);
 
 router
   .route("/")
-  .post(checkRole("intern"), catchAsync(applicationService.createApplication));
+  .post(
+    checkRole(["intern"]),
+    catchAsync(applicationService.createApplication)
+  );
+
+router
+  .route("/intern")
+  .get(
+    checkRole(["intern"]),
+    catchAsync(applicationService.getApplicationsForIntern)
+  );
 
 router
   .route("/:applicationID")
   .put(
-    checkRole("company"),
+    checkRole(["company"]),
     catchAsync(applicationService.modifyApplicationStatus)
   );
 
 router
   .route("/:listingID/:status")
   .get(
-    checkRole("company"),
+    checkRole(["company"]),
     catchAsync(applicationService.getApplicationsByStatus)
   );
 

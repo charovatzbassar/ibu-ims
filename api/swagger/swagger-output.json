@@ -205,8 +205,162 @@
       }
     },
     "/api/applications/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/applications/{applicationID}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "applicationID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/applications/{listingID}/{status}": {
       "get": {
         "description": "",
+        "parameters": [
+          {
+            "name": "listingID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "status",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/internships/": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/internships/company": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/internships/intern": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/internships/manager": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/internships/{internshipID}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "internshipID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/internships/{internshipID}/company": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "internshipID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/internships/{internshipID}/manager": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "internshipID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/internship-days/{internshipID}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "internshipID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -215,6 +369,50 @@
       },
       "post": {
         "description": "",
+        "parameters": [
+          {
+            "name": "internshipID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/internship-days/{internshipID}/all": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "internshipID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/internship-days/{dayID}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "dayID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"

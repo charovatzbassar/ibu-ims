@@ -1,5 +1,6 @@
 import {
   useCreateApplication,
+  useCreateInternship,
   useDeleteInternshipListing,
   useInternshipListing,
   useModifyApplicationStatus,
@@ -13,16 +14,20 @@ import { RootState } from "@/store";
 import React from "react";
 import { ConfirmModal, ErrorAlert, SuccessAlert } from "@/components";
 import { useApplications } from "@/hooks";
+import { Application } from "@/services/types";
 
 const InternshipListingPage = () => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [startInternshipModalOpen, setStartInternshipModalOpen] =
+    React.useState<boolean>(false);
+
   const { listingID } = useParams();
 
   const { data, isPending, isError } = useInternshipListing(listingID || "");
   const {
     mutate: deleteListing,
-    isError: isDeletionError,
     isSuccess: isDeletionSuccess,
+    data: deletionData,
   } = useDeleteInternshipListing(listingID || "");
 
   const {
@@ -39,11 +44,16 @@ const InternshipListingPage = () => {
 
   const {
     mutate: apply,
-    isError: isApplicationError,
     isSuccess: isApplicationSuccess,
+    data: applicationData,
   } = useCreateApplication();
 
+  console.log(applicationData?.response?.data?.error);
+
   const modifyHook = useModifyApplicationStatus();
+
+  const { mutate: createInternship, isSuccess: createInternshipSuccess } =
+    useCreateInternship();
 
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -51,13 +61,24 @@ const InternshipListingPage = () => {
 
   return (
     <>
-      {modifyHook.isSuccess && (
+      {!data && <ErrorAlert />}
+      {user.role === "company" && createInternshipSuccess && (
+        <Navigate to="/home/my-internships" />
+      )}
+      {user.role === "company" && modifyHook.isSuccess && (
         <SuccessAlert content="Application status updated successfully!" />
       )}
-      {isApplicationSuccess && (
-        <SuccessAlert content="Application submitted successfully!" />
+      {user.role === "intern" &&
+        isApplicationSuccess &&
+        !applicationData?.response?.data?.error && (
+          <SuccessAlert content="Application submitted successfully!" />
+        )}
+      {user.role === "intern" && applicationData?.response?.data?.error && (
+        <ErrorAlert message={applicationData?.response?.data?.error} />
       )}
-      {user.role === "company" && isApplicationError && <ErrorAlert />}
+      {user.role === "company" && applicationData && <ErrorAlert />}
+      {user.role === "company" && deletionData && <ErrorAlert />}
+
       {isPending && <CircularProgress />}
       {!isPending && !isError && (
         <InternshipListingContent
@@ -71,24 +92,34 @@ const InternshipListingPage = () => {
       {user.role === "company" && isApplicationsPending && isOwner && (
         <CircularProgress />
       )}
-      {user.role === "company" && isOwner && (
-        <Card sx={{ padding: "20px", marginY: "20px" }}>
-          {applications?.length === 0 &&
-            approvedApplications?.length !== data?.noOfPlaces &&
-            "There are no pending applications."}{" "}
-          {approvedApplications?.length === data?.noOfPlaces &&
-            "All places have been filled."}
-        </Card>
-      )}
+      {user.role === "company" &&
+        isOwner &&
+        applications?.length === 0 &&
+        approvedApplications?.length !== data?.noOfPlaces && (
+          <Card sx={{ padding: "20px", marginY: "20px" }}>
+            There are no pending applications.
+          </Card>
+        )}
+      {user.role === "company" &&
+        isOwner &&
+        approvedApplications?.length === data?.noOfPlaces && (
+          <Card sx={{ padding: "20px", marginY: "20px" }}>
+            All places have been filled.
+          </Card>
+        )}
       {user.role === "company" &&
         applications?.length > 0 &&
         !isApplicationsPending &&
         !isApplicationsError &&
         isOwner &&
-        approvedApplications?.length < 4 && (
+        data?.noOfPlaces &&
+        approvedApplications?.length < data.noOfPlaces && (
           <ApplicationTable data={applications} modifyHook={modifyHook} />
         )}
 
+      {user.role === "company" && isApprovedApplicationsPending && isOwner && (
+        <CircularProgress />
+      )}
       {user.role === "company" &&
         approvedApplications?.length > 0 &&
         !isApprovedApplicationsPending &&
@@ -101,6 +132,41 @@ const InternshipListingPage = () => {
             <ApplicationTable data={approvedApplications} />
           </>
         )}
+
+      {user.role === "company" &&
+        approvedApplications?.length > 0 &&
+        isOwner && (
+          <>
+            <Button
+              variant="contained"
+              color="success"
+              sx={{ marginY: "10px" }}
+              onClick={() => setStartInternshipModalOpen(true)}
+            >
+              Start Internship
+            </Button>
+
+            <ConfirmModal
+              onClick={() => {
+                setStartInternshipModalOpen(false);
+                createInternship({
+                  listingID: listingID || "",
+                  interns: approvedApplications.map(
+                    (app: Application) => app.internID
+                  ),
+                });
+              }}
+              buttonColor="success"
+              modalOpen={startInternshipModalOpen}
+              closeModal={() => setStartInternshipModalOpen(false)}
+            >
+              <Typography variant="h6" component="h2">
+                Are you sure you wish to start the internship?
+              </Typography>
+            </ConfirmModal>
+          </>
+        )}
+
       {user.role === "company" &&
         approvedApplications?.length === 0 &&
         isOwner && (
@@ -110,9 +176,7 @@ const InternshipListingPage = () => {
             </Card>
           </>
         )}
-      {user.role === "company" && isApplicationsError && <ErrorAlert />}
       {isDeletionSuccess && <Navigate to="/home/dashboard" />}
-      {isDeletionError && <ErrorAlert />}
       {user.role === "intern" && (
         <>
           <Button

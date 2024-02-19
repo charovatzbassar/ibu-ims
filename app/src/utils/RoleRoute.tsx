@@ -3,12 +3,12 @@ import { useSelector } from "react-redux";
 import { Outlet, Navigate } from "react-router-dom";
 import { RootState } from "@/store";
 
-type Props = { role: string };
+type Props = { roles: string[] };
 
 const RoleRoute: React.FC<Props> = (props) => {
   const user = useSelector((state: RootState) => state.auth.user);
 
-  return user.role === props.role ? (
+  return props.roles.some((role) => role === user.role) ? (
     <Outlet />
   ) : (
     <Navigate to="/home/dashboard" />

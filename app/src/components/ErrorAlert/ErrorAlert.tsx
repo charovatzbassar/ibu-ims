@@ -1,6 +1,13 @@
 import { Alert } from "@mui/material";
+import React from "react";
 
-const ErrorAlert = () => {
+type Props = {
+  message?: string;
+};
+
+const ErrorAlert = (props: Props) => {
+  const [open, setOpen] = React.useState(true);
+
   return (
     <div
       style={{
@@ -9,8 +16,14 @@ const ErrorAlert = () => {
         flexDirection: "row-reverse",
       }}
     >
-      <Alert severity="error" sx={{ position: "fixed" }}>
-        An error occured.
+      <Alert
+        severity="error"
+        sx={{ position: "fixed", display: !open ? "none" : null }}
+        onClose={() => {
+          setOpen(false);
+        }}
+      >
+        {props.message ? props.message : "An error occurred"}
       </Alert>{" "}
     </div>
   );

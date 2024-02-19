@@ -10,6 +10,7 @@ module.exports = {
         company: true,
       },
       where: {
+        listingStatus: "ACTIVE",
         OR: [
           {
             position: {
@@ -35,19 +36,23 @@ module.exports = {
       },
     });
 
+    if (!company) {
+      return res.status(400).json({ error: "Company does not exist." });
+    }
+
     const startDate = new Date(req.body.startDate);
     const endDate = new Date(req.body.endDate);
 
     if (startDate.getTime() < new Date().getTime()) {
       return res
         .status(400)
-        .json({ error: "Start date must be in the future" });
+        .json({ error: "Start date must be in the future." });
     }
 
     if (startDate.getTime() > endDate.getTime()) {
       return res
         .status(400)
-        .json({ error: "Start date must be before end date" });
+        .json({ error: "Start date must be before end date." });
     }
 
     const newListing = await prisma.internship_listing.create({
@@ -57,6 +62,7 @@ module.exports = {
         ...req.body,
         ...(req.body.startDate ? { startDate } : {}),
         ...(req.body.endDate ? { endDate } : {}),
+        listingStatus: "ACTIVE",
       },
     });
     res.json(newListing);
@@ -80,15 +86,23 @@ module.exports = {
       },
     });
 
-    const listing = await prisma.internship_listing.findUnique({
-      where: {
-        listingID: req.params.id,
-        companyID: company.companyID,
-      },
-    });
+    if (!company) {
+      return res.status(400).json({ error: "Company does not exist." });
+    }
 
-    if (!listing) {
-      return res.status(401).json({ error: "Unauthorized" });
+    const startDate = new Date(req.body.startDate);
+    const endDate = new Date(req.body.endDate);
+
+    if (startDate.getTime() < new Date().getTime()) {
+      return res
+        .status(400)
+        .json({ error: "Start date must be in the future." });
+    }
+
+    if (startDate.getTime() > endDate.getTime()) {
+      return res
+        .status(400)
+        .json({ error: "Start date must be before end date." });
     }
 
     const updatedListing = await prisma.internship_listing.update({
@@ -98,10 +112,8 @@ module.exports = {
       },
       data: {
         ...req.body,
-        ...(req.body.startDate
-          ? { startDate: new Date(req.body.startDate) }
-          : {}),
-        ...(req.body.endDate ? { endDate: new Date(req.body.endDate) } : {}),
+        ...(req.body.startDate ? { startDate } : {}),
+        ...(req.body.endDate ? { endDate } : {}),
       },
     });
 
@@ -114,20 +126,16 @@ module.exports = {
       },
     });
 
-    const listing = await prisma.internship_listing.findUnique({
-      where: {
-        listingID: req.params.id,
-        companyID: company.companyID,
-      },
-    });
-
-    if (!listing) {
-      return res.status(401).json({ error: "Unauthorized" });
+    if (!company) {
+      return res.status(400).json({ error: "Company does not exist." });
     }
 
     const deletedApplications = await prisma.application.deleteMany({
       where: {
         listingID: req.params.id,
+        internship_listing: {
+          companyID: company.companyID,
+        },
       },
     });
 
@@ -147,6 +155,7 @@ module.exports = {
         company: true,
       },
       where: {
+        listingStatus: "ACTIVE",
         company: {
           contactEmail: {
             equals: req.user.profile.emails[0].value,

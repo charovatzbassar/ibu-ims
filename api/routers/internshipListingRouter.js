@@ -11,7 +11,7 @@ router
   .route("/")
   .get(catchAsync(internshipListingService.getInternshipListings))
   .post(
-    checkRole("company"),
+    checkRole(["company"]),
     catchAsync(internshipListingService.createInternshipListing)
   );
 
@@ -23,11 +23,11 @@ router
   .route("/:id")
   .get(catchAsync(internshipListingService.getInternshipListing))
   .put(
-    checkRole("company"),
+    checkRole(["company"]),
     catchAsync(internshipListingService.updateInternshipListing)
   )
   .delete(
-    checkRole("company"),
+    checkRole(["company"]),
     catchAsync(internshipListingService.deleteInternshipListing)
   );
 

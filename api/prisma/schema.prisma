@@ -28,31 +28,23 @@ model intern {
 }
 
 model internship {
-  internshipID    String            @id @db.VarChar(36)
-  internID        String?           @unique(map: "internID_UNIQUE") @db.VarChar(36)
-  managerID       String?           @db.VarChar(36)
-  companyID       String?           @db.VarChar(36)
-  status          String?           @db.VarChar(15)
-  finalReport     String?           @db.VarChar(250)
-  company         company?          @relation(fields: [companyID], references: [companyID], onDelete: NoAction, onUpdate: NoAction, map: "fk_company")
-  intern          intern?           @relation(fields: [internID], references: [internID], onDelete: NoAction, onUpdate: NoAction, map: "fk_internID")
-  manager         manager?          @relation(fields: [managerID], references: [managerID], onDelete: NoAction, onUpdate: NoAction, map: "fk_managerID")
-  internship_days internship_days[]
+  internshipID       String              @id @db.VarChar(36)
+  internID           String?             @unique(map: "internID_UNIQUE") @db.VarChar(36)
+  managerID          String?             @db.VarChar(36)
+  companyID          String?             @db.VarChar(36)
+  status             String?             @db.VarChar(15)
+  finalReport        String?             @db.VarChar(250)
+  listingID          String?             @db.VarChar(36)
+  company            company?            @relation(fields: [companyID], references: [companyID], onDelete: NoAction, onUpdate: NoAction, map: "fk_company")
+  intern             intern?             @relation(fields: [internID], references: [internID], onDelete: NoAction, onUpdate: NoAction, map: "fk_internID")
+  internship_listing internship_listing? @relation(fields: [listingID], references: [listingID], onDelete: NoAction, onUpdate: NoAction, map: "internshiplistingID")
+  manager            manager?            @relation(fields: [managerID], references: [managerID], onDelete: NoAction, onUpdate: NoAction, map: "fk_managerID")
+  internship_day     internship_day[]
 
   @@index([companyID], map: "internshipcompanyID_idx")
   @@index([internID], map: "internshipinternID_idx")
   @@index([managerID], map: "internshipmanagerID_idx")
-}
-
-model internship_days {
-  dayID          String      @id @db.VarChar(36)
-  internshipID   String?     @db.VarChar(36)
-  workdayDate    DateTime?   @db.Date
-  dayDescription String?     @db.Text
-  status         String?     @db.VarChar(45)
-  internship     internship? @relation(fields: [internshipID], references: [internshipID], onDelete: NoAction, onUpdate: NoAction, map: "fk_internshipID")
-
-  @@index([internshipID], map: "internshipdaysinternshipID_idx")
+  @@index([listingID], map: "internshiplistingID_idx")
 }
 
 model internship_listing {
@@ -65,7 +57,9 @@ model internship_listing {
   endDate            DateTime?     @db.Date
   requirements       String?       @db.Text
   noOfPlaces         Int?
+  listingStatus      String?       @db.VarChar(45)
   application        application[]
+  internship         internship[]
   company            company?      @relation(fields: [companyID], references: [companyID], onDelete: NoAction, onUpdate: NoAction, map: "fk_companyID")
 
   @@index([companyID], map: "listingcompanyID_idx")
@@ -90,4 +84,15 @@ model application {
 
   @@index([internID], map: "applicationinternID_idx")
   @@index([listingID], map: "applicationlistingID_idx")
+}
+
+model internship_day {
+  dayID          String      @id @db.VarChar(36)
+  internshipID   String?     @db.VarChar(36)
+  workdayDate    DateTime?   @db.Date
+  dayDescription String?     @db.Text
+  status         String?     @db.VarChar(45)
+  internship     internship? @relation(fields: [internshipID], references: [internshipID], onDelete: NoAction, onUpdate: NoAction, map: "internshipdaysinternshipID")
+
+  @@index([internshipID], map: "internshipdaysinternshipID_idx")
 }
