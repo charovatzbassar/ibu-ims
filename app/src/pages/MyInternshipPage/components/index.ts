@@ -1,1 +1,1 @@
-export { default as InternshipDayForm } from "./InternshipDayForm/InternshipDayForm";
+export { default as InternshipDayForm } from "./InternshipDayForm";

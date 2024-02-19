@@ -7,8 +7,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { InternshipDayForm } from "./components";
 import { ErrorAlert, SuccessAlert } from "@/components";
+import { InternshipDayForm } from "./components";
 
 const MyInternshipPage = () => {
   const { data, isPending } = useInternshipForIntern();
