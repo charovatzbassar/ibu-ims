@@ -9,9 +9,27 @@ import {
 } from "@mui/material";
 import { ApplicationItem } from "..";
 import { Box } from "@mui/system";
+import {
+  CheckCircleOutline,
+  HourglassBottom,
+  Cancel,
+} from "@mui/icons-material";
 
 type Props = {
   status: string;
+};
+
+const Icon = (status: string) => {
+  switch (status) {
+    case "PENDING":
+      return <HourglassBottom color="warning" />;
+    case "APPROVED":
+      return <CheckCircleOutline color="success" />;
+    case "REJECTED":
+      return <Cancel color="error" />;
+    default:
+      return <></>;
+  }
 };
 
 const ApplicationItems = (props: Props) => {
@@ -32,6 +50,7 @@ const ApplicationItems = (props: Props) => {
   return (
     <Box sx={{ marginY: "25px" }}>
       <Card sx={{ padding: "10px", fontSize: 25, marginY: "10px" }}>
+        {Icon(props.status)}{" "}
         {props.status[0] + props.status.slice(1).toLowerCase()} applications
       </Card>
       {isPending && <CircularProgress />}
@@ -42,10 +61,11 @@ const ApplicationItems = (props: Props) => {
       )}
       {data &&
         !isPending &&
+        data.length > 0 &&
         data
           .slice(startIndex, endIndex)
           .map((application: Application) => (
-            <ApplicationItem data={application} />
+            <ApplicationItem key={application.applicationID} data={application} />
           ))}
       {data && data.length > 0 && (
         <Pagination

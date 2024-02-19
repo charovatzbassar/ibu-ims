@@ -48,8 +48,6 @@ const InternshipListingPage = () => {
     data: applicationData,
   } = useCreateApplication();
 
-  console.log(applicationData?.response?.data?.error);
-
   const modifyHook = useModifyApplicationStatus();
 
   const { mutate: createInternship, isSuccess: createInternshipSuccess } =
