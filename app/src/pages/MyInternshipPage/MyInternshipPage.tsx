@@ -19,6 +19,15 @@ const MyInternshipPage = () => {
     isSuccess,
   } = useCreateInternshipDay(data?.internshipID || "");
 
+  const today = new Date();
+  let content = "";
+
+  if (today < new Date(data?.internship_listing.startDate)) {
+    content = "Your internship has not started yet.";
+  } else if (today > new Date(data?.internship_listing.endDate)) {
+    content = "Your internship has ended.";
+  }
+
   return (
     <>
       {!mutateData?.response.data.message && isSuccess && (
@@ -51,11 +60,15 @@ const MyInternshipPage = () => {
               </Box>
             </CardContent>
           </Card>
-          <InternshipDayForm
-            onSubmit={(data) => {
-              mutate(data.description);
-            }}
-          />
+          {content ? (
+            <Card sx={{ padding: "20px", marginY: "10px" }}>{content}</Card>
+          ) : (
+            <InternshipDayForm
+              onSubmit={(data) => {
+                mutate(data.description);
+              }}
+            />
+          )}
         </>
       )}
     </>
