@@ -1,6 +1,12 @@
 import { useInternships } from "@/hooks";
 import { InternshipItem } from "./components";
-import { Pagination, PaginationItem, Typography } from "@mui/material";
+import {
+  Card,
+  CircularProgress,
+  Pagination,
+  PaginationItem,
+  Typography,
+} from "@mui/material";
 import { Internship } from "@/services/types";
 import React from "react";
 
@@ -22,25 +28,26 @@ const MyInternshipsPage = () => {
 
   return (
     <>
-      {data?.length === 0 && !isPending ? (
-        <Typography>No internships found.</Typography>
+      {!data && isPending && <CircularProgress />}
+      {data && data.length === 0 && !isPending ? (
+        <Card sx={{ padding: "20px" }}>No ongoing internships found.</Card>
       ) : (
-        <>
+        <div>
           <Typography variant="h5" sx={{ marginY: "10px" }}>
             My Internships
           </Typography>
-          <div>
-            {data &&
-              data.length !== 0 &&
-              data
-                .slice(startIndex, endIndex)
-                .map((internship: Internship) => (
-                  <InternshipItem
-                    key={internship.internshipID}
-                    data={internship}
-                  />
-                ))}
+          {data &&
+            data.length !== 0 &&
+            data
+              .slice(startIndex, endIndex)
+              .map((internship: Internship) => (
+                <InternshipItem
+                  key={internship.internshipID}
+                  data={internship}
+                />
+              ))}
 
+          {data && data.length > 0 && (
             <Pagination
               sx={{ marginY: 2, display: "flex", justifyContent: "center" }}
               count={totalPages}
@@ -55,8 +62,8 @@ const MyInternshipsPage = () => {
                 />
               )}
             />
-          </div>
-        </>
+          )}
+        </div>
       )}
     </>
   );

@@ -27,7 +27,7 @@ const MyListingsPage = () => {
     <>
       {isPending && <CircularProgress />}
       {isError && <ErrorAlert />}
-      {data && data.length !== 0 && (
+      {data && data.length !== 0 && !isPending && (
         <div>
           {data.slice(startIndex, endIndex).map((internshipListing) => {
             return (

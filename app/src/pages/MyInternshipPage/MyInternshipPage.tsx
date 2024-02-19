@@ -17,9 +17,14 @@ const MyInternshipPage = () => {
     data?.internshipID || ""
   );
 
+  if (data) console.log(data);
+
   return (
     <>
       {isPending && <CircularProgress />}
+      {!data && (
+        <Card sx={{ padding: "10px" }}>You have no ongoing internship.</Card>
+      )}
       {data && (
         <>
           <Card sx={{ marginY: "10px" }}>

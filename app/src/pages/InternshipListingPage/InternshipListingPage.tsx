@@ -117,6 +117,9 @@ const InternshipListingPage = () => {
           <ApplicationTable data={applications} modifyHook={modifyHook} />
         )}
 
+      {user.role === "company" && isApprovedApplicationsPending && isOwner && (
+        <CircularProgress />
+      )}
       {user.role === "company" &&
         approvedApplications?.length > 0 &&
         !isApprovedApplicationsPending &&
