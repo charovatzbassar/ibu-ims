@@ -44,6 +44,34 @@ module.exports = {
 
     res.json(allApplications);
   },
+  getApplicationsForIntern: async (req, res) => {
+    const { status } = req.query;
+    const intern = await prisma.intern.findUnique({
+      where: {
+        email: req.user.profile.emails[0].value,
+      },
+    });
+
+    if (!intern) {
+      return res.status(400).json({ error: "Intern does not exist." });
+    }
+
+    const applications = await prisma.application.findMany({
+      include: {
+        internship_listing: {
+          include: {
+            company: true,
+          },
+        },
+      },
+      where: {
+        internID: intern.internID,
+        applicationStatus: status,
+      },
+    });
+
+    res.json(applications);
+  },
   modifyApplicationStatus: async (req, res) => {
     const { applicationID } = req.params;
     const { status } = req.body;

@@ -15,6 +15,13 @@ router
   );
 
 router
+  .route("/intern")
+  .get(
+    checkRole(["intern"]),
+    catchAsync(applicationService.getApplicationsForIntern)
+  );
+
+router
   .route("/:applicationID")
   .put(
     checkRole(["company"]),

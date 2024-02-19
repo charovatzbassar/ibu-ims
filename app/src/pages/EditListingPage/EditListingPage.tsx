@@ -13,9 +13,13 @@ const EditListingPage = () => {
 
   const { data } = useInternshipListing(listingID || "");
 
-  const { mutate, isError, isPending, isSuccess } = useEditInternshipListing(
-    listingID || ""
-  );
+  const {
+    mutate,
+    isError,
+    isPending,
+    isSuccess,
+    data: mutateData,
+  } = useEditInternshipListing(listingID || "");
 
   const onSubmit = (newData: InternshipListingFormValues) => {
     mutate({
@@ -37,7 +41,7 @@ const EditListingPage = () => {
     });
   };
 
-  if (isSuccess && data?.listingID) {
+  if (isSuccess && data?.listingID && !mutateData.response?.data.error) {
     return <Navigate to={`/home/internship-listings/${data.listingID}`} />;
   }
 
@@ -46,7 +50,7 @@ const EditListingPage = () => {
       {!isListingOwner(data, user) && (
         <Navigate to="/home/internship-listings" />
       )}
-      {isError && <ErrorAlert />}
+      {mutateData && <ErrorAlert message={mutateData.response.data.error} />}
       <InternshipListingForm
         action={FormAction.UPDATE}
         onSubmit={onSubmit}

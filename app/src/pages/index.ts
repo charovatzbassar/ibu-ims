@@ -10,3 +10,4 @@ export { default as MyInternshipsPage } from "./MyInternshipsPage";
 export { default as InternshipDetailsPage } from "./InternshipDetailsPage";
 export { default as InternshipReportPage } from "./InternshipReportPage";
 export { default as MyInternshipPage } from "./MyInternshipPage";
+export { default as MyApplicationsPage } from "./MyApplicationsPage";

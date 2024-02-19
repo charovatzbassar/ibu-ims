@@ -90,6 +90,21 @@ module.exports = {
       return res.status(400).json({ error: "Company does not exist." });
     }
 
+    const startDate = new Date(req.body.startDate);
+    const endDate = new Date(req.body.endDate);
+
+    if (startDate.getTime() < new Date().getTime()) {
+      return res
+        .status(400)
+        .json({ error: "Start date must be in the future." });
+    }
+
+    if (startDate.getTime() > endDate.getTime()) {
+      return res
+        .status(400)
+        .json({ error: "Start date must be before end date." });
+    }
+
     const updatedListing = await prisma.internship_listing.update({
       where: {
         listingID: req.params.id,
@@ -97,10 +112,8 @@ module.exports = {
       },
       data: {
         ...req.body,
-        ...(req.body.startDate
-          ? { startDate: new Date(req.body.startDate) }
-          : {}),
-        ...(req.body.endDate ? { endDate: new Date(req.body.endDate) } : {}),
+        ...(req.body.startDate ? { startDate } : {}),
+        ...(req.body.endDate ? { endDate } : {}),
       },
     });
 

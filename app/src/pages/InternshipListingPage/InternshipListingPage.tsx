@@ -26,8 +26,8 @@ const InternshipListingPage = () => {
   const { data, isPending, isError } = useInternshipListing(listingID || "");
   const {
     mutate: deleteListing,
-    isError: isDeletionError,
     isSuccess: isDeletionSuccess,
+    data: deletionData,
   } = useDeleteInternshipListing(listingID || "");
 
   const {
@@ -44,9 +44,11 @@ const InternshipListingPage = () => {
 
   const {
     mutate: apply,
-    isError: isApplicationError,
     isSuccess: isApplicationSuccess,
+    data: applicationData,
   } = useCreateApplication();
+
+  console.log(applicationData?.response?.data?.error);
 
   const modifyHook = useModifyApplicationStatus();
 
@@ -60,15 +62,22 @@ const InternshipListingPage = () => {
   return (
     <>
       {!data && <ErrorAlert />}
-      {createInternshipSuccess && <Navigate to="/home/my-internships" />}
-      {modifyHook.isSuccess && (
+      {user.role === "company" && createInternshipSuccess && (
+        <Navigate to="/home/my-internships" />
+      )}
+      {user.role === "company" && modifyHook.isSuccess && (
         <SuccessAlert content="Application status updated successfully!" />
       )}
-      {isApplicationSuccess && (
-        <SuccessAlert content="Application submitted successfully!" />
+      {user.role === "intern" &&
+        isApplicationSuccess &&
+        !applicationData?.response?.data?.error && (
+          <SuccessAlert content="Application submitted successfully!" />
+        )}
+      {user.role === "intern" && applicationData?.response?.data?.error && (
+        <ErrorAlert message={applicationData?.response?.data?.error} />
       )}
-      {user.role === "company" && isApplicationError && <ErrorAlert />}
-      {isDeletionError && <ErrorAlert />}
+      {user.role === "company" && applicationData && <ErrorAlert />}
+      {user.role === "company" && deletionData && <ErrorAlert />}
 
       {isPending && <CircularProgress />}
       {!isPending && !isError && (

@@ -24,12 +24,17 @@ const getNavigationItems = (role: string) => {
     case "intern":
       return (
         <>
-          <ListItemButton>
-            <ListItemIcon>
-              <AccessTime />
-            </ListItemIcon>
-            <ListItemText primary="My Applications" />
-          </ListItemButton>
+          <Link
+            to="/home/my-applications"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <AccessTime />
+              </ListItemIcon>
+              <ListItemText primary="My Applications" />
+            </ListItemButton>
+          </Link>
           <Link
             to="/home/my-internship"
             style={{ textDecoration: "none", color: "black" }}

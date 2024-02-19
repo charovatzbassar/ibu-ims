@@ -15,6 +15,13 @@ export default class ApplicationsService {
       .catch((error) => error);
   };
 
+  public static getApplicationsForIntern = async (status: string) => {
+    return appAxios
+      .get(`/applications/intern?status=${status}`)
+      .then((res) => res.data)
+      .catch((error) => error);
+  };
+
   public static modifyApplicationStatus = async (
     applicationID: string,
     status: string

@@ -59,7 +59,7 @@ export type Application = {
   readonly internID: string;
   readonly applicationStatus: string;
   readonly intern: Intern;
-  readonly internshipListing: InternshipListing;
+  readonly internship_listing: InternshipListing;
 };
 
 export type Internship = {
