@@ -33,13 +33,13 @@ model internship {
   managerID          String?             @db.VarChar(36)
   companyID          String?             @db.VarChar(36)
   status             String?             @db.VarChar(15)
-  finalReport        String?             @db.VarChar(250)
   listingID          String?             @db.VarChar(36)
   company            company?            @relation(fields: [companyID], references: [companyID], onDelete: NoAction, onUpdate: NoAction, map: "fk_company")
   intern             intern?             @relation(fields: [internID], references: [internID], onDelete: NoAction, onUpdate: NoAction, map: "fk_internID")
   internship_listing internship_listing? @relation(fields: [listingID], references: [listingID], onDelete: NoAction, onUpdate: NoAction, map: "internshiplistingID")
   manager            manager?            @relation(fields: [managerID], references: [managerID], onDelete: NoAction, onUpdate: NoAction, map: "fk_managerID")
   internship_day     internship_day[]
+  internship_report  internship_report[]
 
   @@index([companyID], map: "internshipcompanyID_idx")
   @@index([internID], map: "internshipinternID_idx")
@@ -89,10 +89,20 @@ model application {
 model internship_day {
   dayID          String      @id @db.VarChar(36)
   internshipID   String?     @db.VarChar(36)
-  workdayDate    DateTime?   @db.Date
+  workdayDate    String?     @db.VarChar(10)
   dayDescription String?     @db.Text
   status         String?     @db.VarChar(45)
   internship     internship? @relation(fields: [internshipID], references: [internshipID], onDelete: NoAction, onUpdate: NoAction, map: "internshipdaysinternshipID")
 
   @@index([internshipID], map: "internshipdaysinternshipID_idx")
+}
+
+model internship_report {
+  reportID     String      @id @db.VarChar(36)
+  internshipID String?     @db.VarChar(36)
+  finalReport  String?     @db.Text
+  status       String?     @db.VarChar(12)
+  internship   internship? @relation(fields: [internshipID], references: [internshipID], onDelete: NoAction, onUpdate: NoAction, map: "reportinternshipID")
+
+  @@index([internshipID], map: "reportinternshipID")
 }

@@ -6,7 +6,7 @@ import { InternshipListingFormValues } from "@/services/types";
 import { Navigate } from "react-router-dom";
 
 const CreateListingPage: React.FC = () => {
-  const { mutate, isError, isPending, isSuccess, data, error } =
+  const { mutate, isError, isPending, isSuccess, data } =
     useCreateInternshipListing();
 
   const onSubmit = (data: InternshipListingFormValues) => {
