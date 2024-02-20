@@ -8,8 +8,12 @@ type Props = {
 
 const MyInternship = (props: Props) => {
   return (
-    <Card sx={{ padding: "10px" }}>
-      {!props.data && "No internship found"}
+    <Card sx={{ padding: "20px" }}>
+      {!props.data && (
+        <Typography sx={{ fontSize: 20 }}>
+          No ongoing internship found.
+        </Typography>
+      )}
       {props.data && (
         <>
           <Typography sx={{ margin: "10px", fontSize: 20 }}>

@@ -78,7 +78,7 @@ const ApprovedApplications = (props: Props) => {
       {!props.data ||
         (props.data.length === 0 && (
           <Card sx={{ fontSize: 20, marginY: "10px", padding: "20px" }}>
-            No ongoing internships.
+            No approved applications.
           </Card>
         ))}
     </Box>

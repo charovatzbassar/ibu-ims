@@ -36,11 +36,10 @@ const MyListings = (props: Props) => {
         props.data
           .slice(startIndex, endIndex)
           .map((internshipListing: InternshipListing) => (
-            <Card>
+            <Card key={internshipListing.listingID}>
               <CardContent>
                 <Typography variant="h5" component="div">
-                  {internshipListing.position}
-                  {internshipListing.location}
+                  {internshipListing.position} - {internshipListing.location}
                 </Typography>
                 <Typography variant="body2">
                   {new Date(internshipListing.startDate).toDateString()} -{" "}

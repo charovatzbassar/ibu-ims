@@ -137,7 +137,7 @@ module.exports = {
       return res.status(400).json({ error: "Listing does not exist." });
     }
 
-    const newInternships = interns.map((intern) => {
+    const newInternships = interns.map(async (intern) => {
       return {
         internshipID: uuid(),
         companyID: company.companyID,
