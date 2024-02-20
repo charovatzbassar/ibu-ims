@@ -137,7 +137,26 @@ module.exports = {
       return res.status(400).json({ error: "Listing does not exist." });
     }
 
-    const newInternships = interns.map(async (intern) => {
+    const ongoingInternships = await prisma.internship.findMany({
+      include: {
+        intern: true,
+      },
+      where: {
+        status: "ONGOING",
+        internID: {
+          in: interns,
+        },
+      },
+    });
+
+    if (ongoingInternships.length > 0) {
+      return res.status(400).json({
+        error: "One or more interns already have an ongoing internship.",
+        interns: ongoingInternships.map((internship) => internship.intern),
+      });
+    }
+
+    const newInternships = interns.map((intern) => {
       return {
         internshipID: uuid(),
         companyID: company.companyID,

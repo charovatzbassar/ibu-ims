@@ -86,7 +86,7 @@ module.exports = {
       return res.status(400).json({ error: "Company does not exist." });
     }
 
-    const updatedApplication = await prisma.application.updateMany({
+    const updatedApplication = await prisma.application.update({
       where: {
         applicationID,
         internship_listing: {

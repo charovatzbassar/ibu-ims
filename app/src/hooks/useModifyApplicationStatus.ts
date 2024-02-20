@@ -4,13 +4,17 @@ import { queryClient } from "@/utils";
 
 const useModifyApplicationStatus = () => {
   return useMutation({
-    mutationFn: (data: { applicationID: string; status: string }) =>
-      ApplicationsService.modifyApplicationStatus(
+    mutationFn: (data: { applicationID: string; status: string }) => {
+      return ApplicationsService.modifyApplicationStatus(
         data.applicationID,
         data.status
-      ),
+      );
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["applications"] });
+      queryClient.invalidateQueries({
+        queryKey: ["applications"],
+      });
+      console.log("Application status modified successfully");
     },
   });
 };

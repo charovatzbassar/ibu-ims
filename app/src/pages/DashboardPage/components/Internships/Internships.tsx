@@ -34,7 +34,7 @@ const Internships = (props: Props) => {
       {props.data &&
         props.data.length > 0 &&
         props.data.slice(startIndex, endIndex).map((internship: Internship) => (
-          <Card>
+          <Card key={internship.internshipID}>
             <CardContent>
               <Typography variant="h5" component="div">
                 {internship.intern.firstName} {internship.intern.lastName} -{" "}
