@@ -15,6 +15,7 @@ import {
   MyInternshipPage,
   MyApplicationsPage,
   MyStudentsPage,
+  InternDetailsPage,
 } from "@/pages";
 import { Navigation } from "@/components";
 import { ProtectedRoute, RoleRoute } from "@/utils";
@@ -60,6 +61,10 @@ function App(): ReactElement {
           </Route>
           <Route element={<RoleRoute roles={["manager"]} />}>
             <Route path="my-students" element={<MyStudentsPage />} />
+            <Route
+              path="my-students/:internID"
+              element={<InternDetailsPage />}
+            />
           </Route>
         </Route>
       </Route>

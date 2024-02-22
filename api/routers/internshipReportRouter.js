@@ -22,7 +22,7 @@ router
   );
 
 router
-  .route("/:internshipID/:internID")
+  .route("/:internshipID")
   .get(
     checkRole(["manager"]),
     catchAsync(internshipReportService.getInternshipReport)

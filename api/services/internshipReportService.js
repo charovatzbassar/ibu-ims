@@ -30,24 +30,14 @@ module.exports = {
         internshipID,
       },
       data: {
-        status: "COMPLETED",
+        status: "PENDING",
       },
     });
 
     res.json(finalReport);
   },
   getInternshipReport: async (req, res) => {
-    const { internshipID, internID } = req.params;
-
-    const intern = await prisma.intern.findUnique({
-      where: {
-        internID,
-      },
-    });
-
-    if (!intern) {
-      return res.status(400).json({ error: "Intern does not exist." });
-    }
+    const { internshipID } = req.params;
 
     const internship = await prisma.internship.findUnique({
       where: {
@@ -62,9 +52,6 @@ module.exports = {
     const report = await prisma.internship_report.findFirst({
       where: {
         internshipID,
-        internship: {
-          internID,
-        },
       },
     });
 
@@ -92,6 +79,17 @@ module.exports = {
         status,
       },
     });
+
+    if (status === "APPROVED") {
+      const updatedInternship = await prisma.internship.update({
+        where: {
+          internshipID: report.internshipID,
+        },
+        data: {
+          status: "COMPLETED",
+        },
+      });
+    }
 
     res.json(modifiedReport);
   },
