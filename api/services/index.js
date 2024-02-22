@@ -4,3 +4,4 @@ module.exports.applicationService = require("./applicationService");
 module.exports.internshipService = require("./internshipService");
 module.exports.internshipDayService = require("./internshipDayService");
 module.exports.internshipReportService = require("./internshipReportService");
+module.exports.internsService = require("./internsService");

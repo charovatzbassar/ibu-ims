@@ -52,22 +52,16 @@ const getNavigationItems = (role: string) => {
       return (
         <>
           <Link
-            to="/home/my-internships"
+            to="/home/my-students"
             style={{ textDecoration: "none", color: "black" }}
           >
             <ListItemButton>
               <ListItemIcon>
-                <BarChart />
+                <Assignment />
               </ListItemIcon>
-              <ListItemText primary="My Internships" />
+              <ListItemText primary="My Students" />
             </ListItemButton>
           </Link>
-          <ListItemButton>
-            <ListItemIcon>
-              <Assignment />
-            </ListItemIcon>
-            <ListItemText primary="My Students" />
-          </ListItemButton>
         </>
       );
     case "company":

@@ -21,3 +21,5 @@ export { default as useApplicationsForIntern } from "./useApplicationsForIntern"
 export { default as useInternshipReport } from "./useInternshipReport";
 export { default as useCreateInternshipReport } from "./useCreateInternshipReport";
 export { default as useModifyInternshipReportStatus } from "./useModifyInternshipReportStatus";
+export { default as useInterns } from "./useInterns";
+export { default as useIntern } from "./useIntern";

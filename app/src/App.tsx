@@ -13,7 +13,8 @@ import {
   InternshipDetailsPage,
   InternshipReportPage,
   MyInternshipPage,
-  MyApplicationsPage
+  MyApplicationsPage,
+  MyStudentsPage,
 } from "@/pages";
 import { Navigation } from "@/components";
 import { ProtectedRoute, RoleRoute } from "@/utils";
@@ -56,6 +57,9 @@ function App(): ReactElement {
           <Route element={<RoleRoute roles={["intern"]} />}>
             <Route path="my-internship" element={<MyInternshipPage />} />
             <Route path="my-applications" element={<MyApplicationsPage />} />
+          </Route>
+          <Route element={<RoleRoute roles={["manager"]} />}>
+            <Route path="my-students" element={<MyStudentsPage />} />
           </Route>
         </Route>
       </Route>
