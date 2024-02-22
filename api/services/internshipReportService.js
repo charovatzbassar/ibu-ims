@@ -25,6 +25,15 @@ module.exports = {
       },
     });
 
+    const updatedInternship = await prisma.internship.update({
+      where: {
+        internshipID,
+      },
+      data: {
+        status: "COMPLETED",
+      },
+    });
+
     res.json(finalReport);
   },
   getInternshipReport: async (req, res) => {
