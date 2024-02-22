@@ -1,16 +1,17 @@
-import React from "react";
 import { InternshipReportForm } from "./components";
 import { Navigate, useParams } from "react-router-dom";
-import { useCreateInternshipFinalReport, useInternship } from "@/hooks";
+import { useCreateInternshipReport, useInternship } from "@/hooks";
 import { CircularProgress } from "@mui/material";
 
 const InternshipReportPage = () => {
   const { internshipID } = useParams();
-  const { mutate, isSuccess } = useCreateInternshipFinalReport(
-    internshipID || ""
-  );
+
   const { data: internshipData, isPending: isInternshipPending } =
     useInternship(internshipID || "");
+
+  const { mutate: createReport, isSuccess } = useCreateInternshipReport(
+    internshipID || ""
+  );
 
   return (
     <>
@@ -19,7 +20,7 @@ const InternshipReportPage = () => {
       {!isInternshipPending && (
         <InternshipReportForm
           onSubmit={(data: { finalReport: string }) => {
-            mutate(data.finalReport);
+            createReport(data.finalReport);
           }}
           internFullName={`${internshipData?.intern?.firstName} ${internshipData?.intern?.lastName}`}
         />

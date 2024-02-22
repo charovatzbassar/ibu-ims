@@ -10,15 +10,6 @@ export default class InternshipsService {
       .then((res) => res.data)
       .catch((error) => error);
   };
-  public static createInternshipFinalReport = async (
-    internshipID: string,
-    finalReport: string
-  ) => {
-    return appAxios
-      .put(`/internships/${internshipID}/report`, { finalReport })
-      .then((res) => res.data)
-      .catch((error) => error);
-  };
   public static getInternshipForIntern = async () => {
     return appAxios
       .get("/internships/intern")

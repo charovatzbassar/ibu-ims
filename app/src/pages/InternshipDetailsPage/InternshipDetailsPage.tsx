@@ -29,6 +29,7 @@ import { InternshipDayItem } from "./components";
 import { isInternshipOwner } from "@/utils";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { ConfirmModal, SuccessAlert } from "@/components";
 
 const InternshipDetailsPage = () => {
   const { internshipID } = useParams();
@@ -42,9 +43,16 @@ const InternshipDetailsPage = () => {
     internshipID || ""
   );
 
-  const { mutate: modifyStatus } = useModifyInternshipDayStatus();
+  const {
+    mutate: modifyStatus,
+    isSuccess: isModifyDataSuccess,
+    data: modifyStatusData,
+  } = useModifyInternshipDayStatus();
 
   const [page, setPage] = React.useState<number>(1);
+
+  const [approveAllModalOpen, setApproveAllModalOpen] =
+    React.useState<boolean>(false);
 
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -63,6 +71,9 @@ const InternshipDetailsPage = () => {
 
   return (
     <>
+      {isModifyDataSuccess && !modifyStatusData.response?.data.mesage && (
+        <SuccessAlert content="Day status updated successfully!" />
+      )}
       {data && !isOwner && <Navigate to="/home/dashboard" />}
       {isPending && <CircularProgress />}
       {data && isOwner && (
@@ -168,11 +179,25 @@ const InternshipDetailsPage = () => {
                     variant="contained"
                     color="success"
                     onClick={() => {
-                      approveAllInternshipDays();
+                      setApproveAllModalOpen(true);
                     }}
                   >
                     Approve all
                   </Button>
+
+                  <ConfirmModal
+                    onClick={() => {
+                      setApproveAllModalOpen(false);
+                      approveAllInternshipDays();
+                    }}
+                    modalOpen={approveAllModalOpen}
+                    closeModal={() => setApproveAllModalOpen(false)}
+                    buttonColor="success"
+                  >
+                    <Typography variant="h6" component="h2">
+                      Are you sure you want to approve all days?
+                    </Typography>
+                  </ConfirmModal>
                 </>
               )}
             </CardContent>

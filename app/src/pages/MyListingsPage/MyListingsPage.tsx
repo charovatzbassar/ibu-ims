@@ -6,6 +6,7 @@ import {
   CircularProgress,
   Pagination,
   PaginationItem,
+  Typography,
 } from "@mui/material";
 
 const MyListingsPage = () => {
@@ -29,6 +30,9 @@ const MyListingsPage = () => {
       {isError && <ErrorAlert />}
       {data && data.length !== 0 && !isPending && (
         <div>
+          <Typography sx={{ marginY: "10px", fontSize: 25 }}>
+            My Listings
+          </Typography>
           {data.slice(startIndex, endIndex).map((internshipListing) => {
             return (
               <InternshipListingItem

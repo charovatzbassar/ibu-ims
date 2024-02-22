@@ -30,10 +30,10 @@ const MyInternshipPage = () => {
 
   return (
     <>
-      {!mutateData?.response.data.message && isSuccess && (
+      {!mutateData?.response?.data.message && isSuccess && (
         <SuccessAlert content="Day submitted successfully. See you tomorrow!" />
       )}
-      {mutateData && mutateData.response.data.message && (
+      {mutateData && mutateData.response?.data.message && (
         <ErrorAlert message={mutateData.response.data.message} />
       )}
       {isPending && <CircularProgress />}

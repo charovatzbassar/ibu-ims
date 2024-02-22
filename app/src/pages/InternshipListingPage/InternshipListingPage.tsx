@@ -14,7 +14,7 @@ import { RootState } from "@/store";
 import React from "react";
 import { ConfirmModal, ErrorAlert, SuccessAlert } from "@/components";
 import { useApplications } from "@/hooks";
-import { Application } from "@/services/types";
+import { Application, Intern } from "@/services/types";
 
 const InternshipListingPage = () => {
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
@@ -50,8 +50,11 @@ const InternshipListingPage = () => {
 
   const modifyHook = useModifyApplicationStatus();
 
-  const { mutate: createInternship, isSuccess: createInternshipSuccess } =
-    useCreateInternship();
+  const {
+    mutate: createInternship,
+    isSuccess: createInternshipSuccess,
+    data: createInternshipData,
+  } = useCreateInternship();
 
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -60,9 +63,18 @@ const InternshipListingPage = () => {
   return (
     <>
       {!data && <ErrorAlert />}
-      {user.role === "company" && createInternshipSuccess && (
-        <Navigate to="/home/my-internships" />
+      {user.role === "company" && createInternshipData && (
+        <ErrorAlert
+          message={`${
+            createInternshipData.response?.data.error
+          } (${createInternshipData.response?.data.interns.map(
+            (intern: Intern) => `${intern.firstName} ${intern.lastName}, `
+          )})`}
+        />
       )}
+      {user.role === "company" &&
+        !createInternshipData?.response?.data.error &&
+        createInternshipSuccess && <Navigate to="/home/my-internships" />}
       {user.role === "company" && modifyHook.isSuccess && (
         <SuccessAlert content="Application status updated successfully!" />
       )}
@@ -127,7 +139,10 @@ const InternshipListingPage = () => {
             <Typography variant="h6" component="h2" sx={{ marginTop: "10px" }}>
               Approved Applications
             </Typography>
-            <ApplicationTable data={approvedApplications} />
+            <ApplicationTable
+              data={approvedApplications}
+              modifyHook={modifyHook}
+            />
           </>
         )}
 

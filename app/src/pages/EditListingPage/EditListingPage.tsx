@@ -50,7 +50,7 @@ const EditListingPage = () => {
       {!isListingOwner(data, user) && (
         <Navigate to="/home/internship-listings" />
       )}
-      {mutateData && <ErrorAlert message={mutateData.response.data.error} />}
+      {mutateData && <ErrorAlert message={mutateData.response?.data.error} />}
       <InternshipListingForm
         action={FormAction.UPDATE}
         onSubmit={onSubmit}

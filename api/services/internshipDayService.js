@@ -60,13 +60,13 @@ module.exports = {
 
     const currentDate = new Date();
 
-    if (currentDate < internship.internship_listing.startDate) {
+    if (currentDate < new Date(internship.internship_listing.startDate)) {
       return res.status(400).json({
         message: "Your internship has not started yet.",
       });
     }
 
-    if (currentDate > internship.internship_listing.endDate) {
+    if (currentDate > new Date(internship.internship_listing.endDate)) {
       return res.status(400).json({
         message: "Your internship has ended.",
       });
@@ -75,7 +75,7 @@ module.exports = {
     const existingInternshipDay = await prisma.internship_day.findFirst({
       where: {
         internshipID,
-        workdayDate: currentDate,
+        workdayDate: currentDate.toISOString().slice(0, 10),
       },
     });
 
@@ -91,7 +91,7 @@ module.exports = {
         dayDescription: description,
         internshipID,
         status: "PENDING",
-        workdayDate: currentDate,
+        workdayDate: currentDate.toISOString().slice(0, 10),
       },
     });
 

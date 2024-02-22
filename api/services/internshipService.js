@@ -137,6 +137,25 @@ module.exports = {
       return res.status(400).json({ error: "Listing does not exist." });
     }
 
+    const ongoingInternships = await prisma.internship.findMany({
+      include: {
+        intern: true,
+      },
+      where: {
+        status: "ONGOING",
+        internID: {
+          in: interns,
+        },
+      },
+    });
+
+    if (ongoingInternships.length > 0) {
+      return res.status(400).json({
+        error: "One or more interns already have an ongoing internship.",
+        interns: ongoingInternships.map((internship) => internship.intern),
+      });
+    }
+
     const newInternships = interns.map((intern) => {
       return {
         internshipID: uuid(),
@@ -163,32 +182,5 @@ module.exports = {
     });
 
     res.json(createdInternships);
-  },
-  createInternshipFinalReport: async (req, res) => {
-    const { finalReport } = req.body;
-    const { internshipID } = req.params;
-
-    const company = await prisma.company.findUnique({
-      where: {
-        contactEmail: req.user.profile.emails[0].value,
-      },
-    });
-
-    if (!company) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-
-    const updatedInternship = await prisma.internship.update({
-      where: {
-        internshipID,
-        companyID: company.companyID,
-      },
-      data: {
-        finalReport,
-        status: "COMPLETED",
-      },
-    });
-
-    res.json(updatedInternship);
   },
 };

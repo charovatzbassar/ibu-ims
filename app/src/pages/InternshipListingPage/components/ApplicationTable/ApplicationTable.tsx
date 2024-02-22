@@ -19,7 +19,7 @@ import React from "react";
 
 type Props = {
   data: Application[];
-  modifyHook?: UseMutationResult<
+  modifyHook: UseMutationResult<
     AxiosResponse<any, any>,
     Error,
     { applicationID: string; status: string },
@@ -53,9 +53,7 @@ const ApplicationTable = (props: Props) => {
               <TableCell>First Name</TableCell>
               <TableCell align="left">Last Name</TableCell>
               <TableCell align="left">Email</TableCell>
-              {props.data[0].applicationStatus === "PENDING" && (
-                <TableCell align="left">Actions</TableCell>
-              )}
+              <TableCell align="left">Actions</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -71,54 +69,57 @@ const ApplicationTable = (props: Props) => {
                   {application.intern.lastName}
                 </TableCell>
                 <TableCell align="left">{application.intern.email}</TableCell>
-                {application.applicationStatus === "PENDING" && (
-                  <TableCell align="left">
-                    <Button
-                      color="success"
-                      variant="contained"
-                      sx={{ margin: "5px" }}
-                      onClick={() => setApproveModalOpen(true)}
-                    >
-                      Approve
-                    </Button>
-                    <ConfirmModal
-                      buttonColor="success"
-                      modalOpen={approveModalOpen}
-                      closeModal={() => setApproveModalOpen(false)}
-                      onClick={() => {
-                        setApproveModalOpen(false);
-                        props.modifyHook?.mutate({
-                          applicationID: application.applicationID,
-                          status: "APPROVED",
-                        });
-                      }}
-                    >
-                      Are you sure you want to approve this application?
-                    </ConfirmModal>
-                    <Button
-                      color="error"
-                      variant="contained"
-                      sx={{ margin: "5px" }}
-                      onClick={() => setRejectModalOpen(true)}
-                    >
-                      Reject
-                    </Button>
-                    <ConfirmModal
-                      buttonColor="error"
-                      modalOpen={rejectModalOpen}
-                      closeModal={() => setRejectModalOpen(false)}
-                      onClick={() => {
-                        setRejectModalOpen(false);
-                        props.modifyHook?.mutate({
-                          applicationID: application.applicationID,
-                          status: "REJECTED",
-                        });
-                      }}
-                    >
-                      Are you sure you want to reject this application?
-                    </ConfirmModal>
-                  </TableCell>
-                )}
+                <TableCell align="left">
+                  {application.applicationStatus === "PENDING" && (
+                    <>
+                      <Button
+                        color="success"
+                        variant="contained"
+                        sx={{ margin: "5px" }}
+                        onClick={() => setApproveModalOpen(true)}
+                      >
+                        Approve
+                      </Button>
+                      <ConfirmModal
+                        buttonColor="success"
+                        modalOpen={approveModalOpen}
+                        closeModal={() => setApproveModalOpen(false)}
+                        onClick={() => {
+                          setApproveModalOpen(false);
+                          props.modifyHook?.mutate({
+                            applicationID: application.applicationID,
+                            status: "APPROVED",
+                          });
+                        }}
+                      >
+                        Are you sure you want to approve this application?
+                      </ConfirmModal>
+                    </>
+                  )}
+                  <Button
+                    color="error"
+                    variant="contained"
+                    sx={{ margin: "5px" }}
+                    onClick={() => setRejectModalOpen(true)}
+                  >
+                    Reject
+                  </Button>
+                  <ConfirmModal
+                    buttonColor="error"
+                    modalOpen={rejectModalOpen}
+                    closeModal={() => setRejectModalOpen(false)}
+                    onClick={() => {
+                      setRejectModalOpen(false);
+                      console.log(props.modifyHook?.mutate);
+                      props.modifyHook?.mutate({
+                        applicationID: application.applicationID,
+                        status: "REJECTED",
+                      });
+                    }}
+                  >
+                    Are you sure you want to reject this application?
+                  </ConfirmModal>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
