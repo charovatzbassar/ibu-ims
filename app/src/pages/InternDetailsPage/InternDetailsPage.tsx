@@ -1,6 +1,6 @@
 import React from "react";
 import { useIntern, useModifyInternshipReportStatus } from "@/hooks";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Days, FinalReport } from "./components";
-import { SuccessAlert } from "@/components";
 
 const InternDetailsPage = () => {
   const { internID } = useParams();
@@ -26,7 +25,7 @@ const InternDetailsPage = () => {
   return (
     <>
       {isSuccess && !data.response?.data?.error && (
-        <SuccessAlert content="Internship completed!" />
+        <Navigate to="/home/dashboard" />
       )}
       {isPending && <CircularProgress />}
       {intern && !isPending && (
