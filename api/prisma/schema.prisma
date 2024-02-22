@@ -39,7 +39,7 @@ model internship {
   internship_listing internship_listing? @relation(fields: [listingID], references: [listingID], onDelete: NoAction, onUpdate: NoAction, map: "internshiplistingID")
   manager            manager?            @relation(fields: [managerID], references: [managerID], onDelete: NoAction, onUpdate: NoAction, map: "fk_managerID")
   internship_day     internship_day[]
-  internship_report  internship_report[]
+  internship_report  internship_report?
 
   @@index([companyID], map: "internshipcompanyID_idx")
   @@index([internID], map: "internshipinternID_idx")
@@ -99,10 +99,8 @@ model internship_day {
 
 model internship_report {
   reportID     String      @id @db.VarChar(36)
-  internshipID String?     @db.VarChar(36)
+  internshipID String?     @unique(map: "internshipID_UNIQUE") @db.VarChar(36)
   finalReport  String?     @db.Text
   status       String?     @db.VarChar(12)
   internship   internship? @relation(fields: [internshipID], references: [internshipID], onDelete: NoAction, onUpdate: NoAction, map: "reportinternshipID")
-
-  @@index([internshipID], map: "reportinternshipID")
 }

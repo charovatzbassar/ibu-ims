@@ -1,7 +1,15 @@
 import React from "react";
+import { MyInternships } from "./components";
+import { useInterns } from "@/hooks";
 
 const ManagerDashboard = () => {
-  return <div>ManagerDashboard</div>;
+  const { data: interns } = useInterns("", "");
+
+  return (
+    <>
+      <MyInternships interns={interns} />
+    </>
+  );
 };
 
 export default ManagerDashboard;

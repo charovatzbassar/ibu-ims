@@ -7,6 +7,7 @@ import {
   PaginationItem,
   InputBase,
   Typography,
+  Card,
 } from "@mui/material";
 import { InternshipListingItem } from "@/components";
 import { Search } from "@mui/icons-material";
@@ -50,19 +51,20 @@ const InternshipListingsPage: React.FC = () => {
           display: "flex",
           alignItems: "center",
           width: 400,
-          backgroundColor: "white",
           borderRadius: "0.3em",
         }}
       >
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="Search Listings"
-          inputProps={{ "aria-label": "search listings" }}
-          {...register("searchTerm")}
-        />
-        <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
-          <Search />
-        </IconButton>
+        <Card>
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Search Listings"
+            inputProps={{ "aria-label": "search listings" }}
+            {...register("searchTerm")}
+          />
+          <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+            <Search />
+          </IconButton>
+        </Card>
       </form>
       {!isPending && data && data.length === 0 && (
         <Typography sx={{ margin: "10px" }}>No Listings Found.</Typography>

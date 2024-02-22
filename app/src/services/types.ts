@@ -25,6 +25,7 @@ export type Intern = {
   readonly lastName: string;
   readonly dateOfBirth: string | null;
   readonly email: string;
+  readonly internship: Internship;
 };
 
 export type Manager = {
@@ -64,16 +65,17 @@ export type Application = {
 
 export type Internship = {
   readonly internshipID: string;
-  readonly intern: Intern;
+  readonly intern?: Intern;
   readonly internID: string;
-  readonly company: Company;
+  readonly company?: Company;
   readonly companyID: string;
-  readonly manager: Manager;
+  readonly manager?: Manager;
   readonly managerID: string;
   readonly status: string;
   readonly listingID: string;
-  readonly internship_listing: InternshipListing;
-  readonly finalReport: string;
+  readonly internship_listing?: InternshipListing;
+  readonly internship_day?: InternshipDay[];
+  readonly internship_report?: InternshipReport;
 };
 
 export type InternshipDay = {
