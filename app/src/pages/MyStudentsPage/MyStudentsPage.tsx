@@ -6,22 +6,30 @@ import { Intern } from "@/services/types";
 import {
   Card,
   CircularProgress,
+  FormControl,
   IconButton,
   InputBase,
+  InputLabel,
+  MenuItem,
   Pagination,
   PaginationItem,
+  Select,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useSearchParams } from "react-router-dom";
 import { queryClient } from "@/utils";
 import { Search } from "@mui/icons-material";
 
 const MyStudentsPage = () => {
   const [page, setPage] = React.useState<number>(1);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { data, isPending } = useInterns(searchParams.get("searchTerm") || "");
 
-  const { register, handleSubmit } = useForm();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { data, isPending } = useInterns(
+    searchParams.get("searchTerm") || "",
+    searchParams.get("searchStatus") || ""
+  );
+
+  const { register, handleSubmit, control } = useForm();
 
   const itemsPerPage: number = 5;
   const startIndex: number = (page - 1) * itemsPerPage;
@@ -35,9 +43,12 @@ const MyStudentsPage = () => {
     data && Math.ceil(data?.length / itemsPerPage);
 
   const onSearch = (data) => {
-    setSearchParams({ searchTerm: data.searchTerm });
+    setSearchParams({
+      searchTerm: data.searchTerm,
+      searchStatus: data.searchStatus,
+    });
     queryClient.invalidateQueries({
-      queryKey: ["interns", data.searchTerm],
+      queryKey: ["interns", data.searchTerm, data.searchStatus],
     });
   };
 
@@ -47,22 +58,41 @@ const MyStudentsPage = () => {
         onSubmit={handleSubmit(onSearch)}
         style={{
           marginTop: "10px",
-          display: "flex",
-          alignItems: "center",
-          width: 400,
-          backgroundColor: "white",
           borderRadius: "0.3em",
         }}
       >
-        <InputBase
-          sx={{ ml: 1, flex: 1 }}
-          placeholder="Search Interns By Company Name"
-          inputProps={{ "aria-label": "search interns by company" }}
-          {...register("searchTerm")}
-        />
-        <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
-          <Search />
-        </IconButton>
+        <Card
+          sx={{
+            display: "flex",
+            marginBottom: "10px",
+            backgroundColor: "white",
+            padding: "5px",
+            borderRadius: "0.3em",
+          }}
+        >
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Search Interns By Company"
+            {...register("searchTerm")}
+          />
+          <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+            <Search />
+          </IconButton>
+        </Card>
+        <FormControl fullWidth sx={{ backgroundColor: "white" }}>
+          <InputLabel id="statusLabel">Status</InputLabel>
+          <Controller
+            name="searchStatus"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Select {...field} labelId="statusLabel" label="Status">
+                <MenuItem value="ONGOING">Ongoing</MenuItem>
+                <MenuItem value="COMPLETED">Completed</MenuItem>
+              </Select>
+            )}
+          />
+        </FormControl>
       </form>
       {isPending && <CircularProgress />}
       {data && data.length === 0 && !isPending && (
