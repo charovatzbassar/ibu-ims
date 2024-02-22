@@ -84,3 +84,10 @@ export type InternshipDay = {
   readonly internship: Internship;
   readonly workdayDate: string;
 };
+
+export type InternshipReport = {
+  readonly reportID: string;
+  readonly internshipID: string;
+  readonly finalReport: string;
+  readonly status: string;
+};

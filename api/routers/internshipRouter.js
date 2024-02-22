@@ -29,11 +29,5 @@ router
     catchAsync(internshipService.getInternship)
   );
 
-router
-  .route("/:internshipID/report")
-  .put(
-    checkRole(["company"]),
-    catchAsync(internshipService.createInternshipFinalReport)
-  );
 
 module.exports = router;

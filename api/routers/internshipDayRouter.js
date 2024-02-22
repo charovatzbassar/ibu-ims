@@ -5,15 +5,15 @@ const { checkAuth, checkRole } = require("../middleware");
 
 const router = express.Router();
 
+router.use(checkAuth);
+
 router
   .route("/:internshipID")
   .get(
-    checkAuth,
     checkRole(["company"]),
     catchAsync(internshipDayService.getInternshipDays)
   )
   .post(
-    checkAuth,
     checkRole(["intern"]),
     catchAsync(internshipDayService.createInternshipDay)
   );
@@ -28,7 +28,6 @@ router
 router
   .route("/:dayID")
   .put(
-    checkAuth,
     checkRole(["company"]),
     catchAsync(internshipDayService.modifyInternshipDayStatus)
   );
