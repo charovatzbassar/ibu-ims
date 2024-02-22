@@ -2,6 +2,7 @@ const prisma = require("../prisma");
 
 module.exports = {
   getInterns: async (req, res) => {
+    const { searchTerm } = req.query;
     const interns = await prisma.intern.findMany({
       include: {
         internship: {
@@ -10,6 +11,15 @@ module.exports = {
             company: true,
             internship_report: true,
             internship_day: true,
+          },
+        },
+      },
+      where: {
+        internship: {
+          company: {
+            companyName: {
+              contains: searchTerm,
+            },
           },
         },
       },

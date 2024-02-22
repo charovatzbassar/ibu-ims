@@ -1,10 +1,10 @@
 import { InternsService } from "@/services";
 import { useQuery } from "@tanstack/react-query";
 
-const useInterns = () => {
+const useInterns = (searchTerm: string) => {
   return useQuery({
-    queryKey: ["interns"],
-    queryFn: () => InternsService.getInterns(),
+    queryKey: ["interns", searchTerm],
+    queryFn: () => InternsService.getInterns(searchTerm),
   });
 };
 
