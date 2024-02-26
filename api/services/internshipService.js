@@ -164,7 +164,6 @@ module.exports = {
         internID: intern,
         managerID: "97f7397c-babe-47b2-814f-0fdb8958023d",
         status: "ONGOING",
-        finalReport: "",
       };
     });
 
