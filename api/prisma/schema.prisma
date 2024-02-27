@@ -34,6 +34,7 @@ model internship {
   companyID          String?             @db.VarChar(36)
   status             String?             @db.VarChar(15)
   listingID          String?             @db.VarChar(36)
+  final_grade        final_grade?
   company            company?            @relation(fields: [companyID], references: [companyID], onDelete: NoAction, onUpdate: NoAction, map: "fk_company")
   intern             intern?             @relation(fields: [internID], references: [internID], onDelete: NoAction, onUpdate: NoAction, map: "fk_internID")
   internship_listing internship_listing? @relation(fields: [listingID], references: [listingID], onDelete: NoAction, onUpdate: NoAction, map: "internshiplistingID")
@@ -103,4 +104,11 @@ model internship_report {
   finalReport  String?     @db.Text
   status       String?     @db.VarChar(12)
   internship   internship? @relation(fields: [internshipID], references: [internshipID], onDelete: NoAction, onUpdate: NoAction, map: "reportinternshipID")
+}
+
+model final_grade {
+  gradeID      String      @id @db.VarChar(36)
+  internshipID String?     @unique(map: "internshipID") @db.VarChar(36)
+  grade        Int?
+  internship   internship? @relation(fields: [internshipID], references: [internshipID], onDelete: NoAction, onUpdate: NoAction, map: "finalgradeinternshipID")
 }

@@ -2,6 +2,7 @@ import React from "react";
 import { useIntern, useModifyInternshipReportStatus } from "@/hooks";
 import { Navigate, useParams } from "react-router-dom";
 import {
+  Button,
   Card,
   CardContent,
   CircularProgress,
@@ -10,6 +11,7 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Days, FinalReport } from "./components";
+import { SuccessAlert } from "@/components";
 
 const InternDetailsPage = () => {
   const { internID } = useParams();
@@ -25,7 +27,7 @@ const InternDetailsPage = () => {
   return (
     <>
       {isSuccess && !data.response?.data?.error && (
-        <Navigate to="/home/dashboard" />
+        <SuccessAlert content="Internship ended!" />
       )}
       {isPending && <CircularProgress />}
       {intern && !isPending && (
@@ -64,15 +66,31 @@ const InternDetailsPage = () => {
                 </Typography>
               </Box>
               <Divider />
+              {intern?.internship?.final_grade?.grade && (
+                <Box
+                  sx={{
+                    marginY: "10px",
+                  }}
+                >
+                  <Typography sx={{ marginY: "10px" }}>
+                    Grade: {intern?.internship?.final_grade?.grade}
+                  </Typography>
+                  <Button variant="contained" color="success">
+                    migrate to sis
+                  </Button>
+                </Box>
+              )}
             </CardContent>
           </Card>
 
           <Days days={intern?.internship?.internship_day || []} />
 
-          <FinalReport
-            modifyReportStatus={modifyReportStatus}
-            report={intern?.internship?.internship_report}
-          />
+          {!intern?.internship?.final_grade?.grade && (
+            <FinalReport
+              modifyReportStatus={modifyReportStatus}
+              report={intern?.internship?.internship_report}
+            />
+          )}
         </>
       )}
     </>

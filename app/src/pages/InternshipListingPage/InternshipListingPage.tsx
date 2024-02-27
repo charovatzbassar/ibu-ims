@@ -67,7 +67,7 @@ const InternshipListingPage = () => {
         <ErrorAlert
           message={`${
             createInternshipData.response?.data.error
-          } (${createInternshipData.response?.data.interns.map(
+          } (${createInternshipData?.response?.data.interns?.map(
             (intern: Intern) => `${intern.firstName} ${intern.lastName}, `
           )})`}
         />

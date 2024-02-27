@@ -69,6 +69,7 @@ module.exports = {
         intern: true,
         manager: true,
         internship_listing: true,
+        final_grade: true,
       },
       where: {
         internshipID,
