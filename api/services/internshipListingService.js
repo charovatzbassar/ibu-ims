@@ -74,6 +74,7 @@ module.exports = {
       },
       include: {
         company: true,
+        application: true,
       },
     });
 

@@ -126,7 +126,7 @@ const InternshipDetailsPage = () => {
                       color="text.secondary"
                       sx={{ marginY: "10px" }}
                     >
-                      There are no workdays for this internship.
+                      There are no pending workdays for this internship.
                     </Typography>
                   )}
                   {internshipDays && internshipDays.length > 0 && (
