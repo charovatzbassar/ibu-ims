@@ -13,6 +13,7 @@ type Props = {
     {
       reportID: string;
       status: string;
+      grade: number;
     },
     unknown
   >;
@@ -26,8 +27,12 @@ const FinalReport = (props: Props) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: { finalGrade: number }) => {
-    console.log(data);
+  const getGrade = (data: { finalGrade: number }) => {
+    props.modifyReportStatus({
+      reportID: props.report.reportID,
+      status: "APPROVED",
+      grade: Number(data.finalGrade),
+    });
   };
 
   return (
@@ -59,11 +64,7 @@ const FinalReport = (props: Props) => {
           <ConfirmModal
             onClick={() => {
               setOpen(false);
-              handleSubmit(onSubmit)();
-              props.modifyReportStatus({
-                reportID: props.report.reportID,
-                status: "APPROVED",
-              });
+              handleSubmit(getGrade)();
             }}
             modalOpen={open}
             closeModal={() => setOpen(false)}
@@ -75,7 +76,7 @@ const FinalReport = (props: Props) => {
             <Typography sx={{ marginY: "10px" }}>
               Please enter the final grade:
             </Typography>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={handleSubmit(getGrade)}>
               <TextField
                 label="Number"
                 type="number"

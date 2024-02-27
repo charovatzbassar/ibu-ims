@@ -45,6 +45,7 @@ module.exports = {
             company: true,
             internship_report: true,
             internship_day: true,
+            final_grade: true,
           },
         },
       },

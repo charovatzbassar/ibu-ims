@@ -59,7 +59,7 @@ module.exports = {
   },
   modifyInternshipReportStatus: async (req, res) => {
     const { reportID } = req.params;
-    const { status } = req.body;
+    const { status, grade } = req.body;
 
     const report = await prisma.internship_report.findUnique({
       where: {
@@ -87,6 +87,14 @@ module.exports = {
         },
         data: {
           status: "COMPLETED",
+        },
+      });
+
+      const newGrade = await prisma.final_grade.create({
+        data: {
+          gradeID: uuid(),
+          internshipID: report.internshipID,
+          grade,
         },
       });
     }

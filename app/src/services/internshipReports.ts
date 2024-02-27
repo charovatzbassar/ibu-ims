@@ -11,9 +11,7 @@ export default class InternshipReportsService {
       .catch((error) => error);
   };
 
-  public static getInternshipReport = async (
-    internshipID: string,
-  ) => {
+  public static getInternshipReport = async (internshipID: string) => {
     return appAxios
       .get(`/internship-reports/${internshipID}`)
       .then((res) => res.data)
@@ -22,11 +20,13 @@ export default class InternshipReportsService {
 
   public static modifyInternshipReportStatus = async (
     reportID: string,
-    status: string
+    status: string,
+    grade: number
   ) => {
     return appAxios
       .put(`/internship-reports/${reportID}`, {
         status,
+        grade,
       })
       .then((res) => res.data)
       .catch((error) => error);
