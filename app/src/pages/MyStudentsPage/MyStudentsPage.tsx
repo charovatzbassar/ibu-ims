@@ -16,20 +16,22 @@ import {
   Select,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
-import { queryClient } from "@/utils";
 import { Search } from "@mui/icons-material";
 
 const MyStudentsPage = () => {
   const [page, setPage] = React.useState<number>(1);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { data, isPending } = useInterns(
-    searchParams.get("searchTerm") || "",
-    searchParams.get("searchStatus") || ""
-  );
+  const { data, isPending } = useInterns();
 
-  const { register, handleSubmit, control } = useForm();
+  const [displayedInterns, setDisplayedInterns] = React.useState<
+    Intern[] | undefined
+  >(undefined);
+
+  React.useEffect(() => {
+    setDisplayedInterns(data);
+  }, [data]);
+
+  const { register, handleSubmit, control, getValues } = useForm();
 
   const itemsPerPage: number = 5;
   const startIndex: number = (page - 1) * itemsPerPage;
@@ -42,20 +44,36 @@ const MyStudentsPage = () => {
   const totalPages: number | undefined =
     data && Math.ceil(data?.length / itemsPerPage);
 
-  const onSearch = (data) => {
-    setSearchParams({
-      searchTerm: data.searchTerm,
-      searchStatus: data.searchStatus,
-    });
-    queryClient.invalidateQueries({
-      queryKey: ["interns", data.searchTerm, data.searchStatus],
-    });
+  const onSearch = () => {
+    const { searchStatus, searchTerm } = getValues();
+
+    if (searchTerm) {
+      setDisplayedInterns([
+        ...data.filter((intern: Intern) => {
+          return intern.internship?.company?.companyName
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase());
+        }),
+      ]);
+    }
+
+    if (searchStatus) {
+      setDisplayedInterns([
+        ...data.filter((intern: Intern) => {
+          return intern.internship.status === searchStatus;
+        }),
+      ]);
+    }
+
+    console.log(displayedInterns);
+    console.log(searchStatus, searchTerm);
   };
 
   return (
     <Box>
       <form
         onSubmit={handleSubmit(onSearch)}
+        onChange={handleSubmit(onSearch)}
         style={{
           marginTop: "10px",
           borderRadius: "0.3em",
@@ -86,8 +104,13 @@ const MyStudentsPage = () => {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <Select {...field} labelId="statusLabel" label="Status">
+              <Select
+                {...field}
+                labelId="statusLabel"
+                label="Status"
+              >
                 <MenuItem value="ONGOING">Ongoing</MenuItem>
+                <MenuItem value="PENDING">Pending</MenuItem>
                 <MenuItem value="COMPLETED">Completed</MenuItem>
               </Select>
             )}
@@ -100,9 +123,11 @@ const MyStudentsPage = () => {
       )}
       {data && data.length > 0 && !isPending && (
         <>
-          {data.slice(startIndex, endIndex).map((intern: Intern) => (
-            <InternItem key={intern.internID} intern={intern} />
-          ))}
+          {displayedInterns
+            ?.slice(startIndex, endIndex)
+            .map((intern: Intern) => (
+              <InternItem key={intern.internID} intern={intern} />
+            ))}
 
           <Pagination
             sx={{ marginY: 2, display: "flex", justifyContent: "center" }}
