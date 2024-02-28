@@ -11,9 +11,11 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Days, FinalReport } from "./components";
-import { SuccessAlert } from "@/components";
+import { ConfirmModal, SuccessAlert } from "@/components";
 
 const InternDetailsPage = () => {
+  const [open, setOpen] = React.useState<boolean>(false);
+
   const { internID } = useParams();
 
   const { data: intern, isPending } = useIntern(internID || "");
@@ -75,7 +77,11 @@ const InternDetailsPage = () => {
                   <Typography sx={{ marginY: "10px" }}>
                     Grade: {intern?.internship?.final_grade?.grade}
                   </Typography>
-                  <Button variant="contained" color="success">
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => setOpen(true)}
+                  >
                     migrate to sis
                   </Button>
                 </Box>
@@ -91,6 +97,20 @@ const InternDetailsPage = () => {
               report={intern?.internship?.internship_report}
             />
           )}
+
+          <ConfirmModal
+            onClick={() => {
+              setOpen(false);
+            }}
+            modalOpen={open}
+            closeModal={() => setOpen(false)}
+            buttonColor="success"
+          >
+            <Typography sx={{ marginY: "10px" }}>
+              Are you sure you want to enter this grade into Student Information
+              System?
+            </Typography>
+          </ConfirmModal>
         </>
       )}
     </>
