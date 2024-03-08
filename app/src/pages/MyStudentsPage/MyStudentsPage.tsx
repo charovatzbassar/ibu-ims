@@ -37,8 +37,12 @@ const MyStudentsPage = () => {
   const startIndex: number = (page - 1) * itemsPerPage;
   const endIndex: number = startIndex + itemsPerPage;
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
+  const handleChange = (
+    event: React.ChangeEvent<unknown> | null,
+    value: number | null
+  ) => {
+    event?.preventDefault();
+    setPage(value ? value : 1);
   };
 
   const totalPages: number | undefined =
@@ -104,11 +108,7 @@ const MyStudentsPage = () => {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <Select
-                {...field}
-                labelId="statusLabel"
-                label="Status"
-              >
+              <Select {...field} labelId="statusLabel" label="Status">
                 <MenuItem value="ONGOING">Ongoing</MenuItem>
                 <MenuItem value="PENDING">Pending</MenuItem>
                 <MenuItem value="COMPLETED">Completed</MenuItem>

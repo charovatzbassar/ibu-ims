@@ -19,8 +19,12 @@ const Internships = (props: Props) => {
   const startIndex: number = (page - 1) * itemsPerPage;
   const endIndex: number = startIndex + itemsPerPage;
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
+  const handleChange = (
+    event: React.ChangeEvent<unknown> | null,
+    value: number | null
+  ) => {
+    event?.preventDefault();
+    setPage(value ? value : 1);
   };
 
   const totalPages: number | undefined =
@@ -37,15 +41,17 @@ const Internships = (props: Props) => {
           <Card key={internship.internshipID}>
             <CardContent>
               <Typography variant="h5" component="div">
-                {internship.intern.firstName} {internship.intern.lastName} -{" "}
-                {internship.internship_listing.position}
+                {internship.intern?.firstName} {internship.intern?.lastName} -{" "}
+                {internship.internship_listing?.position}
               </Typography>
               <Typography variant="body2">
                 {new Date(
-                  internship.internship_listing.startDate
+                  internship.internship_listing?.startDate || ""
                 ).toDateString()}{" "}
                 -{" "}
-                {new Date(internship.internship_listing.endDate).toDateString()}
+                {new Date(
+                  internship.internship_listing?.endDate || ""
+                ).toDateString()}
               </Typography>
             </CardContent>
           </Card>

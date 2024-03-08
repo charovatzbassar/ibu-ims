@@ -42,6 +42,7 @@ export type User = {
   readonly email: string | null;
   readonly role: string | null;
   readonly token: string | null;
+  readonly photo: string | null;
 };
 
 export type InternshipListingFormValues = {

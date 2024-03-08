@@ -40,8 +40,12 @@ const ApplicationItems = (props: Props) => {
   const startIndex: number = (page - 1) * itemsPerPage;
   const endIndex: number = startIndex + itemsPerPage;
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
+  const handleChange = (
+    event: React.ChangeEvent<unknown> | null,
+    value: number | null
+  ) => {
+    event?.preventDefault();
+    setPage(value ? value : 1);
   };
 
   const totalPages: number | undefined =
@@ -65,7 +69,10 @@ const ApplicationItems = (props: Props) => {
         data
           .slice(startIndex, endIndex)
           .map((application: Application) => (
-            <ApplicationItem key={application.applicationID} data={application} />
+            <ApplicationItem
+              key={application.applicationID}
+              data={application}
+            />
           ))}
       {data && data.length > 0 && (
         <Pagination

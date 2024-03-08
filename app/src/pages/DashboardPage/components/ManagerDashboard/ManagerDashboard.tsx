@@ -1,9 +1,8 @@
-import React from "react";
 import { MyInternships } from "./components";
 import { useInterns } from "@/hooks";
 
 const ManagerDashboard = () => {
-  const { data: interns } = useInterns("", "");
+  const { data: interns } = useInterns();
 
   return (
     <>

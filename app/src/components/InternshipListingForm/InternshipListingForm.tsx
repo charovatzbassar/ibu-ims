@@ -4,7 +4,7 @@ import {
 } from "@/services/types";
 import { Controller, useForm } from "react-hook-form";
 import { TextField, Button, Typography, Card } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormAction } from "@/utils";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -42,7 +42,7 @@ const InternshipListingForm = (props: Props) => {
 
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (data && action === FormAction.UPDATE) {
       reset({
         position: data.position,
@@ -101,11 +101,6 @@ const InternshipListingForm = (props: Props) => {
             <Controller
               name="startDate"
               control={control}
-              defaultValue={
-                FormAction.UPDATE && data?.startDate
-                  ? new Date(data.startDate)
-                  : null
-              }
               render={({ field }) => (
                 <DatePicker
                   {...field}
@@ -126,11 +121,6 @@ const InternshipListingForm = (props: Props) => {
             <Controller
               name="endDate"
               control={control}
-              defaultValue={
-                FormAction.UPDATE && data?.endDate
-                  ? new Date(data.endDate)
-                  : null
-              }
               render={({ field }) => (
                 <DatePicker
                   {...field}

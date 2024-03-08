@@ -19,7 +19,7 @@ const CompanyDashboard = () => {
       {isListingsPending ? (
         <CircularProgress />
       ) : (
-        <MyListings data={listings} />
+        <MyListings data={listings || []} />
       )}
     </Box>
   );

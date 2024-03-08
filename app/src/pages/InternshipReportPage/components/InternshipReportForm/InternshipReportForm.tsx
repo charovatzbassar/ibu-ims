@@ -4,7 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 type Props = {
-  onSubmit: (data: { finalReport: string }) => void;
+  onSubmit: (data: { finalReport?: string }) => void;
   internFullName: string;
 };
 
@@ -17,7 +17,7 @@ const InternshipReportForm = (props: Props) => {
     handleSubmit,
     trigger,
     formState: { errors, isValid },
-  } = useForm();
+  } = useForm<{ finalReport: string }>();
 
   return (
     <Card sx={{ padding: "25px" }}>
@@ -33,7 +33,6 @@ const InternshipReportForm = (props: Props) => {
               message: "The final report must not exceed 250 characters.",
             },
           })}
-          id="outlined-multiline-static"
           label="Write your report here"
           multiline
           fullWidth

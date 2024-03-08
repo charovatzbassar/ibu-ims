@@ -1,8 +1,6 @@
 import { Intern } from "@/services/types";
 import {
-  Button,
   Card,
-  CardActions,
   CardContent,
   Divider,
   Pagination,
@@ -11,7 +9,6 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import { Link } from "react-router-dom";
 
 type Props = {
   interns: Intern[];
@@ -24,8 +21,12 @@ const MyInternships = (props: Props) => {
   const startIndex: number = (page - 1) * itemsPerPage;
   const endIndex: number = startIndex + itemsPerPage;
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
+  const handleChange = (
+    event: React.ChangeEvent<unknown> | null,
+    value: number | null
+  ) => {
+    event?.preventDefault();
+    setPage(value ? value : 1);
   };
 
   const totalPages: number | undefined =

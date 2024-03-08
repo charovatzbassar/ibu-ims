@@ -1,13 +1,5 @@
 import { Application } from "@/services/types";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Button,
-  Typography,
-} from "@mui/material";
-import React from "react";
+import { Card, CardContent, Typography } from "@mui/material";
 
 type Props = {
   data: Application;

@@ -25,9 +25,9 @@ const FinalReport = (props: Props) => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<{ finalGrade: number }>();
 
-  const getGrade = (data: { finalGrade: number }) => {
+  const getGrade = (data: { finalGrade?: number }) => {
     props.modifyReportStatus({
       reportID: props.report.reportID,
       status: "APPROVED",

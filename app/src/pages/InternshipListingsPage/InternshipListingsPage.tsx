@@ -12,7 +12,7 @@ import {
 import { InternshipListingItem } from "@/components";
 import { Search } from "@mui/icons-material";
 import { useSearchParams } from "react-router-dom";
-import { useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { queryClient } from "@/utils";
 
 const InternshipListingsPage: React.FC = () => {
@@ -27,14 +27,15 @@ const InternshipListingsPage: React.FC = () => {
   const startIndex: number = (page - 1) * itemsPerPage;
   const endIndex: number = startIndex + itemsPerPage;
 
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
-    setPage(value);
+  const handleChange = (event: React.ChangeEvent<unknown> | null, value: number | null) => {
+    event?.preventDefault();
+    setPage(value ? value : 1);
   };
 
   const totalPages: number | undefined =
     data && Math.ceil(data?.length / itemsPerPage);
 
-  const onSearch = (data) => {
+  const onSearch: SubmitHandler<FieldValues> = (data) => {
     setSearchParams({ searchTerm: data.searchTerm });
     queryClient.invalidateQueries({
       queryKey: ["internship-listings", data.searchTerm],

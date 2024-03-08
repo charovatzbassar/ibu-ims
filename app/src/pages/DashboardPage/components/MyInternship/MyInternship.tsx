@@ -1,6 +1,5 @@
 import { Internship } from "@/services/types";
 import { Card, CardContent, Divider, Typography } from "@mui/material";
-import React from "react";
 
 type Props = {
   data: Internship;
@@ -22,12 +21,12 @@ const MyInternship = (props: Props) => {
           <Divider />
           <CardContent>
             <Typography variant="h5" component="div">
-              {props.data.intern.firstName} {props.data.intern.lastName} -{" "}
-              {props.data.internship_listing.position}
+              {props.data.intern?.firstName} {props.data.intern?.lastName} -{" "}
+              {props.data.internship_listing?.position}
             </Typography>
             <Typography variant="body2">
-              {new Date(props.data.internship_listing.startDate).toDateString()}{" "}
-              - {new Date(props.data.internship_listing.endDate).toDateString()}
+              {new Date(props.data.internship_listing?.startDate || "").toDateString()}{" "}
+              - {new Date(props.data.internship_listing?.endDate || "").toDateString()}
             </Typography>
           </CardContent>
         </>

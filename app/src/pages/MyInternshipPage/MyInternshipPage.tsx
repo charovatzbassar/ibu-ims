@@ -65,7 +65,7 @@ const MyInternshipPage = () => {
           ) : (
             <InternshipDayForm
               onSubmit={(data) => {
-                mutate(data.description);
+                mutate(data.description || "");
               }}
             />
           )}

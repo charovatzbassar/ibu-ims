@@ -19,8 +19,8 @@ const InternshipReportPage = () => {
       {isInternshipPending && <CircularProgress />}
       {!isInternshipPending && (
         <InternshipReportForm
-          onSubmit={(data: { finalReport: string }) => {
-            createReport(data.finalReport);
+          onSubmit={(data: { finalReport?: string }) => {
+            createReport(data.finalReport || "");
           }}
           internFullName={`${internshipData?.intern?.firstName} ${internshipData?.intern?.lastName}`}
         />

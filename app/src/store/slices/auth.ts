@@ -21,12 +21,13 @@ const authSlice = createSlice({
     login: () => {
       window.location.href = "http://localhost:8080/api/auth/google";
     },
-    logout: (state) => {
+    logout: () => {
       appAxios.get("/auth/google/logout").then(() => {
-        state = initialState;
         localStorage.removeItem("token");
         localStorage.removeItem("expiration");
         window.location.href = "/login";
+
+        return { ...initialState };
       });
     },
   },

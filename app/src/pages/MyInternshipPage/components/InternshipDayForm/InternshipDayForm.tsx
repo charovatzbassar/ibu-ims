@@ -4,7 +4,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 type Props = {
-  onSubmit: (data: { description: string }) => void;
+  onSubmit: (data: { description?: string }) => void;
 };
 
 const InternshipDayForm = (props: Props) => {
@@ -16,7 +16,7 @@ const InternshipDayForm = (props: Props) => {
     handleSubmit,
     trigger,
     formState: { errors, isValid },
-  } = useForm();
+  } = useForm<{ description: string }>();
   return (
     <Card sx={{ padding: "20px" }}>
       <Typography sx={{ marginY: "15px", fontSize: 20 }}>
