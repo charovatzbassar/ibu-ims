@@ -2,6 +2,8 @@
 
 ## Welcome to IBU IMS! 
 
+### ims.ibu.edu.ba
+
 >A solution for the University, where students can apply for compulsory internships, and keep track of their applications. After being chosen for the internship, they can fill out daily reports for their workdays. Companies can create listings for internships, and can keep track of applicants. Furthermore, they approve and reject daily workday reports for their interns, and fill out a final report after the internship had ended. Internship manager works at the University, and keeps track of their students' progress during the internship. They receive the final report from the company, after which the student receives a final grade.
 >
 >For this solution, React.js was used on the frontend, accompanied with:
