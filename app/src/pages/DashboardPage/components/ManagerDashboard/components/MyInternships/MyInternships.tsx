@@ -82,6 +82,9 @@ const MyInternships = (props: Props) => {
           )}
         />
       )}
+      {props.interns && props.interns.length == 0 && (
+        <Card sx={{ padding: "10px", marginY: "10px" }}>No interns found</Card>
+      )}
     </>
   );
 };

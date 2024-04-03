@@ -19,28 +19,28 @@ const InternItem = (props: Props) => {
     <Card sx={{ padding: "10px", marginY: "10px" }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {props.intern.firstName} {props.intern.lastName}
+          {props.intern?.firstName} {props.intern?.lastName}
         </Typography>
         <Divider />
         <Box sx={{ marginY: "10px" }}>
           <Typography variant="body2" color="text.secondary">
-            Company: {props.intern.internship.company?.companyName}
+            Company: {props.intern?.internship?.company?.companyName}
           </Typography>
 
           <Typography variant="body2" color="text.secondary">
-            Position: {props.intern.internship.internship_listing?.position}
+            Position: {props.intern?.internship?.internship_listing?.position}
           </Typography>
 
           <Typography variant="body2" color="text.secondary">
             Internship Status:{" "}
-            {props.intern.internship.status[0] +
-              props.intern.internship.status.slice(1).toLowerCase()}
+            {props.intern?.internship?.status[0] +
+              props.intern?.internship?.status.slice(1).toLowerCase()}
           </Typography>
         </Box>
         <Divider />
       </CardContent>
       <CardActions>
-        <Link to={`/home/my-students/${props.intern.internID}`}>
+        <Link to={`/home/my-students/${props.intern?.internID}`}>
           <Button sx={{ marginLeft: "10px" }} variant="contained">
             Details
           </Button>

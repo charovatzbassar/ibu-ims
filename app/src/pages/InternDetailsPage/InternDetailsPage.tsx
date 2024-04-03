@@ -45,7 +45,7 @@ const InternDetailsPage = () => {
                   Company: {intern?.internship?.company?.companyName}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Position: {intern?.internship.internship_listing?.position}
+                  Position: {intern?.internship?.internship_listing?.position}
                 </Typography>
 
                 <Typography variant="body2" color="text.secondary">
