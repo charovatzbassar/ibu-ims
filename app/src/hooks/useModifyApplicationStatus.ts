@@ -14,7 +14,6 @@ const useModifyApplicationStatus = () => {
       queryClient.invalidateQueries({
         queryKey: ["applications"],
       });
-      console.log("Application status modified successfully");
     },
   });
 };

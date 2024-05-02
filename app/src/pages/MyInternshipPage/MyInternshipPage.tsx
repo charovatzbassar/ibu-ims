@@ -22,9 +22,9 @@ const MyInternshipPage = () => {
   const today = new Date();
   let content = "";
 
-  if (today < new Date(data?.internship_listing.startDate)) {
+  if (today < new Date(data?.internship_listing?.startDate)) {
     content = "Your internship has not started yet.";
-  } else if (today > new Date(data?.internship_listing.endDate)) {
+  } else if (today > new Date(data?.internship_listing?.endDate)) {
     content = "Your internship has ended.";
   }
 
@@ -45,17 +45,17 @@ const MyInternshipPage = () => {
           <Card sx={{ marginY: "10px" }}>
             <CardContent>
               <Typography gutterBottom variant="h5" component="div">
-                {data.internship_listing.position}
+                {data?.internship_listing?.position}
               </Typography>
               <Divider />
               <Box sx={{ marginTop: "10px" }}>
                 <Typography variant="body2" color="text.secondary">
                   Started at:{" "}
-                  {new Date(data.internship_listing.startDate).toDateString()}
+                  {new Date(data?.internship_listing?.startDate).toDateString()}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   Ends at:{" "}
-                  {new Date(data.internship_listing.endDate).toDateString()}
+                  {new Date(data?.internship_listing?.endDate).toDateString()}
                 </Typography>
               </Box>
             </CardContent>
@@ -65,7 +65,7 @@ const MyInternshipPage = () => {
           ) : (
             <InternshipDayForm
               onSubmit={(data) => {
-                mutate(data.description || "");
+                mutate(data?.description || "");
               }}
             />
           )}
