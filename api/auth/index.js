@@ -4,13 +4,14 @@ const prisma = require("../prisma");
 const { sign } = require("jsonwebtoken");
 const { APIError } = require("../utils");
 const { v4: uuid } = require("uuid");
+const { constants } = require("../utils");
 
 passport.use(
   new GoogleStrategy(
     {
       clientID: process.env.AUTH_CLIENT_ID,
       clientSecret: process.env.AUTH_CLIENT_SECRET,
-      callbackURL: "http://localhost:8080/api/auth/google/callback",
+      callbackURL: `${constants.BASE_API_URL}/api/auth/google/callback`,
     },
     async (token, refreshToken, profile, done) => {
       let role;

@@ -1,3 +1,5 @@
+const { constants } = require("../utils");
+
 const swaggerAutogen = require("swagger-autogen")();
 
 const doc = {
@@ -5,7 +7,7 @@ const doc = {
     title: "IBU IMS API",
     description: "Endpoints",
   },
-  host: "localhost:8080",
+  host: constants.BASE_API_URL.split("://")[1],
 };
 
 const outputFile = "./swagger-output.json";

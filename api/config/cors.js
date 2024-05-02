@@ -1,8 +1,7 @@
 const cors = require("cors");
-
-const appPort = process.env.APP_PORT || 5173;
+const { constants } = require("../utils");
 
 module.exports = cors({
-  origin: "http://localhost:" + appPort,
+  origin: constants.BASE_APP_URL,
   credentials: true,
 });
