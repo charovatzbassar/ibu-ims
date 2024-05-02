@@ -1,9 +1,9 @@
 import appAxios from "./appAxios";
 
 export default class InternsService {
-  public static getInterns = async () => {
+  public static getInterns = async (status: string) => {
     return appAxios
-      .get("/interns")
+      .get(`/interns?status=${status}`)
       .then((res) => res.data)
       .catch((err) => err);
   };

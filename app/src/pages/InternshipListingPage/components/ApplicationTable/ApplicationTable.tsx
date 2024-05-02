@@ -114,7 +114,6 @@ const ApplicationTable = (props: Props) => {
                     closeModal={() => setRejectModalOpen(false)}
                     onClick={() => {
                       setRejectModalOpen(false);
-                      console.log(props.modifyHook?.mutate);
                       props.modifyHook?.mutate({
                         applicationID: application.applicationID,
                         status: "REJECTED",

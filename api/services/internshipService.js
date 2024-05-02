@@ -3,40 +3,29 @@ const { v4: uuid } = require("uuid");
 
 module.exports = {
   getInternships: async (req, res) => {
-    const userData =
-      req.user.role === "company"
-        ? await prisma.company.findFirst({
-            where: {
-              contactEmail: req.user.profile.emails[0].value,
-            },
-          })
-        : await prisma.manager.findFirst({
-            where: {
-              email: req.user.profile.emails[0].value,
-            },
-          });
+    const companyData =
+      req.user.role === "company" &&
+      (await prisma.company.findFirst({
+        where: {
+          contactEmail: req.user.profile.emails[0].value,
+        },
+      }));
 
-    if (!userData) {
-      return res.status(400).json({ error: "User does not exist." });
+    if (!companyData) {
+      return res.status(400).json({ error: "Company does not exist." });
     }
 
     const internships = await prisma.internship.findMany({
       include: {
         company: true,
         intern: true,
-        manager: true,
         internship_listing: true,
       },
       where: {
         status: "ONGOING",
-        OR: [
-          {
-            companyID: userData.companyID,
-          },
-          {
-            managerID: userData.managerID,
-          },
-        ],
+        ...(req.user.role === "company"
+          ? { companyID: companyData.companyID }
+          : {}),
       },
     });
 
@@ -46,42 +35,31 @@ module.exports = {
   getInternship: async (req, res) => {
     const { internshipID } = req.params;
 
-    const userData =
-      req.user.role === "company"
-        ? await prisma.company.findFirst({
-            where: {
-              contactEmail: req.user.profile.emails[0].value,
-            },
-          })
-        : await prisma.manager.findFirst({
-            where: {
-              email: req.user.profile.emails[0].value,
-            },
-          });
+    const companyData =
+      req.user.role === "company" &&
+      (await prisma.company.findFirst({
+        where: {
+          contactEmail: req.user.profile.emails[0].value,
+        },
+      }));
 
-    if (!userData) {
-      return res.status(400).json({ error: "User does not exist." });
+    if (!companyData) {
+      return res.status(400).json({ error: "Company does not exist." });
     }
 
     const internship = await prisma.internship.findUnique({
       include: {
         company: true,
         intern: true,
-        manager: true,
         internship_listing: true,
         final_grade: true,
       },
       where: {
         internshipID,
         status: "ONGOING",
-        OR: [
-          {
-            companyID: userData.companyID,
-          },
-          {
-            managerID: userData.managerID,
-          },
-        ],
+        ...(req.user.role === "company"
+          ? { companyID: companyData.companyID }
+          : {}),
       },
     });
 
@@ -103,7 +81,6 @@ module.exports = {
       include: {
         company: true,
         intern: true,
-        manager: true,
         internship_listing: true,
       },
       where: {
@@ -163,7 +140,6 @@ module.exports = {
         companyID: company.companyID,
         listingID,
         internID: intern,
-        managerID: "97f7397c-babe-47b2-814f-0fdb8958023d",
         status: "ONGOING",
       };
     });

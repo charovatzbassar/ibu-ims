@@ -21,7 +21,7 @@ import { Search } from "@mui/icons-material";
 const MyStudentsPage = () => {
   const [page, setPage] = React.useState<number>(1);
 
-  const { data, isPending } = useInterns();
+  const { data, isPending } = useInterns("");
 
   const [displayedInterns, setDisplayedInterns] = React.useState<
     Intern[] | undefined
@@ -69,8 +69,6 @@ const MyStudentsPage = () => {
       ]);
     }
 
-    console.log(displayedInterns);
-    console.log(searchStatus, searchTerm);
   };
 
   return (
