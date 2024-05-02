@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import appAxios from "../../services/appAxios";
+import { BASE_URL } from "@/services/constants";
 
 const token = localStorage.getItem("token") || null;
 
@@ -19,7 +20,7 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     login: () => {
-      window.location.href = "http://localhost:8080/api/auth/google";
+      window.location.href = `${BASE_URL}/auth/google`;
     },
     logout: () => {
       appAxios.get("/auth/google/logout").then(() => {

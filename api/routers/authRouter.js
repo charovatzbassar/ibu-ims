@@ -1,5 +1,6 @@
 const express = require("express");
 const passport = require("passport");
+const { constants } = require("../utils");
 
 const router = express.Router();
 
@@ -17,14 +18,14 @@ router.get(
     failureRedirect: "/",
   }),
   (req, res) => {
-    res.redirect("http://localhost:5173/home/dashboard");
+    res.redirect(`${constants.BASE_APP_URL}/home/dashboard`);
   }
 );
 
 router.get("/logout", (req, res) => {
   res.clearCookie("connect.sid", {
     path: "/",
-    domain: "localhost",
+    domain: constants.BASE_APP_URL.split("://")[1],
     secure: req.secure || req.headers["x-forwarded-proto"] === "https",
     sameSite: "None",
     expires: new Date(0),
