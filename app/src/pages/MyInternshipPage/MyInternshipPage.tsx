@@ -37,10 +37,9 @@ const MyInternshipPage = () => {
         <ErrorAlert message={mutateData.response.data.message} />
       )}
       {isPending && <CircularProgress />}
-      {!data && (
+      {!data ? (
         <Card sx={{ padding: "10px" }}>You have no ongoing internship.</Card>
-      )}
-      {data && (
+      ) : (
         <>
           <Card sx={{ marginY: "10px" }}>
             <CardContent>

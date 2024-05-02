@@ -8,12 +8,11 @@ type Props = {
 const MyInternship = (props: Props) => {
   return (
     <Card sx={{ padding: "20px" }}>
-      {!props.data && (
+      {!props.data ? (
         <Typography sx={{ fontSize: 20 }}>
           No ongoing internship found.
         </Typography>
-      )}
-      {props.data && (
+      ) : (
         <>
           <Typography sx={{ margin: "10px", fontSize: 20 }}>
             My Internship
@@ -25,8 +24,13 @@ const MyInternship = (props: Props) => {
               {props.data.internship_listing?.position}
             </Typography>
             <Typography variant="body2">
-              {new Date(props.data.internship_listing?.startDate || "").toDateString()}{" "}
-              - {new Date(props.data.internship_listing?.endDate || "").toDateString()}
+              {new Date(
+                props.data.internship_listing?.startDate || ""
+              ).toDateString()}{" "}
+              -{" "}
+              {new Date(
+                props.data.internship_listing?.endDate || ""
+              ).toDateString()}
             </Typography>
           </CardContent>
         </>
