@@ -14,8 +14,7 @@ passport.use(
     },
     async (token, refreshToken, profile, done) => {
       let role;
-      // revert after bugfixes
-      if (profile.emails[0].value.split("@")[1] === "ibu.edu.ba") {
+      if (profile.emails[0].value.split("@")[1] === "stu.ibu.edu.ba") {
         const user = await prisma.intern.findUnique({
           where: { email: profile.emails[0].value },
         });
@@ -31,7 +30,7 @@ passport.use(
           });
         }
         role = "intern";
-      } else if (profile.emails[0].value.split("@")[1] === "stu.ibu.edu.ba") {
+      } else if (profile.emails[0].value.split("@")[1] === "ibu.edu.ba") {
         const user = await prisma.manager.findUnique({
           where: { email: profile.emails[0].value },
         });
