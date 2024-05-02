@@ -88,7 +88,7 @@ module.exports = {
         status: "ONGOING",
       },
     });
-
+    
     res.json(internship);
   },
   createInternship: async (req, res) => {

@@ -37,7 +37,7 @@ const ApprovedApplications = (props: Props) => {
         props.data
           .slice(startIndex, endIndex)
           .map((application: Application) => (
-            <Card>
+            <Card key={application.applicationID}>
               <Typography sx={{ padding: "10px", fontSize: 20 }}>
                 <CheckCircleOutline color="success" /> Approved Applications
               </Typography>

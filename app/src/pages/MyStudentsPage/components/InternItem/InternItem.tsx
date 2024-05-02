@@ -21,22 +21,27 @@ const InternItem = (props: Props) => {
         <Typography gutterBottom variant="h5" component="div">
           {props.intern?.firstName} {props.intern?.lastName}
         </Typography>
-        <Divider />
-        <Box sx={{ marginY: "10px" }}>
-          <Typography variant="body2" color="text.secondary">
-            Company: {props.intern?.internship?.company?.companyName}
-          </Typography>
+        {props.intern?.internship && (
+          <>
+            <Divider />
+            <Box sx={{ marginY: "10px" }}>
+              <Typography variant="body2" color="text.secondary">
+                Company: {props.intern?.internship?.company?.companyName}
+              </Typography>
 
-          <Typography variant="body2" color="text.secondary">
-            Position: {props.intern?.internship?.internship_listing?.position}
-          </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Position:{" "}
+                {props.intern?.internship?.internship_listing?.position}
+              </Typography>
 
-          <Typography variant="body2" color="text.secondary">
-            Internship Status:{" "}
-            {props.intern?.internship?.status[0] +
-              props.intern?.internship?.status.slice(1).toLowerCase()}
-          </Typography>
-        </Box>
+              <Typography variant="body2" color="text.secondary">
+                Internship Status:{" "}
+                {props.intern?.internship?.status[0] +
+                  props.intern?.internship?.status.slice(1).toLowerCase()}
+              </Typography>
+            </Box>
+          </>
+        )}
         <Divider />
       </CardContent>
       <CardActions>

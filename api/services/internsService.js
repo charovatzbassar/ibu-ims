@@ -17,7 +17,7 @@ module.exports = {
       },
       where: {
         internship: {
-          ...(status === "ONGOING" && { status }),
+          ...(status !== "" && { status }),
         },
       },
     });

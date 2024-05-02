@@ -68,7 +68,6 @@ const MyStudentsPage = () => {
         }),
       ]);
     }
-
   };
 
   return (

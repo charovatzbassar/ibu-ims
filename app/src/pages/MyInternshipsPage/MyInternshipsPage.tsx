@@ -33,10 +33,14 @@ const MyInternshipsPage = () => {
   return (
     <>
       {!data && isPending && <CircularProgress />}
-      {data && data.length === 0 && !isPending ? (
+      {!data && !isPending && (
+        <Card sx={{ padding: "20px" }}>An error occured.</Card>
+      )}
+      {data && data.length === 0 && !isPending && (
         <Card sx={{ padding: "20px" }}>No ongoing internships found.</Card>
-      ) : (
-        <div>
+      )}
+      {data && data.length > 0 && !isPending && (
+        <>
           <Typography variant="h5" sx={{ marginY: "10px" }}>
             My Internships
           </Typography>
@@ -67,7 +71,7 @@ const MyInternshipsPage = () => {
               )}
             />
           )}
-        </div>
+        </>
       )}
     </>
   );
