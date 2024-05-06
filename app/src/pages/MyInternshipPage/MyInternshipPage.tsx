@@ -32,17 +32,13 @@ const MyInternshipPage = () => {
 
   let content: string = "";
 
-  if (internshipDay?.workdayDate === today.toISOString().split("T")[0]) {
-    content =
-      "You have already submitted your day report for today. See you tomorrow!";
-  }
-
   if (today < new Date(data?.internship_listing?.startDate)) {
     content = "Your internship has not started yet.";
-  }
-
-  if (today > new Date(data?.internship_listing?.endDate)) {
+  } else if (today > new Date(data?.internship_listing?.endDate)) {
     content = "Your internship has ended.";
+  } else if (internshipDay?.workdayDate === today.toISOString().split("T")[0]) {
+    content =
+      "You have already submitted your day report for today. See you tomorrow!";
   }
 
   return (
