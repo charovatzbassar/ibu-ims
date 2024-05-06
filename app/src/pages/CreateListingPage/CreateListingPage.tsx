@@ -29,8 +29,8 @@ const CreateListingPage: React.FC = () => {
     });
   };
 
-  if (isSuccess && data?.listingID) {
-    return <Navigate to={`/home/internship-listings/${data.listingID}`} />;
+  if (isSuccess && data?.listingID && !data?.response?.data.error) {
+    return <Navigate to={`/home/internship-listings/${data.listingID}?created=true`} />;
   }
 
   return (

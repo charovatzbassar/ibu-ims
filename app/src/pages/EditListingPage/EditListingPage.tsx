@@ -41,16 +41,17 @@ const EditListingPage = () => {
     });
   };
 
-  if (isSuccess && data?.listingID && !mutateData.response?.data.error) {
-    return <Navigate to={`/home/internship-listings/${data.listingID}`} />;
-  }
-
   return (
     <>
+      {isSuccess && data?.listingID && !mutateData?.response?.data.error && (
+        <Navigate to={`/home/internship-listings/${listingID}?edited=true`} />
+      )}
       {!isListingOwner(data, user) && (
         <Navigate to="/home/internship-listings" />
       )}
-      {mutateData && <ErrorAlert message={mutateData.response?.data.error} />}
+      {mutateData?.response?.data.error && (
+        <ErrorAlert message={mutateData.response?.data.error} />
+      )}
       <InternshipListingForm
         action={FormAction.UPDATE}
         onSubmit={onSubmit}

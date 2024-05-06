@@ -17,6 +17,7 @@ const InternshipDayForm = (props: Props) => {
     trigger,
     formState: { errors, isValid },
   } = useForm<{ description: string }>();
+  
   return (
     <Card sx={{ padding: "20px" }}>
       <Typography sx={{ marginY: "15px", fontSize: 20 }}>

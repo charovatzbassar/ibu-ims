@@ -40,17 +40,17 @@ const InternItem = (props: Props) => {
                   props.intern?.internship?.status.slice(1).toLowerCase()}
               </Typography>
             </Box>
+            <Divider />
+            <CardActions>
+              <Link to={`/home/my-students/${props.intern?.internID}`}>
+                <Button sx={{ marginLeft: "10px" }} variant="contained">
+                  Details
+                </Button>
+              </Link>
+            </CardActions>
           </>
         )}
-        <Divider />
       </CardContent>
-      <CardActions>
-        <Link to={`/home/my-students/${props.intern?.internID}`}>
-          <Button sx={{ marginLeft: "10px" }} variant="contained">
-            Details
-          </Button>
-        </Link>
-      </CardActions>
     </Card>
   );
 };

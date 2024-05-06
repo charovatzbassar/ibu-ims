@@ -23,3 +23,5 @@ export { default as useCreateInternshipReport } from "./useCreateInternshipRepor
 export { default as useModifyInternshipReportStatus } from "./useModifyInternshipReportStatus";
 export { default as useInterns } from "./useInterns";
 export { default as useIntern } from "./useIntern";
+export { default as useInternshipDayByDate } from "./useInternshipDayByDate";
+export { default as useSIS } from "./useSIS";

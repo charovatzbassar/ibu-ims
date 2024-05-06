@@ -50,6 +50,8 @@ const InternshipListingForm = (props: Props) => {
         location: data.location,
         requirements: data.requirements,
         noOfPlaces: data.noOfPlaces,
+        startDate: new Date(data.startDate),
+        endDate: new Date(data.endDate),
       });
     }
   }, [data, reset, action]);

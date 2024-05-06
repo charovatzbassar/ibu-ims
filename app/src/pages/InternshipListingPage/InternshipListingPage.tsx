@@ -5,7 +5,7 @@ import {
   useInternshipListing,
   useModifyApplicationStatus,
 } from "@/hooks";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useParams, useSearchParams } from "react-router-dom";
 import { Button, Card, CircularProgress, Typography } from "@mui/material";
 import { InternshipListingContent, ApplicationTable } from "./components";
 import { isListingOwner } from "@/utils";
@@ -17,6 +17,7 @@ import { useApplications } from "@/hooks";
 import { Application, Intern } from "@/services/types";
 
 const InternshipListingPage = () => {
+  const [searchParams] = useSearchParams();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
   const [startInternshipModalOpen, setStartInternshipModalOpen] =
     React.useState<boolean>(false);
@@ -62,7 +63,16 @@ const InternshipListingPage = () => {
 
   return (
     <>
+      {searchParams.get("created") && (
+        <SuccessAlert content="Internship created successfully!" />
+      )}
+      {searchParams.get("edited") && (
+        <SuccessAlert content="Internship edited successfully!" />
+      )}
       {!data && <ErrorAlert />}
+      {user.role === "company" && isDeletionSuccess && (
+        <Navigate to="/home/dashboard?deleted=true" />
+      )}
       {user.role === "company" && createInternshipData && (
         <ErrorAlert
           message={`${
@@ -74,7 +84,7 @@ const InternshipListingPage = () => {
       )}
       {user.role === "company" &&
         !createInternshipData?.response?.data.error &&
-        createInternshipSuccess && <Navigate to="/home/my-internships" />}
+        createInternshipSuccess && <Navigate to="/home/my-internships?created=true" />}
       {user.role === "company" && modifyHook.isSuccess && (
         <SuccessAlert content="Application status updated successfully!" />
       )}
@@ -189,7 +199,6 @@ const InternshipListingPage = () => {
             </Card>
           </>
         )}
-      {isDeletionSuccess && <Navigate to="/home/dashboard" />}
       {user.role === "intern" && (
         <>
           <Button

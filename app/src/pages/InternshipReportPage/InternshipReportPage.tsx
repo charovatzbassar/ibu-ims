@@ -15,7 +15,7 @@ const InternshipReportPage = () => {
 
   return (
     <>
-      {isSuccess && <Navigate to="/home/dashboard" />}
+      {isSuccess && <Navigate to="/home/dashboard?ended=true" />}
       {isInternshipPending && <CircularProgress />}
       {!isInternshipPending && (
         <InternshipReportForm

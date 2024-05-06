@@ -39,9 +39,8 @@ const InternshipDetailsPage = () => {
     internshipID || ""
   );
 
-  const { mutate: approveAllInternshipDays } = useApproveAllInternshipDays(
-    internshipID || ""
-  );
+  const { mutate: approveAllInternshipDays, isSuccess: isApproveAllSuccess, data: approveAllData } =
+    useApproveAllInternshipDays(internshipID || "");
 
   const {
     mutate: modifyStatus,
@@ -77,6 +76,9 @@ const InternshipDetailsPage = () => {
     <>
       {isModifyDataSuccess && !modifyStatusData.response?.data.mesage && (
         <SuccessAlert content="Day status updated successfully!" />
+      )}
+      {isApproveAllSuccess && !approveAllData?.response?.data.message && (
+        <SuccessAlert content="All days approved successfully!" />
       )}
       {data && !isOwner && <Navigate to="/home/dashboard" />}
       {isPending && <CircularProgress />}

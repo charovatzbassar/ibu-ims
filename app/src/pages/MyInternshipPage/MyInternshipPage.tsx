@@ -1,4 +1,8 @@
-import { useCreateInternshipDay, useInternshipForIntern } from "@/hooks";
+import {
+  useCreateInternshipDay,
+  useInternshipDayByDate,
+  useInternshipForIntern,
+} from "@/hooks";
 import {
   Card,
   CardContent,
@@ -20,11 +24,24 @@ const MyInternshipPage = () => {
   } = useCreateInternshipDay(data?.internshipID || "");
 
   const today = new Date();
-  let content = "";
+
+  const { data: internshipDay } = useInternshipDayByDate(
+    data?.internshipID || "",
+    today.toISOString().split("T")[0]
+  );
+
+  let content: string = "";
+
+  if (internshipDay?.workdayDate === today.toISOString().split("T")[0]) {
+    content =
+      "You have already submitted your day report for today. See you tomorrow!";
+  }
 
   if (today < new Date(data?.internship_listing?.startDate)) {
     content = "Your internship has not started yet.";
-  } else if (today > new Date(data?.internship_listing?.endDate)) {
+  }
+
+  if (today > new Date(data?.internship_listing?.endDate)) {
     content = "Your internship has ended.";
   }
 

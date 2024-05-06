@@ -33,4 +33,14 @@ export default class InternshipDaysService {
       .then((res) => res.data)
       .catch((error) => error);
   };
+
+  public static getInternshipDayByDate = async (
+    internshipID: string,
+    date: string
+  ) => {
+    return appAxios
+      .get(`/internship-days/${internshipID}/${date}`)
+      .then((res) => res.data)
+      .catch((error) => error);
+  };
 }

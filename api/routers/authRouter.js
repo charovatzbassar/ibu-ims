@@ -23,15 +23,12 @@ router.get(
 );
 
 router.get("/logout", (req, res) => {
-  res.clearCookie("connect.sid", {
-    path: "/",
-    domain: constants.BASE_APP_URL.split("://")[1],
-    secure: req.secure || req.headers["x-forwarded-proto"] === "https",
-    sameSite: "None",
-    expires: new Date(0),
-  });
-
-  res.json({ msg: "Logged out" });
+  res
+    .clearCookie("connect.sid", {
+      path: "/",
+    })
+    .status(200)
+    .json({ msg: "Logged out" });
 });
 
 router.get("/user", (req, res) => {

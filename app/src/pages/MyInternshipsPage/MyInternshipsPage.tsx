@@ -9,9 +9,13 @@ import {
 } from "@mui/material";
 import { Internship } from "@/services/types";
 import React from "react";
+import { useSearchParams } from "react-router-dom";
+import { SuccessAlert } from "@/components";
 
 const MyInternshipsPage = () => {
   const { data, isPending } = useInternships();
+
+  const [searchParams] = useSearchParams();
 
   const [page, setPage] = React.useState<number>(1);
 
@@ -32,6 +36,9 @@ const MyInternshipsPage = () => {
 
   return (
     <>
+      {searchParams.get("created") && (
+        <SuccessAlert content="Internship created successfully!" />
+      )}
       {!data && isPending && <CircularProgress />}
       {!data && !isPending && (
         <Card sx={{ padding: "20px" }}>An error occured.</Card>

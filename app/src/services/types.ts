@@ -49,8 +49,8 @@ export type InternshipListingFormValues = {
   position: string;
   listingDescription: string;
   location: string;
-  startDate: string;
-  endDate: string;
+  startDate: string | Date;
+  endDate: string | Date;
   requirements: string;
   noOfPlaces: number;
 };

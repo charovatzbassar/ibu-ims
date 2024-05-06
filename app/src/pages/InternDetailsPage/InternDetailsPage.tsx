@@ -1,6 +1,6 @@
 import React from "react";
-import { useIntern, useModifyInternshipReportStatus } from "@/hooks";
-import {  useParams } from "react-router-dom";
+import { useIntern, useModifyInternshipReportStatus, useSIS } from "@/hooks";
+import { useParams } from "react-router-dom";
 import {
   Button,
   Card,
@@ -11,12 +11,18 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import { Days, FinalReport } from "./components";
-import { ConfirmModal, SuccessAlert } from "@/components";
+import { ConfirmModal, ErrorAlert, SuccessAlert } from "@/components";
 
 const InternDetailsPage = () => {
   const [open, setOpen] = React.useState<boolean>(false);
 
   const { internID } = useParams();
+
+  const {
+    mutate: enterGrade,
+    isSuccess: gradeEnteredSuccessfully,
+    isError: gradeEnteredError,
+  } = useSIS();
 
   const { data: intern, isPending } = useIntern(internID || "");
 
@@ -28,6 +34,10 @@ const InternDetailsPage = () => {
 
   return (
     <>
+      {gradeEnteredSuccessfully && <SuccessAlert content="Grade entered!" />}
+      {gradeEnteredError && (
+        <ErrorAlert message="Grade could not be entered!" />
+      )}
       {isSuccess && !data.response?.data?.error && (
         <SuccessAlert content="Internship ended!" />
       )}
@@ -101,6 +111,9 @@ const InternDetailsPage = () => {
           <ConfirmModal
             onClick={() => {
               setOpen(false);
+              enterGrade({
+                grade: intern?.internship?.final_grade?.grade || "",
+              });
             }}
             modalOpen={open}
             closeModal={() => setOpen(false)}

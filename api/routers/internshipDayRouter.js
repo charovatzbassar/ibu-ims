@@ -19,6 +19,10 @@ router
   );
 
 router
+  .route("/:internshipID/:date")
+  .get(catchAsync(internshipDayService.getInternshipDayByDate));
+
+router
   .route("/:internshipID/all")
   .put(
     checkRole(["company"]),
