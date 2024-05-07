@@ -64,10 +64,10 @@ const InternshipListingPage = () => {
   return (
     <>
       {searchParams.get("created") && (
-        <SuccessAlert content="Internship created successfully!" />
+        <SuccessAlert content="Listing created successfully!" />
       )}
       {searchParams.get("edited") && (
-        <SuccessAlert content="Internship edited successfully!" />
+        <SuccessAlert content="Listing edited successfully!" />
       )}
       {!data && <ErrorAlert />}
       {user.role === "company" && isDeletionSuccess && (
@@ -84,7 +84,9 @@ const InternshipListingPage = () => {
       )}
       {user.role === "company" &&
         !createInternshipData?.response?.data.error &&
-        createInternshipSuccess && <Navigate to="/home/my-internships?created=true" />}
+        createInternshipSuccess && (
+          <Navigate to="/home/my-internships?created=true" />
+        )}
       {user.role === "company" && modifyHook.isSuccess && (
         <SuccessAlert content="Application status updated successfully!" />
       )}
