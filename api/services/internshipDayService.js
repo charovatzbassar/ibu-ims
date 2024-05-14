@@ -31,17 +31,17 @@ module.exports = {
 
     return res.json(internshipDays);
   },
-  getInternshipDayByDate: async (req, res) => {
+  getInternshipDaysByDate: async (req, res) => {
     const { date, internshipID } = req.params;
 
-    const internshipDay = await prisma.internship_day.findFirst({
+    const internshipDays = await prisma.internship_day.findMany({
       where: {
         internshipID,
         workdayDate: date,
       },
     });
 
-    return res.json(internshipDay);
+    return res.json(internshipDays);
   },
   createInternshipDay: async (req, res) => {
     const { internshipID } = req.params;
@@ -82,19 +82,6 @@ module.exports = {
     if (currentDate > new Date(internship.internship_listing.endDate)) {
       return res.status(400).json({
         message: "Your internship has ended.",
-      });
-    }
-
-    const existingInternshipDay = await prisma.internship_day.findFirst({
-      where: {
-        internshipID,
-        workdayDate: currentDate.toISOString().slice(0, 10),
-      },
-    });
-
-    if (existingInternshipDay) {
-      return res.status(400).json({
-        message: "You have already filled out today's date. See you tomorrow!",
       });
     }
 

@@ -20,7 +20,7 @@ router
 
 router
   .route("/:internshipID/:date")
-  .get(catchAsync(internshipDayService.getInternshipDayByDate));
+  .get(catchAsync(internshipDayService.getInternshipDaysByDate));
 
 router
   .route("/:internshipID/all")

@@ -34,7 +34,7 @@ export default class InternshipDaysService {
       .catch((error) => error);
   };
 
-  public static getInternshipDayByDate = async (
+  public static getInternshipDaysByDate = async (
     internshipID: string,
     date: string
   ) => {
