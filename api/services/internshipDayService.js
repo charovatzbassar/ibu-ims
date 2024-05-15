@@ -1,6 +1,5 @@
 const prisma = require("../prisma");
 const { v4: uuid } = require("uuid");
-const { getIntern } = require("./internsService");
 
 module.exports = {
   getInternshipDays: async (req, res) => {
@@ -38,6 +37,9 @@ module.exports = {
       where: {
         internshipID,
       },
+      orderBy: {
+        workdayDate: "desc",
+      }
     });
 
     return res.json(internshipDays);
