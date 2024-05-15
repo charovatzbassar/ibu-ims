@@ -1,51 +1,9 @@
 import { useAllInternshipDays, useInternshipForIntern } from "@/hooks";
 import { InternshipDay } from "@/services/types";
-import {
-  Cancel,
-  CheckCircleOutline,
-  HourglassBottom,
-} from "@mui/icons-material";
-import {
-  Card,
-  CardContent,
-  Divider,
-  Pagination,
-  PaginationItem,
-  Typography,
-} from "@mui/material";
-import { Box } from "@mui/system";
+
+import { Card, Pagination, PaginationItem } from "@mui/material";
 import React from "react";
-
-const getStatusContent = (status: string) => {
-  switch (status) {
-    case "PENDING":
-      return (
-        <>
-          <HourglassBottom color="warning" />
-          Pending approval.
-        </>
-      );
-
-    case "APPROVED":
-      return (
-        <>
-          <CheckCircleOutline color="success" />
-          Approved!
-        </>
-      );
-
-    case "REJECTED":
-      return (
-        <>
-          <Cancel color="error" />
-          Rejected.
-        </>
-      );
-
-    default:
-      return null;
-  }
-};
+import { InternshipDayItem } from "./components";
 
 const DayReportsPage = () => {
   const { data: internship } = useInternshipForIntern();
@@ -70,57 +28,24 @@ const DayReportsPage = () => {
 
   return (
     <>
-      {days && days.length !== 0 && (
+      {!internship && (
+        <Card sx={{ padding: "10px" }}>You have no ongoing internship.</Card>
+      )}
+      {internship && days && days.length === 0 && (
+        <Card sx={{ padding: "10px" }}>
+          You have no day reports for this internship.
+        </Card>
+      )}
+      {internship && days && days.length !== 0 && (
         <div>
           {days
             .slice(startIndex, endIndex)
-            .map((internshipDay: InternshipDay) => {
-              return (
-                <Card
-                  sx={{
-                    minWidth: 275,
-                    margin: "10px",
-                    display: "flex",
-                    flexDirection: "column",
-                    flexWrap: "wrap",
-                  }}
-                  key={internshipDay?.dayID}
-                >
-                  <CardContent>
-                    <Box sx={{ marginY: "10px" }}>
-                      <Typography
-                        variant="h5"
-                        component="div"
-                        sx={{ display: "flex", marginY: "10px" }}
-                      >
-                        {new Date(internshipDay?.workdayDate).toDateString()}
-                      </Typography>
-                      <Divider />
-
-                      <Typography
-                        variant="body2"
-                        sx={{ display: "flex", marginY: "10px" }}
-                      >
-                        {internshipDay?.dayDescription}{" "}
-                      </Typography>
-                      <Divider />
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          display: "flex",
-                          marginY: "10px",
-                          alignItems: "center",
-                          marginX: 1,
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {getStatusContent(internshipDay?.status || "")}
-                      </Typography>
-                    </Box>
-                  </CardContent>
-                </Card>
-              );
-            })}
+            .map((internshipDay: InternshipDay) => (
+              <InternshipDayItem
+                key={internshipDay.dayID}
+                data={internshipDay}
+              />
+            ))}
 
           <Pagination
             sx={{ marginY: 2, display: "flex", justifyContent: "center" }}
