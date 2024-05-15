@@ -31,6 +31,17 @@ module.exports = {
 
     return res.json(internshipDays);
   },
+  getAllInternshipDays: async (req, res) => {
+    const { internshipID } = req.params;
+
+    const internshipDays = await prisma.internship_day.findMany({
+      where: {
+        internshipID,
+      },
+    });
+
+    return res.json(internshipDays);
+  },
   getInternshipDaysByDate: async (req, res) => {
     const { date, internshipID } = req.params;
 

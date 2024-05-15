@@ -1,9 +1,12 @@
-import React from 'react'
+import { useAllInternshipDays, useInternshipForIntern } from "@/hooks";
 
 const DayReportsPage = () => {
-  return (
-    <div>DayReportsPage</div>
-  )
-}
+  const { data: internship } = useInternshipForIntern();
+  const { data: days } = useAllInternshipDays(internship?.internshipID || "");
 
-export default DayReportsPage
+  console.log(days);
+
+  return <>DayReportsPage</>;
+};
+
+export default DayReportsPage;

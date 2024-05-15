@@ -24,6 +24,9 @@ router
 
 router
   .route("/:internshipID/all")
+  .get(
+    catchAsync(internshipDayService.getAllInternshipDays)
+  )
   .put(
     checkRole(["company"]),
     catchAsync(internshipDayService.approveAllInternshipDays)

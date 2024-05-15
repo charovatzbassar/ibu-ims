@@ -34,16 +34,9 @@
     "/api/auth/google/logout": {
       "get": {
         "description": "",
-        "parameters": [
-          {
-            "name": "x-forwarded-proto",
-            "in": "header",
-            "type": "string"
-          }
-        ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         }
       }
@@ -346,7 +339,47 @@
         }
       }
     },
+    "/api/internship-days/{internshipID}/{date}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "internshipID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/internship-days/{internshipID}/all": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "internshipID",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
       "put": {
         "description": "",
         "parameters": [

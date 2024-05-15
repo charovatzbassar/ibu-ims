@@ -1,7 +1,5 @@
-import React from "react";
-
 const MyInternsPage = () => {
-  return <div>MyInternsPage</div>;
+  return <>MyInternsPage</>;
 };
 
 export default MyInternsPage;

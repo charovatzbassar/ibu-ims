@@ -25,3 +25,4 @@ export { default as useInterns } from "./useInterns";
 export { default as useIntern } from "./useIntern";
 export { default as useInternshipDaysByDate } from "./useInternshipDaysByDate";
 export { default as useSIS } from "./useSIS";
+export { default as useAllInternshipDays } from "./useAllInternshipDays";
