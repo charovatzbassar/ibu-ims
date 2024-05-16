@@ -13,4 +13,11 @@ export default class InternsService {
       .then((res) => res.data)
       .catch((err) => err);
   };
+
+  public static getInternsByCompany = async () => {
+    return appAxios
+      .get(`/interns/company`)
+      .then((res) => res.data)
+      .catch((err) => err);
+  };
 }
