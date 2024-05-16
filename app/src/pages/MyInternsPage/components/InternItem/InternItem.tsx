@@ -8,13 +8,13 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { Link } from "react-router-dom";
 
 type Props = {
   intern: Intern;
 };
 
 const InternItem = (props: Props) => {
-  console.log(props.intern);
   return (
     <Card sx={{ padding: "10px", marginY: "10px" }}>
       <CardContent>
@@ -42,9 +42,11 @@ const InternItem = (props: Props) => {
             </Box>
             <Divider />
             <CardActions>
-              <Button sx={{ marginLeft: "10px" }} variant="contained">
-                Details
-              </Button>
+              <Link to={`/home/my-interns/${props.intern?.internID}`}>
+                <Button sx={{ marginLeft: "10px" }} variant="contained">
+                  Details
+                </Button>
+              </Link>
             </CardActions>
           </>
         )}

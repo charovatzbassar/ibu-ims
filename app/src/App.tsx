@@ -15,9 +15,10 @@ import {
   MyInternshipPage,
   MyApplicationsPage,
   MyStudentsPage,
-  InternDetailsPage,
+  StudentDetailsPage,
   MyInternsPage,
   DayReportsPage,
+  InternDetailsPage,
 } from "@/pages";
 import { Navigation } from "@/components";
 import { ProtectedRoute, RoleRoute } from "@/utils";
@@ -57,6 +58,10 @@ function App(): ReactElement {
             />
             <Route path="my-listings" element={<MyListingsPage />} />
             <Route path="my-interns" element={<MyInternsPage />} />
+            <Route
+              path="my-interns/:internID"
+              element={<InternDetailsPage />}
+            />
           </Route>
           <Route element={<RoleRoute roles={["intern"]} />}>
             <Route path="my-internship" element={<MyInternshipPage />} />
@@ -67,7 +72,7 @@ function App(): ReactElement {
             <Route path="my-students" element={<MyStudentsPage />} />
             <Route
               path="my-students/:internID"
-              element={<InternDetailsPage />}
+              element={<StudentDetailsPage />}
             />
           </Route>
         </Route>

@@ -11,7 +11,11 @@ module.exports = {
             internship_listing: true,
             company: true,
             internship_report: true,
-            internship_day: true,
+            internship_day: {
+              orderBy: {
+                workdayDate: "desc",
+              },
+            },
           },
         },
       },
@@ -25,7 +29,6 @@ module.exports = {
     res.json(interns);
   },
   getInternsByCompany: async (req, res) => {
-
     const company = await prisma.company.findFirst({
       where: {
         contactEmail: req.user.profile.emails[0].value,
@@ -42,7 +45,11 @@ module.exports = {
           include: {
             internship_listing: true,
             internship_report: true,
-            internship_day: true,
+            internship_day: {
+              orderBy: {
+                workdayDate: "desc",
+              },
+            },
             final_grade: true,
           },
         },
@@ -66,7 +73,11 @@ module.exports = {
             internship_listing: true,
             company: true,
             internship_report: true,
-            internship_day: true,
+            internship_day: {
+              orderBy: {
+                workdayDate: "desc",
+              },
+            },
             final_grade: true,
           },
         },

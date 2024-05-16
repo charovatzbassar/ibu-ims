@@ -17,6 +17,6 @@ router
 
 router
   .route("/:internID")
-  .get(checkRole(["manager"]), catchAsync(internsService.getIntern));
+  .get(checkRole(["manager", "company"]), catchAsync(internsService.getIntern));
 
 module.exports = router;
