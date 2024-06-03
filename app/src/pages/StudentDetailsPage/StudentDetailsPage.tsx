@@ -1,6 +1,8 @@
-import { useIntern } from "@/hooks";
+import React from "react";
+import { useIntern, useModifyInternshipReportStatus, useSIS } from "@/hooks";
 import { useParams } from "react-router-dom";
 import {
+  Button,
   Card,
   CardContent,
   CircularProgress,
@@ -8,15 +10,37 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { Days } from "@/components";
+import { FinalReport } from "./components";
+import { ConfirmModal, ErrorAlert, SuccessAlert, Days } from "@/components";
 
-const InternDetailsPage = () => {
+const StudentDetailsPage = () => {
+  const [open, setOpen] = React.useState<boolean>(false);
+
   const { internID } = useParams();
+
+  const {
+    mutate: enterGrade,
+    isSuccess: gradeEnteredSuccessfully,
+    isError: gradeEnteredError,
+  } = useSIS();
 
   const { data: intern, isPending } = useIntern(internID || "");
 
+  const {
+    mutate: modifyReportStatus,
+    isSuccess,
+    data,
+  } = useModifyInternshipReportStatus();
+
   return (
     <>
+      {gradeEnteredSuccessfully && <SuccessAlert content="Grade entered!" />}
+      {gradeEnteredError && (
+        <ErrorAlert message="Grade could not be entered!" />
+      )}
+      {isSuccess && !data.response?.data?.error && (
+        <SuccessAlert content="Internship ended!" />
+      )}
       {isPending && <CircularProgress />}
       {intern && !isPending && (
         <>
@@ -54,7 +78,7 @@ const InternDetailsPage = () => {
                 </Typography>
               </Box>
               <Divider />
-              {intern?.internship?.final_grade?.grade ? (
+              {intern?.internship?.final_grade?.grade && (
                 <Box
                   sx={{
                     marginY: "10px",
@@ -63,16 +87,13 @@ const InternDetailsPage = () => {
                   <Typography sx={{ marginY: "10px" }}>
                     Grade: {intern?.internship?.final_grade?.grade}
                   </Typography>
-                </Box>
-              ) : (
-                <Box
-                  sx={{
-                    marginY: "10px",
-                  }}
-                >
-                  <Typography sx={{ marginY: "10px" }}>
-                    The intern has not been graded yet.
-                  </Typography>
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => setOpen(true)}
+                  >
+                    migrate to sis
+                  </Button>
                 </Box>
               )}
             </CardContent>
@@ -81,29 +102,32 @@ const InternDetailsPage = () => {
           <Days days={intern?.internship?.internship_day || []} />
 
           {!intern?.internship?.final_grade?.grade && (
-            <Card sx={{ marginY: "10px" }}>
-              <Typography sx={{ padding: "10px", fontSize: 20 }}>
-                Final Report
-              </Typography>
-              <Divider />
-              {!intern?.internship?.internship_report?.finalReport && (
-                <Typography sx={{ margin: "10px" }}>
-                  There is no final report.
-                </Typography>
-              )}
-              {intern?.internship?.internship_report?.finalReport && (
-                <>
-                  <Typography sx={{ margin: "10px" }}>
-                    {intern?.internship?.internship_report?.finalReport}
-                  </Typography>
-                </>
-              )}
-            </Card>
+            <FinalReport
+              modifyReportStatus={modifyReportStatus}
+              report={intern?.internship?.internship_report}
+            />
           )}
+
+          <ConfirmModal
+            onClick={() => {
+              setOpen(false);
+              enterGrade({
+                grade: intern?.internship?.final_grade?.grade || "",
+              });
+            }}
+            modalOpen={open}
+            closeModal={() => setOpen(false)}
+            buttonColor="success"
+          >
+            <Typography sx={{ marginY: "10px" }}>
+              Are you sure you want to enter this grade into Student Information
+              System?
+            </Typography>
+          </ConfirmModal>
         </>
       )}
     </>
   );
 };
 
-export default InternDetailsPage;
+export default StudentDetailsPage;

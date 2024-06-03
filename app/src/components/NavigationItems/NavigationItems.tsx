@@ -11,6 +11,7 @@ import {
   Addchart,
   FormatListBulleted,
   AccessTime,
+  Summarize,
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { logout } from "@/store/slices/auth";
@@ -44,6 +45,17 @@ const getNavigationItems = (role: string) => {
                 <BarChart />
               </ListItemIcon>
               <ListItemText primary="My Internship" />
+            </ListItemButton>
+          </Link>
+          <Link
+            to="/home/my-internship/days"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <Summarize />
+              </ListItemIcon>
+              <ListItemText primary="Day Reports" />
             </ListItemButton>
           </Link>
         </>
@@ -87,6 +99,17 @@ const getNavigationItems = (role: string) => {
                 <FormatListBulleted />
               </ListItemIcon>
               <ListItemText primary="My Listings" />
+            </ListItemButton>
+          </Link>
+          <Link
+            to="/home/my-interns"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <Summarize />
+              </ListItemIcon>
+              <ListItemText primary="My Interns" />
             </ListItemButton>
           </Link>
           <Link

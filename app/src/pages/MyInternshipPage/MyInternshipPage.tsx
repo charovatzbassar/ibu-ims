@@ -1,6 +1,6 @@
 import {
   useCreateInternshipDay,
-  useInternshipDayByDate,
+  useInternshipDaysByDate,
   useInternshipForIntern,
 } from "@/hooks";
 import {
@@ -13,6 +13,13 @@ import {
 import { Box } from "@mui/system";
 import { ErrorAlert, SuccessAlert } from "@/components";
 import { InternshipDayForm } from "./components";
+import React from "react";
+import {
+  Cancel,
+  CheckCircleOutline,
+  HourglassBottom,
+} from "@mui/icons-material";
+import { InternshipDay } from "@/services/types";
 
 const MyInternshipPage = () => {
   const { data, isPending } = useInternshipForIntern();
@@ -25,20 +32,62 @@ const MyInternshipPage = () => {
 
   const today = new Date();
 
-  const { data: internshipDay } = useInternshipDayByDate(
+  const { data: internshipDays } = useInternshipDaysByDate(
     data?.internshipID || "",
     today.toISOString().split("T")[0]
   );
 
+  const latestInternshipDay: InternshipDay | undefined =
+    (internshipDays && internshipDays[internshipDays.length - 1]) || {};
+
   let content: string = "";
+  let statusContent: React.ReactElement = <></>;
+
+  const dayReportSubmitted: boolean =
+    latestInternshipDay?.workdayDate === today.toISOString().split("T")[0];
 
   if (today < new Date(data?.internship_listing?.startDate)) {
     content = "Your internship has not started yet.";
   } else if (today > new Date(data?.internship_listing?.endDate)) {
     content = "Your internship has ended.";
-  } else if (internshipDay?.workdayDate === today.toISOString().split("T")[0]) {
-    content =
-      "You have already submitted your day report for today. See you tomorrow!";
+  } else if (dayReportSubmitted) {
+    content = `You have already submitted your day report for today. See you tomorrow!`;
+
+    switch (latestInternshipDay?.status) {
+      case "PENDING":
+        statusContent = (
+          <>
+            <HourglassBottom color="warning" />
+            <Typography sx={{ fontWeight: "bold", marginX: 1 }}>
+              Pending approval for your day report.
+            </Typography>
+          </>
+        );
+        break;
+      case "APPROVED":
+        statusContent = (
+          <>
+            <CheckCircleOutline color="success" />
+            <Typography sx={{ fontWeight: "bold", marginX: 1 }}>
+              Your day report has been approved!
+            </Typography>
+          </>
+        );
+        break;
+
+      case "REJECTED":
+        statusContent = (
+          <>
+            <Cancel color="error" />
+            <Typography sx={{ fontWeight: "bold", marginX: 1 }}>
+              Your day report has been rejected. Please resubmit.
+            </Typography>
+          </>
+        );
+        break;
+      default:
+        break;
+    }
   }
 
   return (
@@ -72,7 +121,18 @@ const MyInternshipPage = () => {
               </Box>
             </CardContent>
           </Card>
-          {content ? (
+          {dayReportSubmitted && (
+            <Card
+              sx={{
+                padding: "20px",
+                marginY: "10px",
+                display: "flex",
+              }}
+            >
+              {statusContent}
+            </Card>
+          )}
+          {content && latestInternshipDay?.status !== "REJECTED" ? (
             <Card sx={{ padding: "20px", marginY: "10px" }}>{content}</Card>
           ) : (
             <InternshipDayForm

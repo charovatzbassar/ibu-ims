@@ -12,7 +12,11 @@ router
   .get(checkRole(["manager"]), catchAsync(internsService.getInterns));
 
 router
+  .route("/company")
+  .get(checkRole(["company"]), catchAsync(internsService.getInternsByCompany));
+
+router
   .route("/:internID")
-  .get(checkRole(["manager"]), catchAsync(internsService.getIntern));
+  .get(checkRole(["manager", "company"]), catchAsync(internsService.getIntern));
 
 module.exports = router;
