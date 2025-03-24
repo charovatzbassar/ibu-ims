@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import { ErrorAlert, SuccessAlert } from "@/components";
+import { ErrorAlert, FallbackCard, SuccessAlert } from "@/components";
 import { InternshipDayForm } from "./components";
 import React from "react";
 import {
@@ -100,7 +100,7 @@ const MyInternshipPage = () => {
       )}
       {isPending && <CircularProgress />}
       {!data ? (
-        <Card sx={{ padding: "10px" }}>You have no ongoing internship.</Card>
+        <FallbackCard content="You have no ongoing internship" />
       ) : (
         <>
           <Card sx={{ marginY: "10px" }}>
@@ -112,11 +112,11 @@ const MyInternshipPage = () => {
               <Box sx={{ marginTop: "10px" }}>
                 <Typography variant="body2" color="text.secondary">
                   Started at:{" "}
-                  {new Date(data?.internship_listing?.startDate).toDateString()}
+                  {new Date(data?.internship_listing?.startDate).toLocaleDateString()}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   Ends at:{" "}
-                  {new Date(data?.internship_listing?.endDate).toDateString()}
+                  {new Date(data?.internship_listing?.endDate).toLocaleDateString()}
                 </Typography>
               </Box>
             </CardContent>

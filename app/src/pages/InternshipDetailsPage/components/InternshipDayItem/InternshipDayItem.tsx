@@ -23,7 +23,7 @@ const InternshipDayItem = (props: Props) => {
     <>
       <TableRow>
         <TableCell component="th" scope="row">
-          {new Date(props.data.workdayDate).toDateString()}
+          {new Date(props.data.workdayDate).toLocaleDateString()}
         </TableCell>
         <TableCell align="left">{props.data.dayDescription}</TableCell>
         <TableCell align="left">

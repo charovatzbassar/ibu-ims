@@ -6,3 +6,4 @@ export { default as ErrorAlert } from "./ErrorAlert";
 export { default as ConfirmModal } from "./ConfirmModal";
 export { default as SuccessAlert } from "./SuccessAlert";
 export { default as Days } from "./Days";
+export { default as FallbackCard } from "./FallbackCard";

@@ -60,7 +60,7 @@ const InternshipDayItem = (props: Props) => {
             component="div"
             sx={{ display: "flex", marginY: "10px" }}
           >
-            {new Date(props.data.workdayDate || "").toDateString()}
+            {new Date(props.data.workdayDate || "").toLocaleDateString()}
           </Typography>
           <Divider />
 

@@ -66,7 +66,7 @@ const Days = (props: Props) => {
                     .map((day: InternshipDay) => (
                       <TableRow key={day.dayID}>
                         <TableCell component="th" scope="row">
-                          {new Date(day.workdayDate).toDateString()}
+                          {new Date(day.workdayDate).toLocaleDateString()}
                         </TableCell>
                         <TableCell align="left">{day.dayDescription}</TableCell>
                         <TableCell align="left">

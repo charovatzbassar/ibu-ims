@@ -14,15 +14,15 @@ const ApplicationItem = (props: Props) => {
           {props.data.internship_listing.company.companyName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Location: {props.data.internship_listing.company.location}
+          Location: {props.data.internship_listing.location}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Starts at:{" "}
-          {new Date(props.data.internship_listing.startDate).toDateString()}
+          {new Date(props.data.internship_listing.startDate).toLocaleDateString()}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           Ends at:{" "}
-          {new Date(props.data.internship_listing.endDate).toDateString()}
+          {new Date(props.data.internship_listing.endDate).toLocaleDateString()}
         </Typography>
       </CardContent>
     </Card>

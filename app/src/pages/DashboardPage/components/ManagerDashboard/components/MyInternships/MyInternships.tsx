@@ -1,3 +1,4 @@
+import { FallbackCard } from "@/components";
 import { Intern } from "@/services/types";
 import {
   Card,
@@ -39,7 +40,7 @@ const MyInternships = (props: Props) => {
       </Typography>
 
       {props.interns && props.interns.length === 0 && (
-        <Card sx={{ padding: "10px", marginY: "10px" }}>No interns found</Card>
+        <FallbackCard content="No interns found" />
       )}
 
       {props.interns &&

@@ -4,6 +4,7 @@ import { InternshipDay } from "@/services/types";
 import { Card, Pagination, PaginationItem } from "@mui/material";
 import React from "react";
 import { InternshipDayItem } from "./components";
+import { FallbackCard } from "@/components";
 
 const DayReportsPage = () => {
   const { data: internship } = useInternshipForIntern();
@@ -29,12 +30,10 @@ const DayReportsPage = () => {
   return (
     <>
       {!internship && (
-        <Card sx={{ padding: "10px" }}>You have no ongoing internship.</Card>
+        <FallbackCard content="You have no ongoing internship." />
       )}
       {internship && days && days.length === 0 && (
-        <Card sx={{ padding: "10px" }}>
-          You have no day reports for this internship.
-        </Card>
+        <FallbackCard content="No internship days available." />
       )}
       {internship && days && days.length !== 0 && (
         <div>

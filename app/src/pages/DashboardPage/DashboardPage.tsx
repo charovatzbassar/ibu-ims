@@ -21,7 +21,7 @@ const Dashboard = (role: string) => {
 const DashboardPage: React.FC = () => {
   const user = useSelector((state: RootState) => state.auth.user);
 
-  return <>{Dashboard(user?.role || "")}</>;
+  return Dashboard(user?.role || "");
 };
 
 export default DashboardPage;

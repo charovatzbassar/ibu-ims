@@ -1,3 +1,4 @@
+import { FallbackCard } from "@/components";
 import { InternshipListing } from "@/services/types";
 import {
   Card,
@@ -32,7 +33,7 @@ const MyListings = (props: Props) => {
 
   return (
     <>
-      <Typography sx={{ fontSize: 20, marginY: "10px" }}>
+      <Typography variant="h5" sx={{ marginY: "10px" }}>
         My Listings
       </Typography>
       {props.data &&
@@ -46,8 +47,8 @@ const MyListings = (props: Props) => {
                   {internshipListing.position} - {internshipListing.location}
                 </Typography>
                 <Typography variant="body2">
-                  {new Date(internshipListing.startDate).toDateString()} -{" "}
-                  {new Date(internshipListing.endDate).toDateString()}
+                  {new Date(internshipListing.startDate).toLocaleDateString()} -{" "}
+                  {new Date(internshipListing.endDate).toLocaleDateString()}
                 </Typography>
               </CardContent>
             </Card>
@@ -71,9 +72,7 @@ const MyListings = (props: Props) => {
       )}
       {!props.data ||
         (props.data.length === 0 && (
-          <Card sx={{ fontSize: 20, marginY: "10px", padding: "20px" }}>
-            No active listings.
-          </Card>
+          <FallbackCard content="No active listings." />
         ))}
     </>
   );

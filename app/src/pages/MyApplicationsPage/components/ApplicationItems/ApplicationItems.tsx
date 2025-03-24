@@ -14,6 +14,7 @@ import {
   HourglassBottom,
   Cancel,
 } from "@mui/icons-material";
+import { FallbackCard } from "@/components";
 
 type Props = {
   status: string;
@@ -59,9 +60,9 @@ const ApplicationItems = (props: Props) => {
       </Card>
       {isPending && <CircularProgress />}
       {data && data.length === 0 && (
-        <Card sx={{ padding: "10px" }}>
-          There are no {props.status.toLowerCase()} applications.
-        </Card>
+        <FallbackCard
+          content={`There are no ${props.status.toLowerCase()} applications.`}
+        />
       )}
       {data &&
         !isPending &&

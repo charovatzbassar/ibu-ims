@@ -1,6 +1,6 @@
 import React from "react";
 import { useInternshipListingsByCompany } from "@/hooks";
-import { ErrorAlert, InternshipListingItem } from "@/components";
+import { ErrorAlert, FallbackCard, InternshipListingItem } from "@/components";
 import {
   Card,
   CircularProgress,
@@ -63,11 +63,7 @@ const MyListingsPage = () => {
         </div>
       )}
       {data && data.length === 0 && (
-        <div>
-          <Card sx={{ padding: "20px" }}>
-            No Active Listings Found. Start by creating a listing!
-          </Card>
-        </div>
+        <FallbackCard content="No Active Listings Found. Start by creating a listing!" />
       )}
     </>
   );

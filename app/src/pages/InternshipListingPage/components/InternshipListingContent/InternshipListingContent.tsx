@@ -72,10 +72,10 @@ const InternshipListingContent = (props: Props) => {
 
           <Box sx={{ marginY: "10px" }}>
             <Typography variant="body2">
-              From: {new Date(props.data?.startDate || "").toDateString()}
+              From: {new Date(props.data?.startDate || "").toLocaleDateString()}
             </Typography>
             <Typography variant="body2">
-              To: {new Date(props.data?.endDate || "").toDateString()}
+              To: {new Date(props.data?.endDate || "").toLocaleDateString()}
             </Typography>
           </Box>
           <Divider />

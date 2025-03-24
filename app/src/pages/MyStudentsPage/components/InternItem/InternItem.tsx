@@ -41,13 +41,11 @@ const InternItem = (props: Props) => {
               </Typography>
             </Box>
             <Divider />
-            <CardActions>
+            <Box sx={{ paddingTop: "10px" }}>
               <Link to={`/home/my-students/${props.intern?.internID}`}>
-                <Button sx={{ marginLeft: "10px" }} variant="contained">
-                  Details
-                </Button>
+                <Button variant="contained">Details</Button>
               </Link>
-            </CardActions>
+            </Box>
           </>
         )}
       </CardContent>

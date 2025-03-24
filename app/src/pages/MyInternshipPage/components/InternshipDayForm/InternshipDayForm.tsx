@@ -21,7 +21,7 @@ const InternshipDayForm = (props: Props) => {
   return (
     <Card sx={{ padding: "20px" }}>
       <Typography sx={{ marginY: "15px", fontSize: 20 }}>
-        Today's Date: {new Date().toDateString()}
+        Today's Date: {new Date().toLocaleDateString()}
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField

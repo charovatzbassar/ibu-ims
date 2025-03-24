@@ -1,7 +1,8 @@
 import { useApplicationsForIntern, useInternshipForIntern } from "@/hooks";
-import { CircularProgress, Typography } from "@mui/material";
+import { Card, CircularProgress, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { MyInternship, ApprovedApplications } from "..";
+import { AccessTime } from "@mui/icons-material";
 
 const InternDashboard = () => {
   const { data: internship, isPending: isInternshipPending } =
@@ -14,9 +15,21 @@ const InternDashboard = () => {
 
   return (
     <Box>
-      <Typography sx={{ fontSize: 25, marginY: "10px" }}>
-        Today's Date: {new Date().toDateString()}
-      </Typography>
+      <Card
+        sx={{
+          paddingX: "20px",
+          paddingY: "10px",
+          marginBottom: "20px",
+          display: "flex",
+          alignItems: "center",
+          gap: 1,
+        }}
+      >
+        <AccessTime />
+        <Typography sx={{ fontSize: 25, marginY: "10px" }}>
+          Today's Date: {new Date().toLocaleDateString()}
+        </Typography>
+      </Card>
       {isInternshipPending ? (
         <CircularProgress />
       ) : (

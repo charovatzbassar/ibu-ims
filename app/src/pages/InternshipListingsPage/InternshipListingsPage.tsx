@@ -6,10 +6,9 @@ import {
   Pagination,
   PaginationItem,
   InputBase,
-  Typography,
   Card,
 } from "@mui/material";
-import { InternshipListingItem } from "@/components";
+import { FallbackCard, InternshipListingItem } from "@/components";
 import { Search } from "@mui/icons-material";
 import { useSearchParams } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -27,7 +26,10 @@ const InternshipListingsPage: React.FC = () => {
   const startIndex: number = (page - 1) * itemsPerPage;
   const endIndex: number = startIndex + itemsPerPage;
 
-  const handleChange = (event: React.ChangeEvent<unknown> | null, value: number | null) => {
+  const handleChange = (
+    event: React.ChangeEvent<unknown> | null,
+    value: number | null
+  ) => {
     event?.preventDefault();
     setPage(value ? value : 1);
   };
@@ -47,7 +49,6 @@ const InternshipListingsPage: React.FC = () => {
       <form
         onSubmit={handleSubmit(onSearch)}
         style={{
-          padding: "2px 4px",
           margin: "10px",
           display: "flex",
           alignItems: "center",
@@ -57,7 +58,7 @@ const InternshipListingsPage: React.FC = () => {
       >
         <Card>
           <InputBase
-            sx={{ ml: 1, flex: 1 }}
+            sx={{ ml: 1 }}
             placeholder="Search Listings"
             inputProps={{ "aria-label": "search listings" }}
             {...register("searchTerm")}
@@ -68,7 +69,7 @@ const InternshipListingsPage: React.FC = () => {
         </Card>
       </form>
       {!isPending && data && data.length === 0 && (
-        <Typography sx={{ margin: "10px" }}>No Listings Found.</Typography>
+        <FallbackCard content="No listings found." />
       )}
       {isPending && <CircularProgress />}
       {data && data.length !== 0 && (

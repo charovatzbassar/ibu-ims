@@ -38,14 +38,14 @@ const InternDetailsPage = () => {
                   Start Date:{" "}
                   {new Date(
                     intern?.internship?.internship_listing?.startDate
-                  ).toDateString()}
+                  ).toLocaleDateString()}
                 </Typography>
 
                 <Typography variant="body2" color="text.secondary">
                   End Date:{" "}
                   {new Date(
                     intern?.internship?.internship_listing?.endDate
-                  ).toDateString()}
+                  ).toLocaleDateString()}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   Status:{" "}

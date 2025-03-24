@@ -1,3 +1,4 @@
+import { FallbackCard } from "@/components";
 import { Internship } from "@/services/types";
 import { Card, CardContent, Divider, Typography } from "@mui/material";
 
@@ -7,13 +8,9 @@ type Props = {
 
 const MyInternship = (props: Props) => {
   return (
-    <Card sx={{ padding: "20px" }}>
-      {!props.data ? (
-        <Typography sx={{ fontSize: 20 }}>
-          No ongoing internship found.
-        </Typography>
-      ) : (
-        <>
+    <>
+      {props.data && (
+        <Card sx={{ padding: "20px" }}>
           <Typography sx={{ margin: "10px", fontSize: 20 }}>
             My Internship
           </Typography>
@@ -26,16 +23,17 @@ const MyInternship = (props: Props) => {
             <Typography variant="body2">
               {new Date(
                 props.data.internship_listing?.startDate || ""
-              ).toDateString()}{" "}
+              ).toLocaleDateString()}{" "}
               -{" "}
               {new Date(
                 props.data.internship_listing?.endDate || ""
-              ).toDateString()}
+              ).toLocaleDateString()}
             </Typography>
           </CardContent>
-        </>
+        </Card>
       )}
-    </Card>
+      {!props.data && <FallbackCard content="No ongoing internship found." />}
+    </>
   );
 };
 

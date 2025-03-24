@@ -1,3 +1,4 @@
+import { FallbackCard } from "@/components";
 import { Application } from "@/services/types";
 import { CheckCircleOutline } from "@mui/icons-material";
 import {
@@ -22,7 +23,10 @@ const ApprovedApplications = (props: Props) => {
   const startIndex: number = (page - 1) * itemsPerPage;
   const endIndex: number = startIndex + itemsPerPage;
 
-  const handleChange = (event: React.ChangeEvent<unknown> | null, value: number | null) => {
+  const handleChange = (
+    event: React.ChangeEvent<unknown> | null,
+    value: number | null
+  ) => {
     event?.preventDefault();
     setPage(value ? value : 1);
   };
@@ -50,11 +54,11 @@ const ApprovedApplications = (props: Props) => {
                 <Typography variant="body2">
                   {new Date(
                     application.internship_listing.startDate
-                  ).toDateString()}{" "}
+                  ).toLocaleDateString()}{" "}
                   -{" "}
                   {new Date(
                     application.internship_listing.endDate
-                  ).toDateString()}
+                  ).toLocaleDateString()}
                 </Typography>
               </CardContent>
             </Card>
@@ -78,9 +82,7 @@ const ApprovedApplications = (props: Props) => {
       )}
       {!props.data ||
         (props.data.length === 0 && (
-          <Card sx={{ fontSize: 20, marginY: "10px", padding: "20px" }}>
-            No approved applications.
-          </Card>
+          <FallbackCard content="No approved applications" />
         ))}
     </Box>
   );
