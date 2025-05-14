@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { queryClient } from "@/utils";
-import appAxios from "@/services/appAxios";
+import { queryClient, appAxios } from "@/services/";
 
 const useSIS = () => {
   return useMutation({

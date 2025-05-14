@@ -7,6 +7,7 @@ import {
   PaginationItem,
   Typography,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
 
 type Props = {
@@ -32,7 +33,7 @@ const Internships = (props: Props) => {
     props.data && Math.ceil(props.data?.length / itemsPerPage);
 
   return (
-    <>
+    <Box sx={{ paddingBottom: 2 }}>
       <Typography variant="h5" sx={{ marginY: "10px" }}>
         My Internships
       </Typography>
@@ -78,7 +79,7 @@ const Internships = (props: Props) => {
         (props.data.length === 0 && (
           <FallbackCard content="No ongoing internships." />
         ))}
-    </>
+    </Box>
   );
 };
 

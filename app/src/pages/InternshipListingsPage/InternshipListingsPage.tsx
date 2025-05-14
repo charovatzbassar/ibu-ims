@@ -12,7 +12,7 @@ import { FallbackCard, InternshipListingItem } from "@/components";
 import { Search } from "@mui/icons-material";
 import { useSearchParams } from "react-router-dom";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { queryClient } from "@/utils";
+import { queryClient } from "@/services";
 
 const InternshipListingsPage: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();

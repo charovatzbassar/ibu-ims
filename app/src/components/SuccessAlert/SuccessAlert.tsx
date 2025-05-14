@@ -7,7 +7,6 @@ type Props = {
 
 const SuccessAlert = (props: Props) => {
   const [open, setOpen] = React.useState(true);
-
   return (
     <div
       style={{

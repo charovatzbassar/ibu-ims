@@ -88,12 +88,11 @@ module.exports = {
         status: "ONGOING",
       },
     });
-    
+
     res.json(internship);
   },
   createInternship: async (req, res) => {
     const { interns, listingID } = req.body;
-
     const company = await prisma.company.findUnique({
       where: {
         contactEmail: req.user.profile.emails[0].value,
@@ -134,21 +133,27 @@ module.exports = {
       });
     }
 
-    const newInternships = interns.map((intern) => {
+    const newInternships = interns.map((internID) => {
       return {
         internshipID: uuid(),
         companyID: company.companyID,
         listingID,
-        internID: intern,
+        internID,
         status: "ONGOING",
       };
     });
 
-    const createdInternships = await prisma.internship.createMany({
-      data: newInternships,
+    console.log(newInternships);
+
+    // const createdInternships = await prisma.internship.createMany({
+    //   data: newInternships,
+    // });
+
+    newInternships.forEach(async (internship) => {
+      await prisma.internship.create({ data: internship });
     });
 
-    const listing = await prisma.internship_listing.update({
+    await prisma.internship_listing.update({
       where: {
         listingID,
       },

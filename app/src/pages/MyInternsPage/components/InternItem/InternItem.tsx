@@ -2,7 +2,6 @@ import { Intern } from "@/services/types";
 import {
   Button,
   Card,
-  CardActions,
   CardContent,
   Divider,
   Typography,
@@ -41,13 +40,13 @@ const InternItem = (props: Props) => {
               </Typography>
             </Box>
             <Divider />
-            <CardActions>
+            <Box sx={{ display: "flex", paddingTop: "10px" }}>
               <Link to={`/home/my-interns/${props.intern?.internID}`}>
                 <Button sx={{ marginLeft: "10px" }} variant="contained">
                   Details
                 </Button>
               </Link>
-            </CardActions>
+            </Box>
           </>
         )}
       </CardContent>

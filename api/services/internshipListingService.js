@@ -3,7 +3,7 @@ const { v4: uuid } = require("uuid");
 
 module.exports = {
   getInternshipListings: async (req, res) => {
-    const { searchTerm } = req.query;
+    const { searchTerm, skip, take } = req.query;
 
     const allListings = await prisma.internship_listing.findMany({
       include: {
@@ -26,6 +26,8 @@ module.exports = {
           },
         ],
       },
+      skip: skip ? parseInt(skip) : 0,
+      take: take ? parseInt(take) : 10,
     });
     res.json(allListings);
   },

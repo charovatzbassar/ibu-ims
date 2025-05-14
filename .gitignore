@@ -1,5 +1,6 @@
 # Logs
 api/logs
+api/package.lock.json
 api/*.log
 api/npm-debug.log*
 api/yarn-debug.log*
@@ -140,6 +141,7 @@ app/pnpm-debug.log*
 app/lerna-debug.log*
 
 app/node_modules
+app/package-lock.json
 app/dist
 app/dist-ssr
 app/*.local

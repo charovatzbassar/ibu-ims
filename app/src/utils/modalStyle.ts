@@ -1,4 +1,3 @@
-
 const modalStyle = {
   display: "flex",
   flexDirection: "column",

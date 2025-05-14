@@ -7,12 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model admin {
+  adminID     String    @id @db.VarChar(36)
+  firstName   String?   @db.VarChar(25)
+  lastName    String?   @db.VarChar(25)
+  dateOfBirth DateTime? @db.Date
+  email       String?   @unique(map: "email") @db.VarChar(35)
+}
+
 model company {
   companyID          String               @id @db.VarChar(36)
   companyName        String?              @db.VarChar(25)
   location           String?              @db.VarChar(55)
   contactEmail       String?              @unique(map: "contactEmail") @db.VarChar(35)
-  companyLogo        Bytes?               @db.Blob
+  status             String?              @db.VarChar(25)
   internship         internship[]
   internship_listing internship_listing[]
 }
@@ -71,6 +79,7 @@ model manager {
   firstName   String?      @db.VarChar(25)
   lastName    String?      @db.VarChar(25)
   dateOfBirth DateTime?    @db.Date
+  status      String?      @db.VarChar(100)
   email       String?      @unique(map: "email") @db.VarChar(35)
   internship  internship[]
 }

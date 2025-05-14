@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { InternshipListingsService } from "@/services";
-import { queryClient } from "@/utils";
+import { queryClient, InternshipListingsService } from "@/services";
 import { InternshipListingFormValues } from "@/services/types";
 
 const useEditInternshipListing = (id: string) => {

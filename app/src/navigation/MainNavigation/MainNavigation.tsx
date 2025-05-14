@@ -14,7 +14,7 @@ import {
 import { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { Menu, ChevronLeft } from "@mui/icons-material";
 import { Outlet } from "react-router-dom";
-import { NavigationItems } from "../";
+import { NavigationItems } from "@/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
@@ -70,14 +70,14 @@ const Drawer = styled(MuiDrawer, {
 
 const defaultTheme = createTheme();
 
-export default function Dashboard() {
+const MainNavigation = () => {
   const [open, setOpen] = React.useState(false);
 
   const user = useSelector((state: RootState) => state.auth.user);
 
   const toggleDrawer = () => {
     setOpen(!open);
-  };
+  };  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -161,3 +161,5 @@ export default function Dashboard() {
     </ThemeProvider>
   );
 }
+
+export default MainNavigation;

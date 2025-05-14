@@ -5,6 +5,7 @@ import {
   InternDashboard,
   CompanyDashboard,
   ManagerDashboard,
+  AdminDashboard,
 } from "./components";
 
 const Dashboard = (role: string) => {
@@ -15,6 +16,8 @@ const Dashboard = (role: string) => {
       return <InternDashboard />;
     case "manager":
       return <ManagerDashboard />;
+    case "admin":
+      return <AdminDashboard />;
   }
 };
 

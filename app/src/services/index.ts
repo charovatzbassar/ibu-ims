@@ -5,3 +5,6 @@ export { default as InternshipsService } from "./internships";
 export { default as InternshipDaysService } from "./internshipDays";
 export { default as InternshipReportsService } from "./internshipReports";
 export { default as InternsService } from "./interns";
+export { default as ManagersService } from "./managers";
+export { default as appAxios } from "./appAxios";
+export { default as queryClient } from "./queryClient";

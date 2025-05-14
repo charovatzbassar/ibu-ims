@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { ApplicationsService } from "@/services";
-import { queryClient } from "@/utils";
+import { queryClient, ApplicationsService } from "@/services";
 
 const useCreateApplication = () => {
   return useMutation({

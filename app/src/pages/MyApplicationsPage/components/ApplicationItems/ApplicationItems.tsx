@@ -6,6 +6,7 @@ import {
   CircularProgress,
   Pagination,
   PaginationItem,
+  Typography,
 } from "@mui/material";
 import { ApplicationItem } from "..";
 import { Box } from "@mui/system";
@@ -54,9 +55,21 @@ const ApplicationItems = (props: Props) => {
 
   return (
     <Box sx={{ marginY: "25px" }}>
-      <Card sx={{ padding: "10px", fontSize: 25, marginY: "10px" }}>
-        {Icon(props.status)}{" "}
-        {props.status[0] + props.status.slice(1).toLowerCase()} applications
+      <Card
+        sx={{
+          padding: "10px",
+          fontSize: 25,
+          marginY: "10px",
+          display: "flex",
+          alignItems: "center",
+          gap: 1
+        }}
+      >
+        {Icon(props.status)}
+        <Typography variant="h6">
+          {`${props.status[0]}${props.status.slice(1).toLowerCase()} `}
+          applications
+        </Typography>
       </Card>
       {isPending && <CircularProgress />}
       {data && data.length === 0 && (

@@ -1,5 +1,4 @@
-import { InternshipsService } from "@/services";
-import { queryClient } from "@/utils";
+import { queryClient, InternshipsService } from "@/services";
 import { useMutation } from "@tanstack/react-query";
 
 const useCreateInternship = () => {

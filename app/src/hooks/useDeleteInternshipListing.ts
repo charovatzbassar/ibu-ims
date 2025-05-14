@@ -1,6 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { InternshipListingsService } from "@/services";
-import { queryClient } from "@/utils";
+import { queryClient, InternshipListingsService } from "@/services";
 
 const useDeleteInternshipListing = (id: string) => {
   return useMutation({

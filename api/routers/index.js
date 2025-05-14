@@ -6,3 +6,4 @@ module.exports.internshipRouter = require("./internshipRouter");
 module.exports.internshipDayRouter = require("./internshipDayRouter");
 module.exports.internshipReportRouter = require("./internshipReportRouter");
 module.exports.internRouter = require("./internRouter");
+module.exports.managerRouter = require("./managerRouter");

@@ -7,6 +7,7 @@ import {
   PaginationItem,
   Typography,
 } from "@mui/material";
+import { Box } from "@mui/system";
 import React from "react";
 
 type Props = {
@@ -32,7 +33,7 @@ const MyListings = (props: Props) => {
     props.data && Math.ceil(props.data?.length / itemsPerPage);
 
   return (
-    <>
+    <Box>
       <Typography variant="h5" sx={{ marginY: "10px" }}>
         My Listings
       </Typography>
@@ -74,7 +75,7 @@ const MyListings = (props: Props) => {
         (props.data.length === 0 && (
           <FallbackCard content="No active listings." />
         ))}
-    </>
+    </Box>
   );
 };
 

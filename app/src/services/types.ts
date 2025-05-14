@@ -16,7 +16,7 @@ export type Company = {
   readonly companyName: string;
   readonly location: string;
   readonly contactEmail: string;
-  readonly companyLogo: string;
+  readonly status: string;
 };
 
 export type Intern = {
@@ -34,6 +34,7 @@ export type Manager = {
   readonly lastName: string;
   readonly dateOfBirth: string | null;
   readonly email: string;
+  readonly status: string;
 };
 
 export type User = {
@@ -93,4 +94,16 @@ export type InternshipReport = {
   readonly internshipID: string;
   readonly finalReport: string;
   readonly status: string;
+};
+
+export type ManagerFormValues = {
+  readonly firstName: string;
+  readonly lastName: string;
+  readonly email: string;
+};
+
+export type CompanyFormValues = {
+  readonly companyName: string;
+  readonly location: string;
+  readonly contactEmail: string;
 };

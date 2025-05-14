@@ -1,5 +1,5 @@
 import appAxios from "./appAxios";
-import { Company } from "./types";
+import { Company, CompanyFormValues } from "./types";
 
 export default class CompaniesService {
   public static getCompanies = async (): Promise<Company[]> => {
@@ -16,23 +16,23 @@ export default class CompaniesService {
       .catch((error) => error);
   };
 
-  public static createCompany = async () => {
+  public static createCompany = async (data: CompanyFormValues) => {
     return appAxios
-      .post("/companies")
+      .post("/companies", data)
       .then((res) => res.data)
       .catch((error) => error);
   };
 
-  public static editCompany = async (id: string) => {
+  public static editCompany = async (id: string, data: CompanyFormValues) => {
     return appAxios
-      .put(`/companies/${id}`)
+      .put(`/companies/${id}`, data)
       .then((res) => res.data)
       .catch((error) => error);
   };
 
-  public static deleteCompany = async (id: string) => {
+  public static changeCompanyStatus = async (id: string, status: string) => {
     return appAxios
-      .delete(`/companies/${id}`)
+      .put(`/companies/${id}/status?status=${status}`)
       .then((res) => res.data)
       .catch((error) => error);
   };

@@ -15,47 +15,60 @@ passport.use(
     },
     async (token, refreshToken, profile, done) => {
       let role;
-      if (profile.emails[0].value.split("@")[1] === "stu.ibu.edu.ba") {
-        const user = await prisma.intern.findUnique({
-          where: { email: profile.emails[0].value },
-        });
+      const googleEmail = profile.emails[0].value;
+      const givenName = profile.name.givenName;
+      const familyName = profile.name.familyName;
+      const emailDomain = googleEmail.split("@")[1];
 
-        if (!user) {
-          await prisma.intern.create({
-            data: {
-              internID: uuid(),
-              email: profile.emails[0].value,
-              firstName: profile.name.givenName,
-              lastName: profile.name.familyName,
-            },
+      switch (emailDomain) {
+        case "ibu.edu.ba":
+          const intern = await prisma.intern.findUnique({
+            where: { email: googleEmail },
           });
-        }
-        role = "intern";
-      } else if (profile.emails[0].value.split("@")[1] === "ibu.edu.ba") {
-        const user = await prisma.manager.findUnique({
-          where: { email: profile.emails[0].value },
-        });
 
-        if (!user) {
-          await prisma.manager.create({
-            data: {
-              managerID: uuid(),
-              email: profile.emails[0].value,
-              firstName: profile.name.givenName,
-              lastName: profile.name.familyName,
-            },
+          if (!intern) {
+            prisma.intern.create({
+              data: {
+                internID: uuid(),
+                email: googleEmail,
+                firstName: givenName,
+                lastName: familyName,
+              },
+            });
+          }
+
+          role = "intern";
+          break;
+
+        case "stu.ibu.edu.ba":
+          const [manager, admin] = await Promise.all([
+            prisma.manager.findUnique({
+              where: { email: googleEmail, status: "ACTIVE" },
+            }),
+            prisma.admin.findUnique({
+              where: { email: googleEmail },
+            }),
+          ]);
+
+          if (admin) {
+            role = "admin";
+          } else if (manager) {
+            role = "manager";
+          } else {
+            return done(new APIError("Unauthorized", 401), false);
+          }
+          break;
+
+        default:
+          const company = await prisma.company.findUnique({
+            where: { contactEmail: googleEmail, status: "ACTIVE" },
           });
-        }
-        role = "manager";
-      } else {
-        const user = await prisma.company.findUnique({
-          where: { contactEmail: profile.emails[0].value },
-        });
 
-        if (!user) {
-          return done(new APIError("Unauthorized", 401), false);
-        }
-        role = "company";
+          if (!company) {
+            return done(new APIError("Unauthorized", 401), false);
+          }
+          role = "company";
+          break;
       }
 
       const jwtToken = sign(

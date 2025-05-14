@@ -1,4 +1,3 @@
-import { ReactElement } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import {
   DashboardPage,
@@ -20,15 +19,14 @@ import {
   DayReportsPage,
   InternDetailsPage,
 } from "@/pages";
-import { Navigation } from "@/components";
-import { ProtectedRoute, RoleRoute } from "@/utils";
+import { ProtectedRoute, RoleRoute, MainNavigation } from "@/navigation";
 
-function App(): ReactElement {
+const Router = () => {
   return (
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route element={<ProtectedRoute />}>
-        <Route path="/home" element={<Navigation />}>
+        <Route path="/home" element={<MainNavigation />}>
           <Route path="dashboard" element={<DashboardPage />} />
           <Route
             path="internship-listings"
@@ -80,6 +78,6 @@ function App(): ReactElement {
       <Route path="*" element={<Navigate to="/home/dashboard" />} />
     </Routes>
   );
-}
+};
 
-export default App;
+export default Router;
