@@ -1,4 +1,5 @@
 const prisma = require("../prisma");
+const { v4: uuid } = require("uuid");
 
 module.exports = {
   addManager: async (req, res) => {
@@ -10,6 +11,7 @@ module.exports = {
       data: {
         ...req.body,
         status: "INACTIVE",
+        managerID: uuid(),
       },
     });
     res.json(newManager);
@@ -37,12 +39,12 @@ module.exports = {
   },
 
   changeManagerStatus: async (req, res) => {
-
     const activeManager = await prisma.manager.findFirst({
       where: {
         status: "ACTIVE",
       },
     });
+    
 
     await prisma.manager.update({
       where: {
@@ -52,7 +54,6 @@ module.exports = {
         status: "INACTIVE",
       },
     });
-    console.log("Here");
 
     const updatedManager = await prisma.manager.update({
       where: {
@@ -62,7 +63,6 @@ module.exports = {
         status: "ACTIVE",
       },
     });
-    console.log(updatedManager);
 
     res.json(updatedManager);
   },

@@ -4,22 +4,31 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "swagger": "node ./swagger/swagger.js",
-    "start": "nodemon"
+    "start": "nodemon",
+    "test": "mocha --recursive",
+    "coverage": "nyc npm test"
+  },
+    "nyc": {
+    "reporter": ["text", "html"],
+    "exclude": ["test"]
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^6.5.0",
+    "chai": "^5.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.2",
+    "mocha": "^11.7.0",
+    "nyc": "^17.1.0",
     "passport": "^0.7.0",
     "passport-google-oauth20": "^2.0.0",
+    "supertest": "^7.1.1",
     "swagger-ui-express": "^5.0.0",
     "uuid": "^9.0.1"
   },

@@ -143,12 +143,6 @@ module.exports = {
       };
     });
 
-    console.log(newInternships);
-
-    // const createdInternships = await prisma.internship.createMany({
-    //   data: newInternships,
-    // });
-
     newInternships.forEach(async (internship) => {
       await prisma.internship.create({ data: internship });
     });
@@ -162,6 +156,6 @@ module.exports = {
       },
     });
 
-    res.json(createdInternships);
+    res.json({ success: true });
   },
 };

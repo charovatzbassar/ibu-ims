@@ -25,7 +25,7 @@ module.exports = {
       },
     });
 
-    const updatedInternship = await prisma.internship.update({
+    await prisma.internship.update({
       where: {
         internshipID,
       },
@@ -81,7 +81,7 @@ module.exports = {
     });
 
     if (status === "APPROVED") {
-      const updatedInternship = await prisma.internship.update({
+      await prisma.internship.update({
         where: {
           internshipID: report.internshipID,
         },
@@ -90,7 +90,7 @@ module.exports = {
         },
       });
 
-      const newGrade = await prisma.final_grade.create({
+      await prisma.final_grade.create({
         data: {
           gradeID: uuid(),
           internshipID: report.internshipID,
