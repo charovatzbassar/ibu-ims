@@ -5,13 +5,37 @@ describe("interns", () => {
   it("should return a list of interns", async () => {
     let jsonResponse;
 
-    await internsService.getInterns({
-      query: { status: "" },
-    }, {
-      json: (data) => {
-        jsonResponse = data;
+    await internsService.getInterns(
+      {
+        query: { status: "" },
       },
-    });
+      {
+        json: (data) => {
+          jsonResponse = data;
+        },
+      }
+    );
+    expect(jsonResponse).to.be.an("array");
+    expect(jsonResponse.length).to.be.greaterThan(0);
+    expect(jsonResponse[0]).to.have.property("internID");
+    expect(jsonResponse[0]).to.have.property("firstName");
+    expect(jsonResponse[0]).to.have.property("lastName");
+    expect(jsonResponse[0]).to.have.property("email");
+  });
+
+  it("should return a list of interns without status", async () => {
+    let jsonResponse;
+
+    await internsService.getInterns(
+      {
+        query: { status: undefined },
+      },
+      {
+        json: (data) => {
+          jsonResponse = data;
+        },
+      }
+    );
     expect(jsonResponse).to.be.an("array");
     expect(jsonResponse.length).to.be.greaterThan(0);
     expect(jsonResponse[0]).to.have.property("internID");

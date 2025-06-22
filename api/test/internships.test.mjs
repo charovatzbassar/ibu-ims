@@ -207,7 +207,6 @@ describe("internships", () => {
     await internshipService.createInternship(req, res);
 
     console.log(jsonResponse);
-    
 
     expect(jsonResponse).to.be.an("object");
     expect(jsonResponse).to.have.property("success", true);
@@ -271,10 +270,7 @@ describe("internships", () => {
 
     await internshipService.createInternship(req, res);
     expect(jsonResponse).to.be.an("object");
-    expect(jsonResponse).to.have.property(
-      "error",
-      "Listing does not exist."
-    );
+    expect(jsonResponse).to.have.property("error", "Listing does not exist.");
   });
 
   it("should create a new internship for intern with existing internship", async () => {
@@ -284,7 +280,7 @@ describe("internships", () => {
           "a7073e3f-6bd7-4e96-9fc0-5a995fd8cbc7",
           "a7073e3f-6bd7-4e96-9fc0-5a995fd8cbc6",
         ],
-        listingID: "non-existing-listing-id",
+        listingID: "76bf4908-9120-4e11-8860-cc8eab211dfe",
       },
       user: {
         profile: {
@@ -307,9 +303,6 @@ describe("internships", () => {
 
     await internshipService.createInternship(req, res);
     expect(jsonResponse).to.be.an("object");
-    expect(jsonResponse).to.have.property(
-      "error",
-      "Listing does not exist."
-    );
+    expect(jsonResponse).to.have.property("error", "One or more interns already have an ongoing internship.");
   });
 });

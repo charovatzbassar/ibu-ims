@@ -152,6 +152,38 @@ describe("internship days", () => {
     await internshipDayService.createInternshipDay(req, res);
   });
 
+  it("should create a new internship day for non-existing intern", async () => {
+    const req = {
+      params: { internshipID: "non-existing" },
+      body: {
+        description: "Test internship day",
+      },
+      user: {
+        profile: {
+          emails: [{ value: "dsadsadsad@stu.ibu.edu.ba" }],
+        },
+      },
+    };
+
+    const res = {
+      json: (data) => {
+        expect(data).to.have.property("message", "Intern does not exist.");
+      },
+      status: (code) => {
+        return {
+          json: (data) => {
+            expect(data).to.have.property(
+              "message",
+              "Intern does not exist."
+            );
+          },
+        };
+      },
+    };
+
+    await internshipDayService.createInternshipDay(req, res);
+  });
+
   it("should create a new internship day for not started internship", async () => {
     const req = {
       params: { internshipID: "2f317e2e-6d0f-4fdc-92b0-87937b6e6d16" },
@@ -385,10 +417,10 @@ describe("internship days", () => {
 
   it("should approve all internship days for non-existing internship", async () => {
     const req = {
-      params: { internshipID: "0ca9c81b-c92c-4eb5-8b99-a83ff95c0495" },
+      params: { internshipID: "non-existing" },
       user: {
         profile: {
-          emails: [{ value: "carovac.dksfojdsf@gmail.com" }],
+          emails: [{ value: "carovac.basar@gmail.com" }],
         },
       },
     };
@@ -400,7 +432,7 @@ describe("internship days", () => {
         expect(jsonResponse).to.be.an("object");
         expect(jsonResponse).to.have.property(
           "message",
-          "Company does not exist."
+          "Internship does not exist."
         );
       },
       status: (code) => {
@@ -409,7 +441,7 @@ describe("internship days", () => {
             jsonResponse = data;
             expect(jsonResponse).to.have.property(
               "message",
-              "Company does not exist."
+              "Internship does not exist."
             );
           },
         };

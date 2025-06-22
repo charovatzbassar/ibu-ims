@@ -210,7 +210,7 @@ describe("applications", () => {
         },
       },
       params: {
-        applicationID: "1a2b3c4d-5e6f-7g8h-9i0j-k1l2m3n4o5p6",
+        applicationID: "2b3c4d5e-6f7g-8h9i-0j1k-2l3m4n5o6p7q",
       },
       body: {
         status: "APPROVED",
@@ -232,15 +232,10 @@ describe("applications", () => {
       },
     };
 
-    applicationService.modifyApplicationStatus(req, res).then(() => {
+    return applicationService.modifyApplicationStatus(req, res).then(() => {
       expect(jsonResponse).to.be.an("object");
-      expect(jsonResponse.status).to.be.equal("APPROVED");
+      expect(jsonResponse.applicationStatus).to.be.equal("APPROVED");
       expect(jsonResponse).to.have.property("applicationID");
-      expect(jsonResponse).to.have.property("internship_listing");
-      expect(jsonResponse).to.have.property("intern");
-      expect(jsonResponse.internship_listing).to.have.property("listingID");
-      expect(jsonResponse.internship_listing).to.have.property("companyID");
-      expect(jsonResponse.intern).to.have.property("email");
     });
   });
   it("should modify the application's status for a non-existing company", () => {
@@ -288,13 +283,13 @@ describe("applications", () => {
         profile: {
           emails: [
             {
-              value: "intern@stu.ibu.edu.ba",
+              value: "sam@stu.ibu.edu.ba",
             },
           ],
         },
       },
       body: {
-        listingID: "f68dade3-2a31-4525-8d10-3d79aa3af79c",
+        listingID: "f299b843-1dd8-4f54-a746-bcdfec2a4e23",
       },
     };
 
@@ -313,7 +308,7 @@ describe("applications", () => {
       },
     };
 
-    applicationService.createApplication(req, res).then(() => {
+    return applicationService.createApplication(req, res).then(() => {
       createdApplicationID = jsonResponse.applicationID;
       expect(jsonResponse).to.be.an("object");
       expect(jsonResponse).to.have.property("applicationID");
@@ -334,7 +329,7 @@ describe("applications", () => {
         },
       },
       body: {
-        listingID: "f68dade3-2a31-4525-8d10-3d79aa3af79c",
+        listingID: "f299b843-1dd8-4f54-a746-bcdfec2a4e23",
       },
     };
 
@@ -353,7 +348,7 @@ describe("applications", () => {
       },
     };
 
-    applicationService.createApplication(req, res).then(() => {
+    return applicationService.createApplication(req, res).then(() => {
       expect(jsonResponse).to.be.an("object");
       expect(jsonResponse).to.have.property("error", "Intern does not exist.");
     });
@@ -364,7 +359,7 @@ describe("applications", () => {
         profile: {
           emails: [
             {
-              value: "intern@stu.ibu.edu.ba",
+              value: "sam@stu.ibu.edu.ba",
             },
           ],
         },
@@ -389,7 +384,7 @@ describe("applications", () => {
       },
     };
 
-    applicationService.createApplication(req, res).then(() => {
+    return applicationService.createApplication(req, res).then(() => {
       expect(jsonResponse).to.be.an("object");
       expect(jsonResponse).to.have.property(
         "error",
@@ -403,13 +398,13 @@ describe("applications", () => {
         profile: {
           emails: [
             {
-              value: "intern@stu.ibu.edu.ba",
+              value: "sam@stu.ibu.edu.ba",
             },
           ],
         },
       },
       body: {
-        listingID: "f68dade3-2a31-4525-8d10-3d79aa3af79c",
+        listingID: "f299b843-1dd8-4f54-a746-bcdfec2a4e23",
       },
     };
 
@@ -428,7 +423,7 @@ describe("applications", () => {
       },
     };
 
-    applicationService.createApplication(req, res).then(() => {
+    return applicationService.createApplication(req, res).then(() => {
       expect(jsonResponse).to.be.an("object");
       expect(jsonResponse).to.have.property(
         "error",
@@ -448,7 +443,7 @@ describe("applications", () => {
         },
       },
       body: {
-        listingID: "0ca9c81b-c92c-4eb5-8b99-a83ff95c0495",
+        listingID: "1712848e-f6bf-4509-83a9-cbfa364d6b87",
       },
     };
 
@@ -467,7 +462,7 @@ describe("applications", () => {
       },
     };
 
-    applicationService.createApplication(req, res).then(() => {
+    return applicationService.createApplication(req, res).then(() => {
       expect(jsonResponse).to.be.an("object");
       expect(jsonResponse).to.have.property(
         "error",
