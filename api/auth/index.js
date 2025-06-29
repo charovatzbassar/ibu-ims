@@ -21,7 +21,7 @@ passport.use(
       const emailDomain = googleEmail.split("@")[1];
 
       switch (emailDomain) {
-        case "ibu.edu.ba":
+        case "stu.ibu.edu.ba":
           const intern = await prisma.intern.findUnique({
             where: { email: googleEmail },
           });
@@ -40,7 +40,7 @@ passport.use(
           role = "intern";
           break;
 
-        case "stu.ibu.edu.ba":
+        case "ibu.edu.ba":
           const [manager, admin] = await Promise.all([
             prisma.manager.findUnique({
               where: { email: googleEmail, status: "ACTIVE" },

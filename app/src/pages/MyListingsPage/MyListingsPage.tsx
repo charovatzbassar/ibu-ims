@@ -2,7 +2,6 @@ import React from "react";
 import { useInternshipListingsByCompany } from "@/hooks";
 import { ErrorAlert, FallbackCard, InternshipListingItem } from "@/components";
 import {
-  Card,
   CircularProgress,
   Pagination,
   PaginationItem,

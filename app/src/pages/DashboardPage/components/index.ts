@@ -8,5 +8,3 @@ export { default as ApprovedApplications } from "./ApprovedApplications";
 export { default as AdminDashboard } from "./AdminDashboard";
 export { default as CompanyForm } from "./CompanyForm";
 export { default as CompanyRow } from "./CompanyRow";
-export { default as ManagerForm } from "./ManagerForm";
-export { default as ManagerSelect } from "./ManagerSelect";

@@ -2,7 +2,6 @@ import { Intern } from "@/services/types";
 import {
   Button,
   Card,
-  CardActions,
   CardContent,
   Divider,
   Typography,

@@ -1,7 +1,7 @@
 import { useAllInternshipDays, useInternshipForIntern } from "@/hooks";
 import { InternshipDay } from "@/services/types";
 
-import { Card, Pagination, PaginationItem } from "@mui/material";
+import {  Pagination, PaginationItem } from "@mui/material";
 import React from "react";
 import { InternshipDayItem } from "./components";
 import { FallbackCard } from "@/components";
