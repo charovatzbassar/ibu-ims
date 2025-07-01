@@ -44,12 +44,12 @@ const Days = (props: Props) => {
           <Typography
             variant="body2"
             color="text.secondary"
-            sx={{ marginY: "10px" }}
+            sx={{ marginY: "10px", padding: "10px" }}
           >
             There are no workdays for this internship.
           </Typography>
         )}
-        {props.days && props.days.length > 0 ? (
+        {props.days && props.days.length > 0 && (
           <>
             <TableContainer sx={{ marginY: "20px" }}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -93,8 +93,6 @@ const Days = (props: Props) => {
               )}
             />
           </>
-        ) : (
-          <Typography>There are no internship days.</Typography>
         )}
       </Box>
     </Card>

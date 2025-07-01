@@ -19,6 +19,8 @@ import { Application, Intern } from "@/services/types";
 const InternshipListingPage = () => {
   const [searchParams] = useSearchParams();
   const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [hasInternApplied, setHasInternApplied] =
+    React.useState<boolean>(false);
   const [startInternshipModalOpen, setStartInternshipModalOpen] =
     React.useState<boolean>(false);
 
@@ -60,6 +62,16 @@ const InternshipListingPage = () => {
   const user = useSelector((state: RootState) => state.auth.user);
 
   const isOwner = isListingOwner(data, user);
+
+  React.useEffect(() => {
+    if (user.role === "intern" && data?.application) {
+      const hasApplied = data.application.some(
+        (app: Application) => app.intern?.email === user.email
+      );
+      setHasInternApplied(hasApplied);
+      
+    }
+  }, [data]);
 
   return (
     <>
@@ -206,6 +218,7 @@ const InternshipListingPage = () => {
           <Button
             color="success"
             variant="contained"
+            disabled={hasInternApplied}
             sx={{ margin: "10px" }}
             onClick={() => setModalOpen(true)}
           >
@@ -216,6 +229,7 @@ const InternshipListingPage = () => {
             onClick={() => {
               setModalOpen(false);
               apply(data?.listingID || "");
+              setHasInternApplied(true);
             }}
             buttonColor="success"
             modalOpen={modalOpen}

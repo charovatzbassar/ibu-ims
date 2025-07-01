@@ -206,8 +206,6 @@ describe("internships", () => {
 
     await internshipService.createInternship(req, res);
 
-    console.log(jsonResponse);
-
     expect(jsonResponse).to.be.an("object");
     expect(jsonResponse).to.have.property("success", true);
   });

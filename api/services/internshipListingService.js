@@ -4,7 +4,6 @@ const { v4: uuid } = require("uuid");
 module.exports = {
   getInternshipListings: async (req, res) => {
     const { searchTerm } = req.query;
-    
 
     const allListings = await prisma.internship_listing.findMany({
       include: {
@@ -76,7 +75,11 @@ module.exports = {
       },
       include: {
         company: true,
-        application: true,
+        application: {
+          include: {
+            intern: true,
+          },
+        },
       },
     });
 

@@ -23,15 +23,24 @@ const MyStudentsPage = () => {
 
   const { data, isPending } = useInterns("");
 
-  const [displayedInterns, setDisplayedInterns] = React.useState<
-    Intern[] | undefined
-  >(undefined);
+  const [displayedInterns, setDisplayedInterns] = React.useState<Intern[]>([]);
 
   React.useEffect(() => {
-    setDisplayedInterns(data);
+    if (data) {
+      setDisplayedInterns([
+        ...data?.filter((intern: Intern) => {
+          return intern.internship;
+        }),
+      ]);
+    }
   }, [data]);
 
-  const { register, handleSubmit, control, getValues } = useForm();
+  const { register, handleSubmit, control, getValues } = useForm({
+    defaultValues: {
+      searchStatus: "ALL",
+      searchTerm: "",
+    },
+  });
 
   const itemsPerPage: number = 5;
   const startIndex: number = (page - 1) * itemsPerPage;
@@ -51,23 +60,18 @@ const MyStudentsPage = () => {
   const onSearch = () => {
     const { searchStatus, searchTerm } = getValues();
 
-    if (searchTerm) {
-      setDisplayedInterns([
-        ...data.filter((intern: Intern) => {
-          return intern.internship?.company?.companyName
-            .toLowerCase()
-            .includes(searchTerm.toLowerCase());
-        }),
-      ]);
-    }
-
-    if (searchStatus) {
-      setDisplayedInterns([
-        ...data.filter((intern: Intern) => {
-          return intern.internship.status === searchStatus;
-        }),
-      ]);
-    }
+    let filteredInterns = data?.filter((intern: Intern) => {
+      const matchesStatus =
+        searchStatus === 'ALL' || intern.internship?.status === searchStatus;
+      const matchesCompany =
+        !searchTerm ||
+        intern.internship?.company?.companyName
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      return matchesStatus && matchesCompany && intern.internship;
+    });
+    setDisplayedInterns(filteredInterns || []);
+    setPage(1);
   };
 
   return (
@@ -105,7 +109,16 @@ const MyStudentsPage = () => {
             control={control}
             defaultValue=""
             render={({ field }) => (
-              <Select {...field} labelId="statusLabel" label="Status">
+              <Select
+                {...field}
+                labelId="statusLabel"
+                label="Status"
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleSubmit(onSearch)();
+                }}
+              >
+                <MenuItem value="ALL">All</MenuItem>
                 <MenuItem value="ONGOING">Ongoing</MenuItem>
                 <MenuItem value="PENDING">Pending</MenuItem>
                 <MenuItem value="COMPLETED">Completed</MenuItem>
@@ -117,6 +130,11 @@ const MyStudentsPage = () => {
       {isPending && <CircularProgress />}
       {data && data.length === 0 && !isPending && (
         <Card sx={{ padding: "10px", marginY: "10px" }}>No interns found</Card>
+      )}
+      {displayedInterns && displayedInterns.length === 0 && !isPending && (
+        <Card sx={{ padding: "20px", marginY: "10px" }}>
+          No interns found with the selected filters
+        </Card>
       )}
       {data && data.length > 0 && !isPending && (
         <>

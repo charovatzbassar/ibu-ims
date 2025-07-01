@@ -9,6 +9,7 @@ export type InternshipListing = {
   readonly requirements: string;
   readonly noOfPlaces: number;
   readonly listingStatus: string;
+  readonly application: Application[];
 };
 
 export type Company = {

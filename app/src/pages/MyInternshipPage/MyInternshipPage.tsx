@@ -37,8 +37,23 @@ const MyInternshipPage = () => {
     today.toISOString().split("T")[0]
   );
 
-  const latestInternshipDay: InternshipDay | undefined =
-    (internshipDays && internshipDays[internshipDays.length - 1]) || {};
+  let latestInternshipDay: InternshipDay | undefined;
+
+  if (internshipDays instanceof Array) {
+    if (internshipDays.length === 1) {
+      latestInternshipDay = internshipDays[0];
+    } else if (
+      internshipDays.some((day: InternshipDay) => day.status === "APPROVED")
+    ) {
+      latestInternshipDay = internshipDays?.find(
+        (day: InternshipDay) => day.status === "APPROVED"
+      );
+    } else {
+      latestInternshipDay = internshipDays?.find(
+        (day: InternshipDay) => day.status === "PENDING"
+      );
+    }
+  }
 
   let content: string = "";
   let statusContent: React.ReactElement = <></>;
@@ -112,11 +127,15 @@ const MyInternshipPage = () => {
               <Box sx={{ marginTop: "10px" }}>
                 <Typography variant="body2" color="text.secondary">
                   Started at:{" "}
-                  {new Date(data?.internship_listing?.startDate).toLocaleDateString()}
+                  {new Date(
+                    data?.internship_listing?.startDate
+                  ).toLocaleDateString()}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
                   Ends at:{" "}
-                  {new Date(data?.internship_listing?.endDate).toLocaleDateString()}
+                  {new Date(
+                    data?.internship_listing?.endDate
+                  ).toLocaleDateString()}
                 </Typography>
               </Box>
             </CardContent>
